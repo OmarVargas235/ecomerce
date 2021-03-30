@@ -38,11 +38,16 @@ const NavbarPage = ({ activeSearch, classes, handleChange, setActiveSearch, them
 			</Grid>
 
 			<Grid item xs={2} className="d-flex justify-content-center align-items-center">
-				<SearchIcon
-					className="pointer mr-2"
-					onClick={() => setActiveSearch(true)}
-				/>
-				<Cart className="pointer" />		
+				<div className="container-icon">
+					<SearchIcon
+						className="pointer mr-2"
+						onClick={() => setActiveSearch(true)}
+					/>
+				</div>
+
+				<div className="container-icon">
+					<Cart className="pointer" />
+				</div>	
 			</Grid>		
 		</Grid>
 

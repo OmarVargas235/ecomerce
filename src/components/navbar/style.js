@@ -6,17 +6,6 @@ export const NavbarContainer = styled.nav`
 	svg {
 		width: 20px;
 		height: 20px;
-		position: relative;
-
-		// &::before {
-		// 	display: block;
-		// 	content: '';
-		// 	background-color: red;
-		// 	width: 100px;
-		// 	height: 100px;
-		// 	position: absolute;
-		// 	top: 0;
-		// }
 	}
 
 	.img-logo {
@@ -28,58 +17,49 @@ export const NavbarContainer = styled.nav`
 	.MuiPaper-elevation1 {
 		box-shadow: none;
 	}
+
+	.container-icon {
+		position: relative;
+
+		::after {
+			display: block;
+			content: '';
+			background-color: #DD473E;
+			width: 0%;
+			height: 4px;
+			position: absolute;
+			left: 50%;
+			top: 140%;
+			transition: width .1s ease-out, left .1s ease-out;
+		}
+
+		&:hover::after {
+			width: 80%;
+			left: 20%;
+		}
+	}
 `;
 
 // =====================================
 // Estilos de la barra de busqueda
 // =====================================
 
-// const animationOpacity = (typeAnimation) => (`
-// 	@keyframes ${typeAnimation} {
-// 		0% {
-// 			opacity: 0;
-// 		}
-
-// 		25% {
-// 			opacity: .25;
-// 		}
-
-// 		50% {
-// 			opacity: .5;
-// 		}
-
-// 		75% {
-// 			opacity: .75;
-// 		}
-
-// 		100% {
-// 			opacity: 1;
-// 		}
-// 	}
-// `)
-
 const animationOpacity = (typeAnimation, opacity) => {
 
-	let percent = 0, templete = '';
+	let templete = '', porcent = 0;
 
-	return (`
-		@keyframes ${typeAnimation} {
-			${() => {
-				for (let i = 0; i < 4; i++) {
+	templete += `@keyframes ${typeAnimation} {`;
 
-					templete += `${percent}% {
-						opacity: ${opacity};
-					}`
+	for (let i = 0; i < 5; i++) {
 
-					percent += 25;
-					opacity += .25;
-				}
+		templete += `${porcent}% { opacity: ${opacity}; }`;
+		porcent += 25;
+		typeAnimation === 'searchAnimateEnter' ? opacity += .25 : opacity -= .25;
+	}
 
-				console.log(templete)
-				return templete;
-			}}
-		}
-	`);
+	templete += `}`;
+
+	return templete;
 }
 
 export const SearchContainer = styled.div`
@@ -132,28 +112,6 @@ export const SearchContainer = styled.div`
 
 	${props => props.animationEnter 
 				? animationOpacity('searchAnimateEnter', 0) 
-				: animationOpacity('searchAnimateOut')
+				: animationOpacity('searchAnimateOut', 1)
 	}
-
-	// @keyframes searchAnimateOut {
-	// 	0% {
-	// 		opacity: 1;
-	// 	}
-
-	// 	25% {
-	// 		opacity: .75;
-	// 	}
-
-	// 	50% {
-	// 		opacity: .5;
-	// 	}
-
-	// 	75% {
-	// 		opacity: .25;
-	// 	}
-
-	// 	100% {
-	// 		opacity: 0;
-	// 	}
-	// }
 `;
