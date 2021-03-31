@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
-	max-height: 333px;
 	position: relative;
 
 	button {

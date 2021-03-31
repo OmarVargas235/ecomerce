@@ -38,6 +38,10 @@ export const NavbarContainer = styled.nav`
 			left: 20%;
 		}
 	}
+
+	.MuiAppBar-colorPrimary {
+		background-color: black;
+	}
 `;
 
 // =====================================
@@ -64,7 +68,7 @@ const animationOpacity = (typeAnimation, opacity) => {
 
 export const SearchContainer = styled.div`
 	position: absolute;
-	z-index: 1;
+	z-index: 1100;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -113,5 +117,9 @@ export const SearchContainer = styled.div`
 	${props => props.animationEnter 
 				? animationOpacity('searchAnimateEnter', 0) 
 				: animationOpacity('searchAnimateOut', 1)
+	}
+
+	@media (max-width: 767px) {
+		height: 96px;
 	}
 `;
