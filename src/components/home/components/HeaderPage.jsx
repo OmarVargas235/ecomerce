@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { HeaderContainer } from './style';
-import banner from '../../assets/img/banner.webp';
-import bannerMobile from '../../assets/img/banner_Mobile.jpg';
+import banner from '../../../assets/img/banner.webp';
+import bannerMobile from '../../../assets/img/banner_Mobile.jpg';
 
 import Button from '@material-ui/core/Button';
 
 const HeaderPage = ({ matches }) => (
-	<HeaderContainer banner={banner}>
+	<header className="banner">
 		{
 			matches 
 				? <img src={bannerMobile} alt="banner" className="img-fluid w-100" />
@@ -19,7 +18,7 @@ const HeaderPage = ({ matches }) => (
 			color="secondary"
 			className="text-capitalize px-5"
 		>shop now</Button>
-	</HeaderContainer>
+	</header>
 )
 
 export default HeaderPage;
