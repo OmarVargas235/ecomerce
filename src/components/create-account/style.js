@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const RegisterContainer = styled.section`
 	min-height: 85vh;
-	background-color: #F7F7F7;
 	
 	form {
 		box-shadow: 0 1px 3px rgba(0,0,0,.2);

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const ContainerHome = styled.main`
-	background-color: #F6F6F6;
-
 	.banner {
 		position: relative;
 
@@ -27,4 +25,25 @@ export const ContainerHome = styled.main`
 			background-color: #212121 !important;
 		}
 	}
+
+	.footer {
+		background-color: white;
+		
+		.border-right {
+			position: relative;
+
+			&:before {
+				background-color: #e2e2e2;
+				content: "";
+				display: block;
+				margin-top: -32.5px;
+				height: 65px;
+				position: absolute;
+				top: 50%;
+				right: -10%;
+				width: 1px;
+			}
+		}
+	}
+
 `;

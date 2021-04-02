@@ -3,6 +3,7 @@ import React from 'react';
 import HeaderPage from './components/HeaderPage';
 import ProductsCarrouselPage from './components/ProductsCarrouselPage';
 import ProductsCardPage from './components/ProductsCardPage';
+import Footer from './components/Footer';
 import { ContainerHome } from './style';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -26,7 +27,7 @@ const theme = createMuiTheme({
 	},
 });
 
-const Home = () => {
+const Home = ({ history }) => {
 
 	const matches = useMediaQuery('(max-width: 767px)');
 	const classes = useStyles();
@@ -38,6 +39,7 @@ const Home = () => {
 			/>
 
 			<ProductsCarrouselPage
+				history={history}
 				classes={classes}
 				theme={theme}
 			/>
@@ -45,6 +47,10 @@ const Home = () => {
 			<ProductsCardPage
 				classes={classes}
 				theme={theme}
+			/>
+
+			<Footer
+				classes={classes}
 			/>
 		</ContainerHome>
 
