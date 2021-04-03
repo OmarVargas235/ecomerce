@@ -1,54 +1,43 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardActions, CardContent } from '@material-ui/core';
-import { CardMedia, Button, Typography } from '@material-ui/core';
+import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
-	root: {
-		maxWidth: 345,
-	},
-	media: {
-		height: 140,
-	},
-});
-
-const CardProduct = ({ product }) => {
-
-	const classes = useStyles();
+const CardProduct = ({ data }) => {
 	
 	return (
-		<Card 
-			className={`d-flex flex-column justify-content-between w-100 ${classes.root}`}
-			raised={true}
-		>
+		<Card>
 			<CardActionArea>
 				<CardMedia
-					className={classes.media}
-					image={product.img}
-					title="Contemplative Reptile"
+					component="img"
+					alt="Contemplative Reptile"
+					height="140"
+					image={data.img}
+					title={data.id}
 				/>
 
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="h2" align="center">
-						{product.name}
+					<Typography gutterBottom variant="h5" component="h2">
+						$ { data.price }
 					</Typography>
 
-					<Typography gutterBottom variant="h6" component="h3" align="center">
-						{product.price}
+					<Typography
+						variant="body2"
+						color="textSecondary"
+						className="text-green"
+					>
+						Envio gratis
 					</Typography>
 
-					<Typography gutterBottom variant="h6" component="h4" align="center">
-						{product.description}
+					<Typography
+						variant="body2"
+						color="textSecondary"
+						component="p"
+					>
+						{ data.name }
 					</Typography>
 				</CardContent>
 			</CardActionArea>
-
-			<CardActions className="mb-sm-3">
-				<Button size="medium" color="primary" className="btn-block">
-					Learn More
-				</Button>
-			</CardActions>
 		</Card>
 	)
 }
