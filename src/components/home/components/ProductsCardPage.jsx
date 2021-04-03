@@ -1,5 +1,5 @@
 import React from 'react';
-import CardProduct from '../../../layaut/CardProduct';
+import CardProductHome from '../../../layaut/CardProductHome';
 import { accessories } from '../../../utils/dataCardsHome';
 
 import { Container, Grid, ThemeProvider } from '@material-ui/core';
@@ -21,7 +21,7 @@ const ProductsCardPage = ({ classes, theme }) => (
 							className={`d-flex justify-content-center ${classes.root}`}
 							key={product.id}
 						>
-							<CardProduct
+							<CardProductHome
 								product={product}
 							/>
 				        </Grid>

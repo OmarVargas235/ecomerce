@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { items } from '../../../utils/dataCarrouselHome';
+import { items } from '../../../utils/dataProducts';
 
 import Carousel from 'react-material-ui-carousel';
 import { Paper, Button, Grid } from '@material-ui/core';
@@ -13,7 +13,7 @@ const ProductsCarrouselPage = ({ history, classes, theme }) => (
 	>
         {
             items.map( (item, i) => (
-				<Paper key={i} square={true}>
+				<Paper key={i} square={true} className="py-4">
 					<Grid container spacing={3}>
 						<Grid item xs={5} className={`text-center ${classes.root}`}>
 	          				<img src={item.img} alt={item.name} className="img-fluid" />
