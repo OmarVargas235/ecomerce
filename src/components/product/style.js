@@ -26,4 +26,8 @@ export const ProductStyle = styled.section`
 			border: 2px solid #3483fa;
 		}
 	}
+
+	.CarouselItem {
+		height: 20rem;
+	}
 `;

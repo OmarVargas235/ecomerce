@@ -3,11 +3,25 @@ import React, { useMemo } from 'react';
 import ProductPage from './components/ProductPage';
 import { items } from '../../utils/dataProducts';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 	root: {
 		minWidth: 275,
+	},
+	card: {
+		minHeight: 275,
+	}
+});
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: '#E12727',
+		},
+		secondary: {
+			main: '#212121',
+		},
 	},
 });
 
@@ -22,6 +36,7 @@ const Product = ({ match }) => {
 			classes={classes}
 			items={items}
 			productMemo={productMemo}
+			theme={theme}
 		/>
 	)
 }

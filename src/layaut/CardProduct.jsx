@@ -3,10 +3,10 @@ import React from 'react';
 import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-const CardProduct = ({ data }) => {
+const CardProduct = ({ classes, data }) => {
 	
 	return (
-		<Card>
+		<Card raised={true} className={classes.card}>
 			<CardActionArea>
 				<CardMedia
 					component="img"
@@ -17,8 +17,8 @@ const CardProduct = ({ data }) => {
 				/>
 
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="h2">
-						$ { data.price }
+					<Typography gutterBottom variant="h6" component="h2">
+						${ data.price }
 					</Typography>
 
 					<Typography
