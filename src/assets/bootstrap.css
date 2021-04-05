@@ -82,6 +82,10 @@ h6, .h6 {
   cursor: pointer;
 }
 
+.zoom-in {
+  cursor: zoom-in;
+}
+
 .img-fluid {
   max-width: 100%;
   height: auto;

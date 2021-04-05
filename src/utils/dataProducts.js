@@ -31,7 +31,7 @@ export const items = [
         description: "Call of Duty: Modern Warfare es un videojuego de disparos en primera persona desarrollado por Infinity Ward y publicado por Activision. Es el decimosexto juego de la saga Call of Duty y es un reboot de la serie Modern Warfare.​​​ Fue lanzado el 25 de octubre de 2019.",
         img: cover4,
         price: "4000000",
-        id: "Detroid_Become_Human"
+        id: "Call_Duty_Modern_Warfare"
     },
     {
         name: "Dollhouse",

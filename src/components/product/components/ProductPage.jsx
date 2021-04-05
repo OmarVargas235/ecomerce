@@ -2,9 +2,10 @@ import React from 'react';
 
 import { ProductStyle } from '../style';
 import CardProduct from '../../../layaut/CardProduct';
+import Gallery from '../container/Gallery';
 
 import Carousel from 'react-material-ui-carousel';
-import { Container, Grid, TextField, Button } from '@material-ui/core';
+import { Container, Grid, TextField, Button, Divider } from '@material-ui/core';
 import { Card, CardContent, CardActions } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -15,19 +16,16 @@ const ProductPage = ({ classes, items, productMemo }) => (
 		<Container>
 			<Grid container spacing={3}>
 				<Grid item xs={8}>
-					<div className="d-flex">
-						<div className="mr-3">
-							<div>img1</div>
-							<div>img2</div>
-							<div>img3</div>
-							<div>img4</div>
-							<div>img5</div>
-						</div>
-
-						<img src={productMemo.img} alt={productMemo.name} />
-					</div>
 					
-					<h4 className="mt-5">Mas publicaciones de Omar</h4>
+					<Gallery
+						img={productMemo.img}
+						items={items}
+						name={productMemo.name}
+					/>
+
+					<Divider className="my-5" />
+					
+					<h4>Mas publicaciones de Omar</h4>
 
 					<Carousel 
 						animation='slide'
