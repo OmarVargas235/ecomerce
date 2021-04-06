@@ -14,10 +14,6 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		textAlign: 'center',
 	},
-	formControl: {
-		marginBottom: theme.spacing(1),
-		minWidth: 120,
-	},
 }));
 
 const theme = createMuiTheme({
@@ -38,17 +34,8 @@ const Navbar = ({ history }) => {
 
 	const classes = useStyles();
   	const [value, setValue] = useState(0);
-	const [category, setCategory] = useState('');
-  	const [open, setOpen] = useState(false);
 
-  	const handleChange = (event, newValue) => {
-		
-  		typeof newValue === 'number' && setValue(newValue);
-  		(event.target.value || event.target.value === '') && setCategory(event.target.value);
-  	}
-
-  	const handleClose = () => setOpen(false);
-  	const handleOpen = () => setOpen(true);
+  	const handleChange = (event, newValue) => setValue(newValue);
 	
 	// Estados del del componente
   	const [activeSearch, setActiveSearch] = useState(false);
@@ -63,14 +50,10 @@ const Navbar = ({ history }) => {
 		<NavbarPage
 			history={history}
 			activeSearch={activeSearch}
-			category={category}
 			classes={classes}
 			handleChange={handleChange}
-			handleClose={handleClose}
-			handleOpen={handleOpen}
 			isActiveLink={isActiveLink}
 			matches={matches}
-			open={open}
 			setActiveSearch={setActiveSearch}
 			theme={theme}
 			value={value}

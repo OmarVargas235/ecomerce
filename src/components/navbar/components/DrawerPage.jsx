@@ -5,11 +5,12 @@ import { ReactComponent as Close } from '../../../assets/icons/close.svg';
 import Logo from '../../../assets/img/logo.jpg';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/search.svg';
 import { ReactComponent as Cart } from '../../../assets/icons/cart.svg';
+import SelectionMenu from '../../../layaut/SelectionMenu';
+import { categorys } from '../../../utils/helper';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, IconButton, Divider } from '@material-ui/core';
-import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -153,37 +154,11 @@ const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose
 				<Divider />
 
 				<List>
-					<ThemeProvider theme={theme}>
-						<FormControl className={`w-100 px-3 ${classes.formControl}`}>
-							<InputLabel
-								color="secondary"
-								id="demo-controlled-open-select-label"
-								className="ml-3"
-							>Category</InputLabel>
-
-							<Select
-								labelId="demo-controlled-open-select-label"
-								id="demo-controlled-open-select"
-								open={openSelect}
-								onClose={handleClose}
-								onOpen={handleOpen}
-								value={category}
-								onChange={handleChange}
-								color="secondary"
-							>
-								<MenuItem value="">
-									<em>None</em>
-								</MenuItem>
-
-								<MenuItem value='Juegos PC'>Juegos PC</MenuItem>
-								<MenuItem value='Consolas'>Consolas</MenuItem>
-								<MenuItem value='Accesorios'>Accesorios</MenuItem>
-								<MenuItem value='Juegos consolas'>Juegos consolas</MenuItem>
-								<MenuItem value='Componentes'>Componentes</MenuItem>
-								<MenuItem value='Decoracion'>Decoracion</MenuItem>
-							</Select>
-						</FormControl>
-					</ThemeProvider>
+					<SelectionMenu
+						title="Category"
+						theme={theme}
+						categorys={categorys}
+					/>
 				</List>
 
 				<List className="d-flex justify-content-center" dense>

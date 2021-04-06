@@ -4,20 +4,16 @@ import DrawerPage from './DrawerPage';
 import { NavbarContainer } from '../style';
 import Search from '../container/Search';
 
-const NavbarPage = ({ history, activeSearch, category, classes, handleChange, handleClose, handleOpen, isActiveLink, matches, open, setActiveSearch, theme, value }) => (
+const NavbarPage = ({ history, activeSearch, classes, handleChange, isActiveLink, matches, setActiveSearch, theme, value }) => (
 	<NavbarContainer className="p-3">
 		{
 			matches 
 				? <MenuMdPage
 					history={history}
 					activeSearch={activeSearch}
-					category={category}
 					classes={classes}
 					handleChange={handleChange}
-					handleClose={handleClose}
-					handleOpen={handleOpen}
 					isActiveLink={isActiveLink}
-					open={open}
 					setActiveSearch={setActiveSearch}
 					theme={theme}
 					value={value}
@@ -25,12 +21,9 @@ const NavbarPage = ({ history, activeSearch, category, classes, handleChange, ha
 				: <DrawerPage 
 					history={history}
 					activeSearch={activeSearch}
-					category={category}
+					classes={classes}
 					handleChange={handleChange}
-					handleClose={handleClose}
-					handleOpen={handleOpen}
 					isActiveLink={isActiveLink}
-					openSelect={open}
 					setActiveSearch={setActiveSearch}
 					theme={theme}
 					value={value}
