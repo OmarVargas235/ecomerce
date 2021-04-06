@@ -3,9 +3,10 @@ import React from 'react';
 import { ProductStyle } from '../style';
 import CardProduct from '../../../layaut/CardProduct';
 import Gallery from '../container/Gallery';
+import Chat from '../container/Chat';
 
 import Carousel from 'react-material-ui-carousel';
-import { Container, Grid, TextField, Button, Divider } from '@material-ui/core';
+import { Container, Grid, Button, Divider } from '@material-ui/core';
 import { Card, CardContent, CardActions, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
@@ -62,19 +63,10 @@ const ProductPage = ({ classes, items, productMemo, theme }) => (
 						
 						<Divider className="my-4" />
 
-						<div className="mt-5 chat">
-							<h3>Preguntas y Respuesta</h3>
-
-							<h5>Pregunte a Omar</h5>
-
-							<form className={classes.root} noValidate autoComplete="off">
-								<TextField id="standard-basic" label="Standard" />
-								
-								<Button variant="contained" color="secondary">
-								  	Secondary
-								</Button>
-						    </form>
-						</div>
+						<Chat
+							classes={classes}
+							theme={theme}
+						/>
 					</Grid>
 
 					<Grid item xs={4}>
