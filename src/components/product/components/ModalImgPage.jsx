@@ -1,23 +1,19 @@
 import React from 'react';
 
+import { ModalStyle } from '../style';
+
 import Carousel from 'react-material-ui-carousel';
 import { Dialog, Container  } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
-const ModalImgPage = ({ handleClose, items, indexCarrousel, openModal }) => {
-	
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-
-	return (
-		<Dialog
-			fullScreen={fullScreen}
-			open={openModal}
-			onClose={handleClose}
-			aria-labelledby="responsive-dialog-title"
-		>
-			<Container>
+const ModalImgPage = ({ handleClose, items, indexCarrousel, openModal }) => (
+	<Dialog
+		open={openModal}
+		onClose={handleClose}
+		aria-labelledby="responsive-dialog-title"
+		fullWidth={true}
+	>
+		<Container>
+			<ModalStyle className="text-center">
 				<Carousel 
 					animation='slide'
 					className="my-4"
@@ -28,13 +24,13 @@ const ModalImgPage = ({ handleClose, items, indexCarrousel, openModal }) => {
 				>
 					{
 						items.map((img, index) => (
-							<img src={img.img} alt={img.name} key={index} />
+							<img src={img.img} alt={img.name} key={index} className="img-modal" />
 						))
 					}
 				</Carousel>
-			</Container>
-		</Dialog>
-	)
-}
+			</ModalStyle>
+		</Container>
+	</Dialog>
+);
 
 export default ModalImgPage;

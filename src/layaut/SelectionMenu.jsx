@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const SelectionMenu = ({ categorys, theme, title }) => {
+const SelectionMenu = ({ categorys, value=[], theme, title }) => {
 
 	const classes = useStyles();
 	const [category, setCategory] = useState('');
@@ -23,12 +23,12 @@ const SelectionMenu = ({ categorys, theme, title }) => {
 	
 	return (
 		<ThemeProvider theme={theme}>
-			<FormControl className={`w-100 px-3 ${classes.formControl}`}>
+			<FormControl className={`w-100 pr-3 ${classes.formControl}`}>
 				<InputLabel
 					color="secondary"
 					id="demo-controlled-open-select-label"
 					className="ml-3"
-				>Category</InputLabel>
+				>{title}</InputLabel>
 
 				<Select
 					labelId="demo-controlled-open-select-label"
@@ -45,11 +45,11 @@ const SelectionMenu = ({ categorys, theme, title }) => {
 					</MenuItem>
 
 					{
-						categorys.map(category => (
+						categorys.map((category, index) => (
 
 							<MenuItem
-								value={category}
-								key={category}
+								value={value.length === 0 ? category : value[index]}
+								key={index}
 							>{category}</MenuItem>
 						))
 					}

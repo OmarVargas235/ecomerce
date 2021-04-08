@@ -155,7 +155,7 @@ const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose
 
 				<List>
 					<SelectionMenu
-						title="Category"
+						title="Categorias"
 						theme={theme}
 						categorys={categorys}
 					/>

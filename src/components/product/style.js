@@ -30,4 +30,16 @@ export const ProductStyle = styled.section`
 	.CarouselItem {
 		height: 20rem;
 	}
+
+	.imgUpMorePost {
+		width: 90px;
+		height: 90px;
+	}
 `;
+
+export const ModalStyle = styled.article`
+	.img-modal {
+		width: 70%;
+	}
+`;
+

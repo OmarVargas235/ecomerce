@@ -2,6 +2,7 @@ import React from 'react';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
+export const categorysScoreValue = [5, 4, 3, 2, 1];
 export const categorysScore = [
 	<React.Fragment>
 		<StarIcon color="primary" />

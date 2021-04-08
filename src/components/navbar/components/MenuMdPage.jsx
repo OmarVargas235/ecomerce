@@ -27,7 +27,7 @@ const MenuMdPage = ({ history, activeSearch, classes, handleChange, isActiveLink
 			<Grid item sm={2}>
 				<ThemeProvider theme={theme}>
 					<SelectionMenu
-						title="Category"
+						title="Categorias"
 						theme={theme}
 						categorys={categorys}
 					/>
