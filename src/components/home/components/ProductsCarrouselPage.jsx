@@ -28,7 +28,7 @@ const ProductsCarrouselPage = ({ history, classes, theme }) => (
 									className="CheckButton"
 									variant="contained"
 									color="primary"
-									onClick={() => history.push(`/product/${item.id}`)}
+									onClick={() => history.push(`/producto/${item.id}`)}
 								>
 									Mas informacion
 								</Button>

@@ -4,8 +4,8 @@ import { SearchContainer } from '../style';
 
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { ReactComponent as SearchIcon } from '../../../assets/icons/search.svg';
-import { ReactComponent as Close } from '../../../assets/icons/close.svg';
+import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 
 const SearchPage = ({ animationEnter, closeInputSearch }) => (
 	<SearchContainer className="d-flex align-items-center" animationEnter={animationEnter}>
@@ -27,8 +27,8 @@ const SearchPage = ({ animationEnter, closeInputSearch }) => (
 
 			<Grid item>
 				<div className="container-icon-close d-flex justify-content-center align-items-center">
-					<Close 
-						className="pointer"
+					<CloseIcon 
+						className="pointer icon-close"
 						onClick={closeInputSearch}
 					/>
 				</div>

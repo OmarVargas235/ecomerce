@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const SelectionMenu = ({ categorys, value=[], theme, title }) => {
+const SelectionMenu = ({ categorys, value=[], title }) => {
 
 	const classes = useStyles();
 	const [category, setCategory] = useState('');
@@ -22,40 +22,38 @@ const SelectionMenu = ({ categorys, value=[], theme, title }) => {
   	const handleOpen = () => setOpen(true);
 	
 	return (
-		<ThemeProvider theme={theme}>
-			<FormControl className={`w-100 pr-3 ${classes.formControl}`}>
-				<InputLabel
-					color="secondary"
-					id="demo-controlled-open-select-label"
-					className="ml-3"
-				>{title}</InputLabel>
+		<FormControl className={`w-100 pr-3 ${classes.formControl}`}>
+			<InputLabel
+				color="secondary"
+				id="demo-controlled-open-select-label"
+				className="ml-2"
+			>{title}</InputLabel>
 
-				<Select
-					labelId="demo-controlled-open-select-label"
-					id="demo-controlled-open-select"
-					open={openSelect}
-					onClose={handleClose}
-					onOpen={handleOpen}
-					value={category}
-					onChange={handleChange}
-					color="secondary"
-				>
-					<MenuItem value="">
-						<em>{ title }</em>
-					</MenuItem>
+			<Select
+				labelId="demo-controlled-open-select-label"
+				id="demo-controlled-open-select"
+				open={openSelect}
+				onClose={handleClose}
+				onOpen={handleOpen}
+				value={category}
+				onChange={handleChange}
+				color="secondary"
+			>
+				<MenuItem value="">
+					<em>{ title }</em>
+				</MenuItem>
 
-					{
-						categorys.map((category, index) => (
+				{
+					categorys.map((category, index) => (
 
-							<MenuItem
-								value={value.length === 0 ? category : value[index]}
-								key={index}
-							>{category}</MenuItem>
-						))
-					}
-				</Select>
-			</FormControl>
-		</ThemeProvider>
+						<MenuItem
+							value={value.length === 0 ? category : value[index]}
+							key={index}
+						>{category}</MenuItem>
+					))
+				}
+			</Select>
+		</FormControl>
 	)
 }
 

@@ -3,9 +3,15 @@ import styled from 'styled-components';
 export const NavbarContainer = styled.nav`
 	position: relative;
 
-	svg {
-		width: 20px;
-		height: 20px;
+	.icon-close {
+		width: 35px;
+		height: 35px;
+		fill: black;
+	}
+
+	.icon {
+		width: 27px;
+		height: 27px;
 	}
 
 	.img-logo {
@@ -121,5 +127,52 @@ export const SearchContainer = styled.div`
 
 	@media (max-width: 767px) {
 		height: 96px;
+	}
+`;
+
+// =====================================
+// Estilos del carrito de compras
+// =====================================
+
+export const CartStyle = styled.div`
+	img {
+		width: 75px;
+		height: 75px;
+	}
+
+	.close-icon {
+		fill: rgb(239, 53, 52);
+		cursor: pointer;
+	}
+
+	.incrementAndDecrement {
+		border-top: 1px solid #343535;
+		border-bottom: 1px solid #343535;
+		max-width: 73px;
+		max-height: 22px;
+		
+		span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 20px;
+			border-right: 1px solid #343535;
+			border-left: 1px solid #343535;
+			cursor: pointer;
+			background-color: white;
+		}
+
+		input {
+			text-align: center;
+			width: 33px;
+			outline: none;
+			border: none;
+		}
+	}
+
+	.total_to_pay {
+		width: 300px;
+		position: absolute;
+		bottom: 20px;
 	}
 `;

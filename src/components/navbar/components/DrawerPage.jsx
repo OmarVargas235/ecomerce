@@ -1,48 +1,22 @@
 import React from 'react';
 
 import { ReactComponent as BtnToggle } from '../../../assets/icons/btn_toggle.svg';
-import { ReactComponent as Close } from '../../../assets/icons/close.svg';
+import CloseIcon from '@material-ui/icons/Close';
 import Logo from '../../../assets/img/logo.jpg';
-import { ReactComponent as SearchIcon } from '../../../assets/icons/search.svg';
-import { ReactComponent as Cart } from '../../../assets/icons/cart.svg';
+import SearchIcon from '@material-ui/icons/Search';
 import SelectionMenu from '../../../layaut/SelectionMenu';
+import Cart from '../container/Cart';
 import { categorys } from '../../../utils/helper';
 
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, IconButton, Divider } from '@material-ui/core';
 import { Paper, Tabs, Tab } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
-	},
-	appBar: {
-		transition: theme.transitions.create(['margin', 'width'], {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-	},
-	appBarShift: {
-		width: `calc(100% - ${drawerWidth}px)`,
-		marginLeft: drawerWidth,
-		transition: theme.transitions.create(['margin', 'width'], {
-		easing: theme.transitions.easing.easeOut,
-		duration: theme.transitions.duration.enteringScreen,
-	}),
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
-	},
-	hide: {
-		display: 'none',
-	},
-	drawer: {
-		width: drawerWidth,
-		flexShrink: 0,
 	},
 	drawerPaper: {
 		width: drawerWidth,
@@ -55,25 +29,9 @@ const useStyles = makeStyles((theme) => ({
 		...theme.mixins.toolbar,
 		justifyContent: 'flex-end',
 	},
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing(3),
-		transition: theme.transitions.create('margin', {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-		marginLeft: -drawerWidth,
-	},
-	contentShift: {
-		transition: theme.transitions.create('margin', {
-		easing: theme.transitions.easing.easeOut,
-		duration: theme.transitions.duration.enteringScreen,
-	}),
-	marginLeft: 0,
-  },
 }));
 
-const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose, handleOpen, isActiveLink, openSelect, setActiveSearch, theme, value }) => {
+const DrawerPage = ({ history, handleChange, isActiveLink, setActiveSearch, value }) => {
 
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -94,7 +52,6 @@ const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose
 						aria-label="open drawer"
 						onClick={handleDrawerOpen}
 						edge="start"
-						className={clsx(classes.menuButton, open && classes.hide)}
 					>
 						<BtnToggle style={{width: '40px', height: '40px', fill: "white"}} />
 					</IconButton>
@@ -112,20 +69,19 @@ const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose
 				>
 					<div className="container-icon">
 						<SearchIcon
-							className="pointer mr-2"
+							className="pointer mr-2 icon"
 							onClick={() => setActiveSearch(true)}
   							style={{fill: "white"}}
 						/>
 					</div>
 
 					<div className="container-icon">
-						<Cart className="pointer" style={{fill: "white"}} />
+						<Cart />
 					</div>	
 				</div>	
 			</AppBar>
 
 			<Drawer
-				className={classes.drawer}
 				variant="persistent"
 				anchor="left"
 				open={open}
@@ -135,7 +91,7 @@ const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose
 			>
 				<div className={classes.drawerHeader}>
 					<IconButton onClick={handleDrawerClose}>
-						<Close style={{width: '20px', height: '20px'}} />
+						<CloseIcon className="icon" />
 					</IconButton>
 				</div>
 
@@ -156,32 +112,29 @@ const DrawerPage = ({ history, activeSearch, category, handleChange, handleClose
 				<List>
 					<SelectionMenu
 						title="Categorias"
-						theme={theme}
 						categorys={categorys}
 					/>
 				</List>
 
 				<List className="d-flex justify-content-center" dense>
-					<ThemeProvider theme={theme}>
-						<Paper className={classes.root}>
-							<Tabs
-								value={isActiveLink ? value : false}
-								onChange={handleChange}
-								indicatorColor="secondary"
-								textColor="primary"
-								orientation="vertical"
-							>
-								<Tab 
-									label="Registrarse"
-									onClick={() => history.push('/crear-cuenta')}
-								/>
-								<Tab 
-									label="Iniciar sesion"
-									onClick={() => history.push('/iniciar-sesion')}
-								/>
-							</Tabs>
-						</Paper>
-					</ThemeProvider>
+					<Paper className={classes.root}>
+						<Tabs
+							value={isActiveLink ? value : false}
+							onChange={handleChange}
+							indicatorColor="secondary"
+							textColor="primary"
+							orientation="vertical"
+						>
+							<Tab 
+								label="Registrarse"
+								onClick={() => history.push('/crear-cuenta')}
+							/>
+							<Tab 
+								label="Iniciar sesion"
+								onClick={() => history.push('/iniciar-sesion')}
+							/>
+						</Tabs>
+					</Paper>
 				</List>
 			</Drawer>  
 		</div>

@@ -8,6 +8,7 @@ import Home from './components/home/';
 import CreateAccount from './components/create-account/';
 import Login from './components/login/';
 import Product from './components/product/';
+import MoreProducts from './components/products_de';
 
 const Body = createGlobalStyle`
 	main, section {
@@ -27,7 +28,8 @@ const App = () => {
 				<Route exact path="/" component={Home} />
 				<Route exact path="/crear-cuenta" component={CreateAccount} />
 				<Route exact path="/iniciar-sesion" component={Login} />
-				<Route exact path="/product/:id" component={Product} />
+				<Route exact path="/productos/:name" component={MoreProducts} />
+				<Route exact path="/producto/:id" component={Product} />
 
 				<Redirect to="/" />
 			</Switch>

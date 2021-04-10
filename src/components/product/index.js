@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import ProductPage from './components/ProductPage';
 import { items } from '../../utils/dataProducts';
+import { accessories } from '../../utils/dataCardsHome';
 
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 
@@ -25,11 +26,13 @@ const theme = createMuiTheme({
 	},
 });
 
+const products = [...items, ...accessories];
+
 const Product = ({ match }) => {
 
 	const classes = useStyles();
 	
-	const productMemo = useMemo(() => items.find(product => product.id === match.params.id), [match]);
+	const productMemo = useMemo(() => products.find(product => product.id === match.params.id), [match]);
 	
 	return (
 		<ProductPage
