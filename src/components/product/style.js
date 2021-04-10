@@ -42,4 +42,3 @@ export const ModalStyle = styled.article`
 		width: 70%;
 	}
 `;
-

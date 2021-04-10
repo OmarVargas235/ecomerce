@@ -12,7 +12,7 @@ import MoreProducts from './components/products_de';
 
 const Body = createGlobalStyle`
 	main, section {
-		background-color: #F6F6F6;
+		background-color: #EDEDED;
 	}
 `;
 

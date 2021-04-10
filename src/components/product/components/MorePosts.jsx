@@ -1,11 +1,12 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import CardProduct from '../../../layaut/CardProduct';
 
 import Carousel from 'react-material-ui-carousel';
 import { Grid, Typography, Hidden, Button } from '@material-ui/core';
 
-const MorePosts = ({ classes, items }) => (
+const MorePosts = ({ history, classes, items }) => (
 	<React.Fragment>
 		<Hidden mdUp>
 			<Grid container>
@@ -46,6 +47,7 @@ const MorePosts = ({ classes, items }) => (
 					variant="text"
 					color="primary"
 					size="small"
+					onClick={() => history.push("/productos/omar")}
 				>Ver mas publicaciones de Omar</Button>
 			</Grid>
 		</Hidden>
@@ -78,4 +80,4 @@ const MorePosts = ({ classes, items }) => (
 	</React.Fragment>
 )
 
-export default MorePosts;
+export default withRouter(MorePosts);
