@@ -2,9 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import NavbarPage from './components/NavbarPage';
+import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,17 +16,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: '#E12727',
-		},
-		secondary: {
-			main: '#212121',
-		},
-	},
-});
-
 const Navbar = ({ history }) => {
 
 	// Variables y metodos de material ui
@@ -37,7 +26,7 @@ const Navbar = ({ history }) => {
 
   	const handleChange = (event, newValue) => setValue(newValue);
 	
-	// Estados del del componente
+	// Estados del componente
   	const [activeSearch, setActiveSearch] = useState(false);
   	
   	// Detecta cuando esta en '/crear-cuenta' o '/iniciar-sesion' y agrega los estilos correspondientes
@@ -45,6 +34,8 @@ const Navbar = ({ history }) => {
 		history.location.pathname === '/crear-cuenta'
 		|| history.location.pathname === '/iniciar-sesion'
   	), [history.location]);
+
+  	const [ theme ] = styleMaterialUiTheme();
 	
 	return (
 		<NavbarPage

@@ -4,7 +4,6 @@ import { items } from '../../../utils/dataProducts';
 
 import Carousel from 'react-material-ui-carousel';
 import { Paper, Button, Grid } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
 
 const ProductsCarrouselPage = ({ history, classes, theme }) => (
 	<Carousel 
@@ -23,16 +22,14 @@ const ProductsCarrouselPage = ({ history, classes, theme }) => (
 							<h2>{item.name}</h2>
 							<p>{item.description}</p>
 							
-							<ThemeProvider theme={theme}>
-								<Button
-									className="CheckButton"
-									variant="contained"
-									color="primary"
-									onClick={() => history.push(`/producto/${item.id}`)}
-								>
-									Mas informacion
-								</Button>
-							</ThemeProvider>
+							<Button
+								className="CheckButton"
+								variant="contained"
+								color="primary"
+								onClick={() => history.push(`/producto/${item.id}`)}
+							>
+								Mas informacion
+							</Button>
 	        			</Grid>
 					</Grid>
 				</Paper>

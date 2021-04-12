@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GalleryPage from '../components/GalleryPage';
 
-const Gallery = ({ img, items, name }) => {
+const Gallery = ({ items, name }) => {
 	
 	const [openModal, setOpenModal] = useState(false);
 	const [changeImg, setChangeImg] = useState({ img: items[0].img, id: items[0].id });
@@ -16,7 +16,6 @@ const Gallery = ({ img, items, name }) => {
 			changeImg={changeImg}
 			handleClose={handleClose}
 			handleClickOpen={handleClickOpen}
-			img={img}
 			items={items}
 			indexCarrousel={indexCarrousel}
 			name={name}

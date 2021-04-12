@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 import CartPage from '../components/CartPage';
+import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -26,6 +27,8 @@ const Cart = () => {
 
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);
+
+	const [ themeColour ] = styleMaterialUiTheme();
 	
 	return (
 		<CartPage
@@ -38,6 +41,7 @@ const Cart = () => {
 			setOpen={setOpen}
 			setMouseMove={setMouseMove}
 			theme={theme}
+			themeColour={themeColour}
 		/>
 	)
 }

@@ -9,15 +9,6 @@ export const RegisterContainer = styled.section`
 		background-color: white;
 	}
 
-	.MuiInputBase-root {
-		background-color: #F6F6F6;
-	}
-
-	.MuiFormLabel-root {
-		z-index: 1;
-		margin-left: 1rem;
-	}
-
 	@media (max-width: 576px) {
 		margin-top: 2rem;
 

@@ -11,7 +11,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 
-
 const MenuMdPage = ({ history, classes, handleChange, isActiveLink, setActiveSearch, value }) => (
 	
 		<Grid container>

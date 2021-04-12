@@ -2,6 +2,7 @@ import React from 'react';
 
 import imgPrueba from '../../../assets/img/mouse1.webp';
 import { CartStyle } from '../style';
+import { ThemeProvider } from '@material-ui/styles';
 
 import { Drawer, Typography, Divider, IconButton } from '@material-ui/core';
 import { List, ListItem, Button } from '@material-ui/core';
@@ -11,7 +12,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloseIcon from '@material-ui/icons/Close';
 
-const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouseMove, open, setOpen, setMouseMove, theme }) => (
+const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouseMove, open, setOpen, setMouseMove, theme, themeColour }) => (
 	<CartStyle className={classes.root}>
 		
 		<ShoppingCartIcon className="pointer icon" onClick={handleDrawerOpen} />
@@ -80,12 +81,14 @@ const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouse
 							$95.94
 						</Typography>
 					</div>
-				
-					<Button
-						fullWidth={true}
-						variant="contained"
-						color="primary"
-					>coprar</Button>
+					
+					<ThemeProvider theme={themeColour}>
+						<Button
+							fullWidth={true}
+							variant="contained"
+							color="primary"
+						>coprar</Button>
+					</ThemeProvider>
 				</List>
 			</div>
 		</Drawer>

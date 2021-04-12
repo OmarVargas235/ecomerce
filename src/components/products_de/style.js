@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+const padding = p => (`
+	padding-right: ${p};
+	padding-left: ${p};
+`);
+
 export const MoreProductsStyle = styled.article`
 	.accordion {
 		width: 100%;
@@ -19,29 +24,25 @@ export const MoreProductsStyle = styled.article`
 
 	@media (max-width: 599px) {
 		.products_cards{
-			padding-right: 11rem;
-			padding-left: 11rem;
+			${padding('11rem')};
 		}
 	}
 
 	@media (max-width: 550px) {
 		.products_cards{
-			padding-right: 8rem;
-			padding-left: 8rem;
+			${padding('8rem')};
 		}
 	}
 
 	@media (max-width: 470px) {
 		.products_cards{
-			padding-right: 5rem;
-			padding-left: 5rem;
+			${padding('5rem')};
 		}
 	}
 
 	@media (max-width: 375px) {
 		.products_cards{
-			padding-right: 3rem;
-			padding-left: 3rem;
+			${padding('3rem')};
 		}
 	}
 `;

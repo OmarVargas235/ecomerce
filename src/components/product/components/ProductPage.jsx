@@ -18,7 +18,6 @@ const ProductPage = ({ classes, items, productMemo, theme }) => (
 					<Grid item sm={12} md={8}>
 						
 						<Gallery
-							img={productMemo.img}
 							items={items}
 							name={productMemo.name}
 						/>

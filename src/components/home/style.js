@@ -6,12 +6,12 @@ export const ContainerHome = styled.main`
 
 		button {
 			position: absolute;
-			z-index: 1;
+			background-color: #e12727;
 			bottom: 0;
 			left: 50%;
+			z-index: 1;
 			transform: translate(-50%, -50%);
 			font-size: 30px;
-			background-color: #e12727;
 			font-family: "Montserrat", "HelveticaNeue", "Helvetica Neue", sans-serif;
 		}
 
@@ -33,12 +33,12 @@ export const ContainerHome = styled.main`
 			position: relative;
 
 			&:before {
+				position: absolute;
 				background-color: #e2e2e2;
 				content: "";
 				display: block;
 				margin-top: -32.5px;
 				height: 65px;
-				position: absolute;
 				top: 50%;
 				right: -10%;
 				width: 1px;

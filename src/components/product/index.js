@@ -3,8 +3,9 @@ import React, { useMemo } from 'react';
 import ProductPage from './components/ProductPage';
 import { items } from '../../utils/dataProducts';
 import { accessories } from '../../utils/dataCardsHome';
+import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 	root: {
@@ -15,17 +16,6 @@ const useStyles = makeStyles({
 	}
 });
 
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: '#E12727',
-		},
-		secondary: {
-			main: '#212121',
-		},
-	},
-});
-
 const products = [...items, ...accessories];
 
 const Product = ({ match }) => {
@@ -33,6 +23,8 @@ const Product = ({ match }) => {
 	const classes = useStyles();
 	
 	const productMemo = useMemo(() => products.find(product => product.id === match.params.id), [match]);
+
+	const [ theme ] = styleMaterialUiTheme();
 	
 	return (
 		<ProductPage

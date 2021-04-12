@@ -3230,5 +3230,9 @@ input[type="button"].btn-block {
 }
 
 .text-lightgray {
-  color: #99999999;
+  color: #99999999 !important;
+}
+
+.text-green {
+  color: #36B875 !important;
 }

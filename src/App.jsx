@@ -21,18 +21,18 @@ const App = () => {
 	return (
 		<Router>
 			<Body />
+			
+				<Navbar />
 
-			<Navbar />
+				<Switch>
+					<Route exact path="/" component={Home} />
+					<Route exact path="/crear-cuenta" component={CreateAccount} />
+					<Route exact path="/iniciar-sesion" component={Login} />
+					<Route exact path="/productos/:name" component={MoreProducts} />
+					<Route exact path="/producto/:id" component={Product} />
 
-			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/crear-cuenta" component={CreateAccount} />
-				<Route exact path="/iniciar-sesion" component={Login} />
-				<Route exact path="/productos/:name" component={MoreProducts} />
-				<Route exact path="/producto/:id" component={Product} />
-
-				<Redirect to="/" />
-			</Switch>
+					<Redirect to="/" />
+				</Switch>
 		</Router>
 	)
 }

@@ -4,7 +4,7 @@ import ModalImgPage from './ModalImgPage';
 
 import { Grid } from '@material-ui/core';
 
-const GalleryPage = ({ changeImg, handleClose, handleClickOpen, img, items, indexCarrousel, name, openModal, setChangeImg }) => (
+const GalleryPage = ({ changeImg, handleClose, handleClickOpen, items, indexCarrousel, name, openModal, setChangeImg }) => (
 	<Grid container spacing={3}>
 		<Grid item sm={1} className="galerry">
 			<div

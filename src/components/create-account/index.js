@@ -1,8 +1,9 @@
 import React from 'react';
+
+import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 import CreateAccountPage from './CreateAccountPage';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
@@ -11,24 +12,22 @@ const useStyles = makeStyles((theme) => ({
 			margin: theme.spacing(1),
 			width: 200,
 		},
+		'& .MuiInputBase-root': {
+			backgroundColor: '#F6F6F6',
+		},
+		'& .MuiFormLabel-root': {
+			zIndex: 1,
+			marginLeft: '1rem',
+		},
 	},
 }));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#E12727',
-    },
-    secondary: {
-      main: '#212121',
-    },
-  },
-});
 
 const CreateAccount = () => {
 
 	const classes = useStyles();
 	const matches = useMediaQuery('(max-width: 576px)');
+
+	const [ theme ] = styleMaterialUiTheme();
 	
 	return (
 		<CreateAccountPage
