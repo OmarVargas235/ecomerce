@@ -4,7 +4,7 @@ import { accessories } from '../../../utils/dataCardsHome';
 
 import { Container, Grid } from '@material-ui/core';
 
-const ProductsCardPage = ({ classes, theme }) => (
+const ProductsCardPage = ({ classes }) => (
 	<Container>	
 		<h3 className="mb-4 text-center">Algunas de los accesorios que puedes encontrar</h3>
 		
