@@ -9,10 +9,14 @@ export const RegisterContainer = styled.section`
 		background-color: white;
 	}
 
+	.password {
+		width: 216px;
+	}
+
 	@media (max-width: 576px) {
 		margin-top: 2rem;
 
-		.MuiTextField-root {
+		.MuiTextField-root, .password {
 			width: 100%;
 		}
 	}
