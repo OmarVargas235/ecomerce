@@ -3,7 +3,7 @@ import { useState } from 'react';
 export const useForm = (initialState ={}) => {
 	
 	const [values, setValues] = useState( initialState );
-	// const [desactiveBtn, setDesactiveBtn] = useState(false);
+	const [desactiveBtn, setDesactiveBtn] = useState(false);
 
 	const handleChange = e => {
 
@@ -13,5 +13,5 @@ export const useForm = (initialState ={}) => {
 		});
 	}
 
-	return [values, handleChange];
+	return [values, handleChange, desactiveBtn, setDesactiveBtn];
 }

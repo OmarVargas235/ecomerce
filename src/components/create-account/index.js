@@ -4,6 +4,8 @@ import { alert } from '../../utils/alert'
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 import CreateAccountPage from './components/CreateAccountPage';
 import { useForm } from '../../customHooks/useForm';
+import { useValidateForm } from '../../customHooks/useValidateForm';
+import { requestWithoutToken } from '../../utils/fetch';
 
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -24,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CreateAccount = () => {
+const CreateAccount = ({ history }) => {
 
 	const classes = useStyles();
 	const matches = useMediaQuery('(max-width: 576px)');
 
 	const [ theme ] = styleMaterialUiTheme();
 
-	const [ formData, handleChange ] = useForm({
+	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
 		name: '',
 		lastName: '',
 		email: '',
@@ -39,7 +41,15 @@ const CreateAccount = () => {
 		repeatPassword: '',
 	});
 
-	const [isRquerid, setIsRquerid] = useState({});
+	const [required, validate] = useValidateForm({
+		name: false,
+		lastName: false,
+		email: false,
+		password: false,
+		repeatPassword: false,
+	});
+
+	const [isRequired, setIsRequired] = useState({});
 
 	const registerUser = async e => {
 
@@ -47,34 +57,27 @@ const CreateAccount = () => {
 
 		const { name, lastName, email, password, repeatPassword } = formData;
 
-		setIsRquerid({ 
-			isName: name.trim() === '',
-			isLastName: lastName.trim() === '',
-			isEmail: email.trim() === '',
-			password: password.trim() === '',
-			repeatPassword: repeatPassword.trim() === '',
-		});
+		setIsRequired(required);
 
-		if (name.trim() === '' || lastName.trim() === '' || email.trim() === '' || password.trim() === '' || repeatPassword.trim() === '') return;
-
-		const resp = await fetch('http://localhost:5000/create-user', {
-			method: 'POST',
-			headers: {
-		      'Content-Type':'application/json',
-			},
-			body: JSON.stringify(formData),
-		});
-		const { ok, messages } = await resp.json();
+		if ( validate({ name, lastName, email, password, repeatPassword }) ) return;
+		
+		const { ok, messages } = await requestWithoutToken('create-user', formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);
+
+		if (ok) history.push('/iniciar-sesion');
+
+		setDesactiveBtn(!ok ? true : false);
+		setTimeout(() => setDesactiveBtn(false), 3000);
 	}
 	
 	return (
 		<CreateAccountPage
 			classes={classes}
+			desactiveBtn={desactiveBtn}
 			formData={formData}
 			handleChange={handleChange}
-			isRquerid={isRquerid}
+			isRequired={isRequired}
 			matches={matches}
 			registerUser={registerUser}
 			theme={theme}
