@@ -1,6 +1,8 @@
-export const requestWithoutToken = async (url = "", formData={}, method="GET") => {
+export const requestWithoutToken = async (url = "", formData={}, method="GET", query="") => {
 
-	const resp = await fetch(`http://localhost:5000/${url}`, {
+	const newUrl = query ? (url + '/' + query) : url;
+
+	const resp = await fetch(`http://localhost:5000/${newUrl}`, {
 		method,
 		headers: {
 	      'Content-Type':'application/json',

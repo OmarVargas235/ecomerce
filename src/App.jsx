@@ -9,6 +9,7 @@ import CreateAccount from './components/create-account/';
 import Login from './components/login/';
 import Product from './components/product/';
 import MoreProducts from './components/products_de';
+import ChangePassword from './components/change-password';
 
 const Body = createGlobalStyle`
 	main, section {
@@ -30,6 +31,7 @@ const App = () => {
 					<Route exact path="/iniciar-sesion" component={Login} />
 					<Route exact path="/productos/:name" component={MoreProducts} />
 					<Route exact path="/producto/:id" component={Product} />
+					<Route exact path="/cambiar-contraseña" component={ChangePassword} />
 
 					<Redirect to="/" />
 				</Switch>
