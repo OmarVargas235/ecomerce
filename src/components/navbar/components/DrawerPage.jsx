@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DrawerPage = ({ history, handleChange, isActiveLink, setActiveSearch, value }) => {
+const DrawerPage = ({ history, isActiveLink, setActiveSearch }) => {
 
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -119,8 +119,7 @@ const DrawerPage = ({ history, handleChange, isActiveLink, setActiveSearch, valu
 				<List className="d-flex justify-content-center" dense>
 					<Paper className={classes.root}>
 						<Tabs
-							value={isActiveLink ? value : false}
-							onChange={handleChange}
+							value={isActiveLink}
 							indicatorColor="secondary"
 							textColor="primary"
 							orientation="vertical"

@@ -11,7 +11,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 
-const MenuMdPage = ({ history, classes, handleChange, isActiveLink, setActiveSearch, value }) => (
+const MenuMdPage = ({ history, classes, isActiveLink, setActiveSearch }) => (
 	
 		<Grid container>
 			<Grid item sm={2} className="text-center">
@@ -33,8 +33,7 @@ const MenuMdPage = ({ history, classes, handleChange, isActiveLink, setActiveSea
 			<Grid item sm={6}>
 				<Paper className={classes.root}>
 					<Tabs
-						value={isActiveLink ? value : false}
-						onChange={handleChange}
+						value={isActiveLink}
 						indicatorColor="secondary"
 						textColor="primary"
 						centered

@@ -5,7 +5,7 @@ import InputPasswordPage from './InputPasswordPage';
 import { TextField, Container, Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const CreateAccountPage = ({ classes, formData, handleChange, isRquerid, matches, registerUser, theme }) => (
+const CreateAccountPage = ({ classes, desactiveBtn, formData, history, handleChange, isRequired, matches, registerUser, theme }) => (
 	<RegisterContainer className="d-flex align-items-center">
 		<Container maxWidth="sm">
 			<h4 className="pl-1 mb-4">Completa tus datos</h4>
@@ -16,41 +16,41 @@ const CreateAccountPage = ({ classes, formData, handleChange, isRquerid, matches
 					noValidate 
 					autoComplete="off"
 					onSubmit={registerUser}
-				>		
+				>
 					<TextField
 						label="Nombre"
-						color={isRquerid.isName ? "primary" : "secondary"}
+						color={isRequired.name ? "primary" : "secondary"}
 						name="name"
 						onChange={handleChange}
-						error={isRquerid.isName}
-						helperText={isRquerid.isName ? "El nombre es obligatorio." : ""}
+						error={isRequired.name}
+						helperText={isRequired.name ? "El nombre es obligatorio." : ""}
 						required
 					/>
 
 					<TextField
 						label="Apellido"
-						color={isRquerid.isLastName ? "primary" : "secondary"}
+						color={isRequired.lastName ? "primary" : "secondary"}
 						name="lastName"
 						onChange={handleChange}
-						error={isRquerid.isLastName}
-						helperText={isRquerid.isLastName ? "El apellido es obligatorio." : ""}
+						error={isRequired.lastName}
+						helperText={isRequired.lastName ? "El apellido es obligatorio." : ""}
 						required
 					/>
 
 					<TextField
 						label="Email"
-						color={isRquerid.isEmail ? "primary" : "secondary"}
+						color={isRequired.email ? "primary" : "secondary"}
 						name="email"
 						onChange={handleChange}
-						error={isRquerid.isEmail}
-						helperText={isRquerid.isEmail ? "El email es obligatorio." : ""}
+						error={isRequired.email}
+						helperText={isRequired.email ? "El email es obligatorio." : ""}
 						required
 					/>
 
 					<InputPasswordPage
 						formData={formData}
 						handleChange={handleChange}
-						isRquerid={isRquerid}
+						isRequired={isRequired}
 						text="Password"
 						typeName="password"
 					/>
@@ -58,7 +58,7 @@ const CreateAccountPage = ({ classes, formData, handleChange, isRquerid, matches
 					<InputPasswordPage
 						formData={formData}
 						handleChange={handleChange}
-						isRquerid={isRquerid}
+						isRequired={isRequired}
 						text="Repetir password"
 						typeName="repeatPassword"
 					/>
@@ -69,11 +69,17 @@ const CreateAccountPage = ({ classes, formData, handleChange, isRquerid, matches
 							variant="contained"
 							color="secondary"
 							className={`mr-3 ${matches ? 'w-100 mb-3' : ''}`}
+							disabled={desactiveBtn}
 						>
 					  		Crear
 						</Button>
 
-						<Button color="primary" className={`${matches ? 'w-100' : ''}`}>
+						<Button
+							color="primary"
+							className={`${matches ? 'w-100' : ''}`}
+							disabled={desactiveBtn}
+							onClick={() => history.goBack()}
+						>
 					  		Regresar
 						</Button>
 					</div>

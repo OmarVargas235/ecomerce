@@ -6,7 +6,7 @@ import Search from '../container/Search';
 
 import { ThemeProvider } from '@material-ui/styles';
 
-const NavbarPage = ({ history, activeSearch, classes, handleChange, isActiveLink, matches, setActiveSearch, theme, value }) => (
+const NavbarPage = ({ history, activeSearch, classes, isActiveLink, matches, setActiveSearch, theme }) => (
 	<NavbarContainer className="p-3">
 		<ThemeProvider theme={theme}>
 			{
@@ -14,17 +14,13 @@ const NavbarPage = ({ history, activeSearch, classes, handleChange, isActiveLink
 					? <MenuMdPage
 						history={history}
 						classes={classes}
-						handleChange={handleChange}
 						isActiveLink={isActiveLink}
 						setActiveSearch={setActiveSearch}
-						value={value}
 					/>
 					: <DrawerPage 
 						history={history}
-						handleChange={handleChange}
 						isActiveLink={isActiveLink}
 						setActiveSearch={setActiveSearch}
-						value={value}
 					/>
 			}
 			
