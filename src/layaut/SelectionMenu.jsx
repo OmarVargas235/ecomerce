@@ -42,7 +42,7 @@ const SelectionMenu = ({ categorys, value=[], title }) => {
 				<MenuItem value="">
 					<em>{ title }</em>
 				</MenuItem>
-
+	
 				{
 					categorys.map((category, index) => (
 

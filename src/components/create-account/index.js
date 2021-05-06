@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import CreateAccountPage from './CreateAccountPage';
 import { alert } from '../../utils/alert';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
-import CreateAccountPage from './components/CreateAccountPage';
 import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { requestWithoutToken } from '../../utils/fetch';

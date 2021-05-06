@@ -10,7 +10,7 @@ import Login from './components/login/';
 import Product from './components/product/';
 import MoreProducts from './components/products_de';
 import ChangePassword from './components/change-password';
-import FormChangePassword from './components/change-password/components/FormChangePassword';
+import FormChangePassword from './components/change-password/container/FormChangePassword';
 
 const Body = createGlobalStyle`
 	main, section {

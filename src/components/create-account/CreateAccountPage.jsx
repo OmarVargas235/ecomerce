@@ -1,6 +1,6 @@
 import React from 'react';
-import { RegisterContainer } from '../style';
-import InputPasswordPage from './InputPasswordPage';
+import { RegisterContainer } from './style';
+import InputPassword from '../../layaut/InputPassword';
 
 import { TextField, Container, Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
@@ -47,20 +47,20 @@ const CreateAccountPage = ({ classes, desactiveBtn, formData, history, handleCha
 						required
 					/>
 
-					<InputPasswordPage
-						formData={formData}
+					<InputPassword
 						handleChange={handleChange}
 						isRequired={isRequired}
 						text="Password"
 						typeName="password"
+						isCreateAccount={true}
 					/>
 
-					<InputPasswordPage
-						formData={formData}
+					<InputPassword
 						handleChange={handleChange}
 						isRequired={isRequired}
 						text="Repetir password"
 						typeName="repeatPassword"
+						isCreateAccount={true}
 					/>
 
 					<div className="mt-4 w-100">
