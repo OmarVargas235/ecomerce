@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import LoginPage from './LoginPage';
 import { useForm } from '../../customHooks/useForm';
@@ -27,6 +27,21 @@ const Login = ({ history }) => {
 	const [isRequired, setIsRequired] = useState({});
 	const [checked, setChecked] = useState(getLS ? getLS.checked : false);
 
+	useEffect(() => {
+		
+		async function tokenExpired() {
+			
+			const data = await requestWithoutToken('get-message');
+			const { ok, messages, empty } = await data.json();
+
+			if (empty) return;
+			alert(ok ? 'success' : 'error', messages);
+		}
+
+		tokenExpired();
+
+	}, []);
+
 	const login = async e => {
 		
 		e.preventDefault();
@@ -41,7 +56,8 @@ const Login = ({ history }) => {
 		else window.localStorage.removeItem('email-ecomerce');
 		
 		const data = await requestWithoutToken('login-user', formData, 'POST');
-		const { ok, messages, dataUser, token } = data;
+		const { ok, messages } = data;
+		// const { ok, messages, dataUser, token } = data;
 
 		alert(ok ? 'success' : 'error', messages);
 

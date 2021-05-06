@@ -10,6 +10,7 @@ import Login from './components/login/';
 import Product from './components/product/';
 import MoreProducts from './components/products_de';
 import ChangePassword from './components/change-password';
+import FormChangePassword from './components/change-password/components/formChangePassword';
 
 const Body = createGlobalStyle`
 	main, section {
@@ -32,6 +33,7 @@ const App = () => {
 					<Route exact path="/productos/:name" component={MoreProducts} />
 					<Route exact path="/producto/:id" component={Product} />
 					<Route exact path="/cambiar-contraseña" component={ChangePassword} />
+					<Route exact path="/formulario_cambiar_contraseña/:token" component={FormChangePassword} />
 
 					<Redirect to="/" />
 				</Switch>

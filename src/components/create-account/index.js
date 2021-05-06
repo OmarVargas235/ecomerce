@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { alert } from '../../utils/alert';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
@@ -50,6 +50,21 @@ const CreateAccount = ({ history }) => {
 	});
 
 	const [isRequired, setIsRequired] = useState({});
+
+	useEffect(() => {
+		
+		async function messagesAccountActive() {
+			
+			const data = await requestWithoutToken('get-message');
+			const { ok, messages, empty } = await data.json();
+
+			if (empty) return;
+			alert(ok ? 'success' : 'error', messages);
+		}
+
+		messagesAccountActive();
+
+	}, []);
 
 	const registerUser = async e => {
 

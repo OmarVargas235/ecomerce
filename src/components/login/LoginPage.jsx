@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LoginContainer } from './style';
 
-import { TextField, Container, Button, Checkbox } from '@material-ui/core';
+import { TextField, Container, Button, Checkbox, FormControlLabel } from '@material-ui/core';
 import { IconButton, FormControl, InputLabel, Input, InputAdornment } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -60,14 +60,17 @@ const LoginPage = ({ checked, desactiveBtn, formData, history, handleChange, isR
 							/>
 						</FormControl>
 
-						<div>
-							<Checkbox
-								checked={checked}
-								color="secondary"
-								onChange={event => setChecked(event.target.checked)}
-								inputProps={{ 'aria-label': 'secondary checkbox' }}
-							/>
-						</div>
+						<FormControlLabel
+							control={
+								<Checkbox
+									checked={checked}
+									color="secondary"
+									onChange={event => setChecked(event.target.checked)}
+									inputProps={{ 'aria-label': 'secondary checkbox' }}
+								/>
+							}
+							label="Recordar"
+						/>
 
 						<div className="mt-4">
 							<Button 
