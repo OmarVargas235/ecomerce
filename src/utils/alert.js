@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export const alert = (iconError, messages) => {
+export const alert = (iconError, messages=[]) => {
 
 	const Toast = Swal.mixin({
 		toast: true,

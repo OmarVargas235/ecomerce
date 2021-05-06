@@ -6,7 +6,7 @@ import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
-import ChangePasswordPage from './ChangePasswordPage';
+import ChangePasswordPage from './components/ChangePasswordPage';
 
 const getLS = JSON.parse(window.localStorage.getItem('email-ecomerce')) || '';
 const getLSChecked = Boolean(window.localStorage.getItem('change-password-checked')) || false;
@@ -31,8 +31,6 @@ const ChangePassword = () => {
 		
 		e.preventDefault();
 
-		// omravaja@hotmail.com
-
 		const { email } = formData;
 
 		setIsRequired(required);
@@ -43,12 +41,8 @@ const ChangePassword = () => {
 		else window.localStorage.removeItem('change-password-checked');
 
 		const { ok, messages } = await requestWithoutToken('reset-password', formData, 'POST', email);
-		// const { ok, messages, dataUser, token } = data;
-		console.log(ok, messages)
 
 		alert(ok ? 'success' : 'error', messages);
-
-		// if (ok) history.push('/iniciar-sesion');
 
 		setDesactiveBtn(!ok ? true : false);
 		setTimeout(() => setDesactiveBtn(false), 3000);
