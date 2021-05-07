@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import LoginPage from './LoginPage';
 import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
+import { useShowMessage } from '../../customHooks/useShowMessage';
 
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
@@ -27,20 +28,7 @@ const Login = ({ history }) => {
 	const [isRequired, setIsRequired] = useState({});
 	const [checked, setChecked] = useState(getLS ? getLS.checked : false);
 
-	useEffect(() => {
-		
-		async function tokenExpired() {
-			
-			const data = await requestWithoutToken('get-message');
-			const { ok, messages, empty } = await data.json();
-
-			if (empty) return;
-			alert(ok ? 'success' : 'error', messages);
-		}
-
-		tokenExpired();
-
-	}, []);
+	useShowMessage(history, 'get-message');
 
 	const login = async e => {
 		
