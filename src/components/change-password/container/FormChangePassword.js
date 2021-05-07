@@ -1,14 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 import FormChangePasswordPage from '../components/FormChangePasswordPage';
+import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
+import { useShowMessage } from '../../../customHooks/useShowMessage';
+import { useValidateForm } from '../../../customHooks/useValidateForm';
+import { useForm } from '../../../customHooks/useForm';
+import { requestWithoutToken } from '../../../utils/fetch';
+import { alert } from '../../../utils/alert';
 
-const FormChangePassword = () => {
-
+const FormChangePassword = ({ history }) => {
+	
 	const [ theme ] = styleMaterialUiTheme();
+	const getToken = history.location.pathname.split('/')[2];
+
+	useShowMessage(history, `expired-form/${getToken}`);
+
+	const [ formData, handleChange ] = useForm({
+		password: '',
+		repeatPassword: '',
+	});
+
+	const [required, validate] = useValidateForm({
+		password: false,
+		repeatPassword: false,
+	});
+
+	const [isRequired, setIsRequired] = useState({});
+
+	const changePassword = async e => {
+
+		e.preventDefault();
+
+		const { password, repeatPassword } = formData;
+
+		setIsRequired(required);
+
+		if ( validate({ password, repeatPassword }) ) return;
+
+		const { ok, messages } = await requestWithoutToken(`reset-password/${getToken}`, formData, 'POST');
+
+		alert(ok ? 'success' : 'error', messages);
+
+		if (ok) history.replace('/iniciar-sesion');
+	}
 
 	return (
 		<FormChangePasswordPage
+			changePassword={changePassword}
+			handleChange={handleChange}
+			isRequired={isRequired}
 			theme={theme}
 		/>
 	)

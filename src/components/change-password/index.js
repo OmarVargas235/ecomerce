@@ -8,15 +8,14 @@ import { alert } from '../../utils/alert';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 import ChangePasswordPage from './components/ChangePasswordPage';
 
-const getLS = JSON.parse(window.localStorage.getItem('email-ecomerce')) || '';
-const getLSChecked = Boolean(window.localStorage.getItem('change-password-checked')) || false;
+const getLS = JSON.parse(window.localStorage.getItem('change-password-checked')) || {checked: false};
 
-const ChangePassword = () => {
+const ChangePassword = ({ history }) => {
 
 	const [ theme ] = styleMaterialUiTheme();
 
 	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
-		email: getLSChecked ? getLS.email : '',
+		email: getLS.checked ? getLS.email : '',
 	});
 
 	const [required, validate] = useValidateForm({
@@ -25,7 +24,7 @@ const ChangePassword = () => {
 
 	const [isRequired, setIsRequired] = useState({});
 
-	const [checked, setChecked] = useState(getLSChecked);
+	const [checked, setChecked] = useState(getLS.checked);
 
 	const changPassword = async e => {
 		
@@ -37,10 +36,10 @@ const ChangePassword = () => {
 
 		if ( validate({ email }) ) return;
 
-		if (checked) window.localStorage.setItem('change-password-checked', checked);
+		if (checked) window.localStorage.setItem('change-password-checked', JSON.stringify({checked, email}));
 		else window.localStorage.removeItem('change-password-checked');
 
-		const { ok, messages } = await requestWithoutToken('reset-password', formData, 'POST', email);
+		const { ok, messages } = await requestWithoutToken(`send-email-password/${email}`, formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);
 
@@ -55,6 +54,7 @@ const ChangePassword = () => {
 			desactiveBtn={desactiveBtn}
 			formData={formData}
 			handleChange={handleChange}
+			history={history}
 			isRequired={isRequired}
 			setChecked={setChecked}
 			theme={theme}

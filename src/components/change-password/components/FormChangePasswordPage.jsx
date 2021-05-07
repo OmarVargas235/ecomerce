@@ -5,7 +5,7 @@ import InputPassword from '../../../layaut/InputPassword';
 import { Container, Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const FormChangePasswordPage = ({ theme }) => (
+const FormChangePasswordPage = ({ changePassword, handleChange, isRequired, theme }) => (
 	<Container maxWidth="xs" className="container p-5">
 		<h4 className="pl-1 mb-4 text-center">Cambiar contraseña</h4>
 		
@@ -14,18 +14,18 @@ const FormChangePasswordPage = ({ theme }) => (
 				noValidate
 				autoComplete="off"
 				className="d-flex flex-column"
-				// onSubmit={login}
+				onSubmit={changePassword}
 			>
-				<InputPassword
-					handleChange={() => {}}
-					isRequired={{}}
+				<InputPassword					
+					handleChange={handleChange}
+					isRequired={isRequired}
 					text="Password"
 					typeName="password"
 				/>
 
 				<InputPassword
-					handleChange={() => {}}
-					isRequired={{}}
+					handleChange={handleChange}
+					isRequired={isRequired}
 					text="Repetir password"
 					typeName="repeatPassword"
 				/>

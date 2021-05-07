@@ -3,7 +3,7 @@ import React from 'react';
 import { TextField, Container, Button, Checkbox, FormControlLabel } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const ChangePasswordPage = ({ checked, changPassword, desactiveBtn, formData, handleChange, isRequired, setChecked, theme }) => (
+const ChangePasswordPage = ({ checked, changPassword, desactiveBtn, formData, handleChange, history, isRequired, setChecked, theme }) => (
 	
 	<div className="d-flex align-items-center px-3">
 		<Container maxWidth="xs" className="container p-5">
@@ -55,6 +55,7 @@ const ChangePasswordPage = ({ checked, changPassword, desactiveBtn, formData, ha
 							color="primary"
 							className="w-100 mt-4"
 							disabled={desactiveBtn}
+							onClick={() => history.goBack()}
 						>
 					  		Volver
 						</Button>
