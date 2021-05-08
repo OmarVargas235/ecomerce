@@ -17,7 +17,7 @@ const NavbarPage = ({ history, activeSearch, classes, isActiveLink, matches, set
 						isActiveLink={isActiveLink}
 						setActiveSearch={setActiveSearch}
 					/>
-					: <DrawerPage 
+					: <DrawerPage
 						history={history}
 						isActiveLink={isActiveLink}
 						setActiveSearch={setActiveSearch}

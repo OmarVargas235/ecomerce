@@ -11,6 +11,7 @@ export const useShowMessage = (history, url) => {
 			const data = await requestWithoutToken(url);
 			const { ok, messages, empty, changePassword } = await data.json();
 			
+			// Cuando se cambia la contraseña el token expira redireccionandolo al login
 			if (ok === undefined && !messages && empty === undefined) {
 
 				if (changePassword) history.replace('/iniciar-sesion');
@@ -18,6 +19,7 @@ export const useShowMessage = (history, url) => {
 				return;
 			}
 
+			// Mensaje de cuenta activada o de token expirado
 			if (empty) return;
 			alert(ok ? 'success' : 'error', messages);
 

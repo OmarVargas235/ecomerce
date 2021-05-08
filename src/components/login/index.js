@@ -28,6 +28,7 @@ const Login = ({ history }) => {
 	const [isRequired, setIsRequired] = useState({});
 	const [checked, setChecked] = useState(getLS ? getLS.checked : false);
 
+	// Mostrar mensaje de cuenta activada o de si el token del formulario de cambiar contraseña a expirado.
 	useShowMessage(history, 'get-message');
 
 	const login = async e => {
@@ -36,13 +37,16 @@ const Login = ({ history }) => {
 
 		const { email, password } = formData;
 
+		// Validaciones en el frontend
 		setIsRequired(required);
 
 		if ( validate({ email, password }) ) return;
 
+		// Guardar en el localStorage
 		if (checked) window.localStorage.setItem('email-ecomerce', JSON.stringify({email, checked}));
 		else window.localStorage.removeItem('email-ecomerce');
 		
+		// Enviando la data del formulario al backend
 		const data = await requestWithoutToken('login-user', formData, 'POST');
 		const { ok, messages } = data;
 		// const { ok, messages, dataUser, token } = data;
@@ -51,6 +55,7 @@ const Login = ({ history }) => {
 
 		if (ok) history.push('/iniciar-sesion');
 
+		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(!ok ? true : false);
 		setTimeout(() => setDesactiveBtn(false), 3000);
 	}

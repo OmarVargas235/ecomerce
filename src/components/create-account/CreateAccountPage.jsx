@@ -5,7 +5,7 @@ import InputPassword from '../../layaut/InputPassword';
 import { TextField, Container, Button } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const CreateAccountPage = ({ classes, desactiveBtn, formData, history, handleChange, isRequired, matches, registerUser, theme }) => (
+const CreateAccountPage = ({ classes, desactiveBtn, history, handleChange, isRequired, matches, registerUser, theme }) => (
 	<RegisterContainer className="d-flex align-items-center">
 		<Container maxWidth="sm">
 			<h4 className="pl-1 mb-4">Completa tus datos</h4>

@@ -41,9 +41,7 @@ const Home = ({ history }) => {
 					classes={classes}
 				/>
 				
-				<Footer
-					classes={classes}
-				/>
+				<Footer />
 			</ThemeProvider>
 		</ContainerHome>
 

@@ -57,16 +57,19 @@ const CreateAccount = ({ history }) => {
 
 		const { name, lastName, email, password, repeatPassword } = formData;
 
+		// Validaciones en el frontend
 		setIsRequired(required);
 
 		if ( validate({ name, lastName, email, password, repeatPassword }) ) return;
 		
+		// Enviando la data del formulario al backend
 		const { ok, messages } = await requestWithoutToken('create-user', formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);
 
 		if (ok) history.push('/iniciar-sesion');
 
+		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(!ok ? true : false);
 		setTimeout(() => setDesactiveBtn(false), 3000);
 	}
@@ -75,7 +78,6 @@ const CreateAccount = ({ history }) => {
 		<CreateAccountPage
 			classes={classes}
 			desactiveBtn={desactiveBtn}
-			formData={formData}
 			history={history}
 			handleChange={handleChange}
 			isRequired={isRequired}

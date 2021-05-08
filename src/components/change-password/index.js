@@ -32,17 +32,21 @@ const ChangePassword = ({ history }) => {
 
 		const { email } = formData;
 
+		// Validaciones en el frontend
 		setIsRequired(required);
 
 		if ( validate({ email }) ) return;
 
+		// Guardar en el localStorage
 		if (checked) window.localStorage.setItem('change-password-checked', JSON.stringify({checked, email}));
 		else window.localStorage.removeItem('change-password-checked');
 
+		// Enviando la data del formulario al backend
 		const { ok, messages } = await requestWithoutToken(`send-email-password/${email}`, formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);
 
+		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(!ok ? true : false);
 		setTimeout(() => setDesactiveBtn(false), 3000);
 	}

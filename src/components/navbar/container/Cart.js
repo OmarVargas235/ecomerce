@@ -38,7 +38,6 @@ const Cart = () => {
 			handleDrawerClose={handleDrawerClose}
 			mouseMove={mouseMove}
 			open={open}
-			setOpen={setOpen}
 			setMouseMove={setMouseMove}
 			theme={theme}
 			themeColour={themeColour}

@@ -12,7 +12,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloseIcon from '@material-ui/icons/Close';
 
-const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouseMove, open, setOpen, setMouseMove, theme, themeColour }) => (
+const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouseMove, open, setMouseMove, theme, themeColour }) => (
 	<CartStyle className={classes.root}>
 		
 		<ShoppingCartIcon className="pointer icon" onClick={handleDrawerOpen} />

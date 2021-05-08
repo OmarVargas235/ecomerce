@@ -11,9 +11,9 @@ import { alert } from '../../../utils/alert';
 const FormChangePassword = ({ history }) => {
 	
 	const [ theme ] = styleMaterialUiTheme();
-	const getToken = history.location.pathname.split('/')[2];
 
-	useShowMessage(history, `expired-form/${getToken}`);
+	// Obteniendo el token de la url
+	const getToken = history.location.pathname.split('/')[2];
 
 	const [ formData, handleChange ] = useForm({
 		password: '',
@@ -27,16 +27,20 @@ const FormChangePassword = ({ history }) => {
 
 	const [isRequired, setIsRequired] = useState({});
 
+	useShowMessage(history, `expired-form/${getToken}`);
+
 	const changePassword = async e => {
 
 		e.preventDefault();
 
 		const { password, repeatPassword } = formData;
 
+		// Validaciones en el frontend
 		setIsRequired(required);
 
 		if ( validate({ password, repeatPassword }) ) return;
 
+		// Enviando la data del formulario al backend
 		const { ok, messages } = await requestWithoutToken(`reset-password/${getToken}`, formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);

@@ -6,7 +6,7 @@ import { ReactComponent as FreeSell } from '../../../assets/icons/free-sell.svg'
 
 import Grid from '@material-ui/core/Grid';
 
-const Footer = ({ classes }) => (
+const Footer = () => (
     <Grid container justify='center' alignItems='center' className="mt-5 p-4 footer">
 		<Grid item xs={3} className="mr-5 text-center border-right">
 			<BuyHeart />
