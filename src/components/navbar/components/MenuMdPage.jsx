@@ -6,12 +6,10 @@ import { categorys } from '../../../utils/helper';
 import SelectionMenu from '../../../layaut/SelectionMenu';
 import Cart from '../container/Cart';
 
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Grid from '@material-ui/core/Grid';
+import { Paper, Tabs, Tab, Grid, Typography } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const MenuMdPage = ({ history, classes, isActiveLink, setActiveSearch }) => (
+const MenuMdPage = ({ classes, dataUser, history, isActiveLink, setActiveSearch }) => (
 	
 		<Grid container>
 			<Grid item sm={2} className="text-center">
@@ -30,25 +28,49 @@ const MenuMdPage = ({ history, classes, isActiveLink, setActiveSearch }) => (
 				/>
 			</Grid>
 			
-			<Grid item sm={6}>
-				<Paper className={classes.root}>
-					<Tabs
-						value={isActiveLink}
-						indicatorColor="secondary"
-						textColor="primary"
-						centered
-					>
-						<Tab 
-							label="Registrarse"
-							onClick={() => history.push('/crear-cuenta')}
-						/>
-						<Tab 
-							label="Iniciar sesion"
-							onClick={() => history.push('/iniciar-sesion')}
-						/>
-					</Tabs>
-				</Paper>
-			</Grid>
+			{
+				Object.keys(dataUser).length === 0
+				? <Grid item sm={6}>
+					<Paper className={classes.root}>
+						<Tabs
+							value={isActiveLink}
+							indicatorColor="secondary"
+							textColor="primary"
+							centered
+						>
+							<Tab 
+								label="Registrarse"
+								onClick={() => history.push('/crear-cuenta')}
+							/>
+							<Tab 
+								label="Iniciar sesion"
+								onClick={() => history.push('/iniciar-sesion')}
+							/>
+						</Tabs>
+					</Paper>
+				</Grid>
+				: <Grid item sm={6} container alignContent="center">
+
+					<div className="pl-3">
+						<div className="d-inline-block pointer">
+							<AccountCircleIcon fontSize="large" />
+						
+							<Typography variant="body1" component="span" className="ml-2">
+								{ dataUser.name } { dataUser.lastName }
+							</Typography>
+						</div>
+						
+						<Typography variant="body1" component="span" className="mx-4 pointer">
+							cerrar sesion
+						</Typography>
+						
+						<Typography variant="body1" component="span" className="pointer">
+							ordenes
+						</Typography>
+					</div>
+
+				</Grid>
+			}
 
 			<Grid item sm={1} className="d-flex justify-content-center align-items-center">
 				<div className="container-icon">

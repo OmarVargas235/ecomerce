@@ -1,6 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getUser } from '../../redux/actions/getUser';
 import NavbarPage from './components/NavbarPage';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
@@ -17,14 +19,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = ({ history }) => {
-
+	
 	// Variables y metodos de material ui
 	const matches = useMediaQuery('(min-width:768px)');
 
 	const classes = useStyles();
+
+	const [ theme ] = styleMaterialUiTheme();
+
+	const dispatch = useDispatch();
+	const getUserRedux = useSelector(state => state.user.dataUser);
 	
 	// Estados del componente
   	const [activeSearch, setActiveSearch] = useState(false);
+
+  	useEffect(() => dispatch( getUser() ), [dispatch]);
   	
   	// Detecta cuando esta en '/crear-cuenta' o '/iniciar-sesion' y agrega los estilos correspondientes
   	const isActiveLink = useMemo(() => {
@@ -35,14 +44,13 @@ const Navbar = ({ history }) => {
 		return false;
 
   	}, [history.location]);
-
-  	const [ theme ] = styleMaterialUiTheme();
 	
 	return (
 		<NavbarPage
-			history={history}
 			activeSearch={activeSearch}
 			classes={classes}
+			dataUser={getUserRedux}
+			history={history}
 			isActiveLink={isActiveLink}
 			matches={matches}
 			setActiveSearch={setActiveSearch}

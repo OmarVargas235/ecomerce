@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { getUser } from '../../redux/actions/getUser';
 import LoginPage from './LoginPage';
 import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
@@ -9,11 +11,13 @@ import { useShowMessage } from '../../customHooks/useShowMessage';
 
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
-const getLS = JSON.parse(window.localStorage.getItem('email-ecomerce')) || '';
-
 const Login = ({ history }) => {
 
+	const getLS = JSON.parse(window.localStorage.getItem('email-ecomerce')) || '';
+	
   	const [ theme ] = styleMaterialUiTheme();
+
+  	const dispatch = useDispatch();
 
   	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
 		email: getLS ? getLS.email : '',
@@ -48,12 +52,19 @@ const Login = ({ history }) => {
 		
 		// Enviando la data del formulario al backend
 		const data = await requestWithoutToken('login-user', formData, 'POST');
-		const { ok, messages } = data;
-		// const { ok, messages, dataUser, token } = data;
+		const { ok, messages, dataUser, token } = data;
 
 		alert(ok ? 'success' : 'error', messages);
 
-		if (ok) history.push('/iniciar-sesion');
+		if (ok) {
+
+			dataUser.token = token;
+			window.localStorage.setItem( 'user-login', JSON.stringify(dataUser) );
+			history.push('/');
+			dispatch( getUser() );
+
+			return;
+		}
 
 		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(!ok ? true : false);

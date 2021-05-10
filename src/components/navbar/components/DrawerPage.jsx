@@ -11,6 +11,7 @@ import { categorys } from '../../../utils/helper';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, IconButton, Divider } from '@material-ui/core';
 import { Paper, Tabs, Tab } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const drawerWidth = 240;
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DrawerPage = ({ history, isActiveLink, setActiveSearch }) => {
+const DrawerPage = ({ dataUser, history, isActiveLink, setActiveSearch }) => {
 
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -118,21 +119,44 @@ const DrawerPage = ({ history, isActiveLink, setActiveSearch }) => {
 
 				<List className="d-flex justify-content-center" dense>
 					<Paper className={classes.root}>
-						<Tabs
-							value={isActiveLink}
-							indicatorColor="secondary"
-							textColor="primary"
-							orientation="vertical"
-						>
-							<Tab 
-								label="Registrarse"
-								onClick={() => history.push('/crear-cuenta')}
-							/>
-							<Tab 
-								label="Iniciar sesion"
-								onClick={() => history.push('/iniciar-sesion')}
-							/>
-						</Tabs>
+						{
+							Object.keys(dataUser).length === 0
+							? <Tabs
+								value={isActiveLink}
+								indicatorColor="secondary"
+								textColor="primary"
+								orientation="vertical"
+							>
+								<Tab 
+									label="Registrarse"
+									onClick={() => history.push('/crear-cuenta')}
+								/>
+								<Tab 
+									label="Iniciar sesion"
+									onClick={() => history.push('/iniciar-sesion')}
+								/>
+							</Tabs>
+							: <Tabs
+								value={isActiveLink}
+								indicatorColor="secondary"
+								textColor="primary"
+								orientation="vertical"
+							>
+								<Tab 
+									icon={<AccountCircleIcon fontSize="large" color="secondary" />}
+									label={`${dataUser.name} ${dataUser.lastName}`}
+									// onClick={() => history.push('/crear-cuenta')}
+								/>
+								<Tab 
+									label="Ordenes"
+									// onClick={() => history.push('/iniciar-sesion')}
+								/>
+								<Tab 
+									label="Cerrar sesion"
+									// onClick={() => history.push('/iniciar-sesion')}
+								/>
+							</Tabs>
+						}
 					</Paper>
 				</List>
 			</Drawer>  

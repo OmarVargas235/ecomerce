@@ -8,9 +8,9 @@ import { alert } from '../../utils/alert';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 import ChangePasswordPage from './components/ChangePasswordPage';
 
-const getLS = JSON.parse(window.localStorage.getItem('change-password-checked')) || {checked: false};
-
 const ChangePassword = ({ history }) => {
+
+	const getLS = JSON.parse(window.localStorage.getItem('change-password-checked')) || {checked: false};
 
 	const [ theme ] = styleMaterialUiTheme();
 
