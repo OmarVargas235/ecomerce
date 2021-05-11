@@ -5,7 +5,7 @@ import { Card, CardContent, CardActions, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const AddToCart = ({ classes }) => (
+const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, turn }) => (
 	<Card className={classes.root} variant="outlined">
 		<CardContent>
 			<Grid container spacing={3}>
@@ -19,31 +19,24 @@ const AddToCart = ({ classes }) => (
 					</Typography>
 				</Grid>
 				
-				<Grid item xs={2} style={{
-						perspective: '1000px',
-				}}>
-					<FavoriteBorderIcon
-						color="error"
-						className="pointer"
-						style={{
-							transformStyle: 'preserve-3d',
-							transform: 'rotateY(180deg)',
-						}}
-					/>
-
-					<FavoriteIcon
-						color="error"
-						className="pointer"
-						style={{
-							transformStyle: 'preserve-3d',
-							transform: 'rotateY(180deg)',
-						}}
-					/>
+				<Grid item xs={2} className={classes.containerFavorite}>
+					{
+						!changeIconFavorite ? <FavoriteBorderIcon
+							color="primary"
+							className={`pointer ${turn ? classes.favorite : classes.favoriteTurn}`}
+							onClick={addFavorite}
+						/>
+						: <FavoriteIcon
+							color="primary"
+							className={`pointer ${turn ? classes.favorite : classes.favoriteTurn}`}
+							onClick={addFavorite}
+						/>
+					}
 				</Grid>
 			</Grid>
 
 			<Typography variant="h4" component="h5" className="my-4 font-weight-light">
-				Bs.25.550.690
+				Bs.13.85
 			</Typography>
 
 			<Typography variant="body2" component="h5">
@@ -60,9 +53,10 @@ const AddToCart = ({ classes }) => (
 				fullWidth
 				variant="contained"
 				color="primary"
+				onClick={addCart}
 			>Añadir al carrito</Button>
 		</CardActions>
 	</Card>
-)
+);
 
-export default AddToCart;
+export default AddToCartPage;

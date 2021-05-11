@@ -4,7 +4,7 @@ import { ProductStyle } from '../style';
 import Gallery from '../container/Gallery';
 import Chat from '../container/Chat';
 import MorePosts from './MorePosts';
-import AddToCart from './AddToCart';
+import AddToCart from '../container/AddToCart';
 import Map from './Map';
 
 import { Container, Grid, Divider, Typography, Hidden  } from '@material-ui/core';
@@ -25,11 +25,13 @@ const ProductPage = ({ classes, items, productMemo, theme }) => (
 						<Divider className="my-5" />
 						
 						<Hidden mdUp>
-							<AddToCart classes={classes} />
+							<AddToCart
+								product={productMemo}
+							/>
 						</Hidden>
 						
 						<h4 className="my-4">Mas publicaciones de Omar</h4>
-						
+
 						<MorePosts
 							classes={classes}
 							items={items}
@@ -58,7 +60,7 @@ const ProductPage = ({ classes, items, productMemo, theme }) => (
 					<Grid item sm={12} md={4}>
 						
 						<Hidden smDown>
-							<AddToCart classes={classes} />
+							<AddToCart product={productMemo} />
 							<Map classes={classes} />
 						</Hidden>
 					</Grid>

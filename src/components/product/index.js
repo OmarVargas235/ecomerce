@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 	},
 	card: {
 		minHeight: 275,
-	}
+	},
 });
 
 const products = [...items, ...accessories];
