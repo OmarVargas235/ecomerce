@@ -1,6 +1,5 @@
 import React from 'react';
 
-import imgPrueba from '../../../assets/img/mouse1.webp';
 import { CartStyle } from '../style';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -12,7 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloseIcon from '@material-ui/icons/Close';
 
-const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouseMove, open, setMouseMove, theme, themeColour }) => (
+const CartPage = ({ buyProduct, cartRef, classes, deleteProduct, handleDrawerOpen, handleDrawerClose, mouseMove, open, products, plusOrLess, setMouseMove, theme, themeColour, totalToPay }) => (
 	<CartStyle className={classes.root}>
 		
 		<ShoppingCartIcon className="pointer icon" onClick={handleDrawerOpen} />
@@ -38,29 +37,37 @@ const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouse
 			<Divider />
 			
 			<List ref={cartRef}>
-				{[imgPrueba, imgPrueba].map((img, index) => (
+				{products.map((product, index) => (
 				<ListItem
 					key={index}
 					selected={mouseMove === index}
 					onMouseOver={() => setMouseMove(index)}
 					onMouseOut={() => setMouseMove(-1)}
 				>
-					<img src={img} alt="prueba" />
+					<img src={product.img} alt="prueba" />
 
 					<div className="ml-4">
 						<Typography variant="subtitle1" component="p">
-							Mause
+							{product.name}
 						</Typography>
 
 						<div className="d-flex justify-content-between align-items-center">
 							<div className="d-flex incrementAndDecrement mr-5">
-								<span>-</span>
-								<input type="text" defaultValue="4" readOnly />
-								<span>+</span>
+								<span
+									onClick={() => plusOrLess(product, 'less')}
+								>-</span>
+								<input type="text" value={product.cont} readOnly />
+								<span
+									onClick={() => plusOrLess(product)}
+								>+</span>
 							</div>
 
-							<Typography variant="subtitle1" component="p">
-								<CloseIcon className="close-icon" /> $15.99
+							<Typography variant="subtitle1" component="div">
+								<CloseIcon
+									className="close-icon"
+									onClick={() => deleteProduct(product)}
+								/>
+								<div className="price">${parseFloat(product.price) * product.cont}</div>
 							</Typography>
 						</div>
 					</div>
@@ -68,7 +75,7 @@ const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouse
 				))}
 			</List>
 
-			<div className={`${189 + cartRef.current?.offsetHeight < window.innerHeight ? 'total_to_pay' : ''} mx-4`}>
+			<div className={`${240 + cartRef.current?.offsetHeight < window.innerHeight ? 'total_to_pay' : ''} mx-4`}>
 				<Divider />
 				
 				<List>
@@ -77,8 +84,8 @@ const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouse
 							TOTAL A PAGAR
 						</Typography>
 						
-						<Typography variant="h6" component="h6">
-							$95.94
+						<Typography variant="h6" component="h6" className="total-pay">
+							${totalToPay.toFixed(2)}
 						</Typography>
 					</div>
 					
@@ -87,7 +94,8 @@ const CartPage = ({ cartRef, classes, handleDrawerOpen, handleDrawerClose, mouse
 							fullWidth={true}
 							variant="contained"
 							color="primary"
-						>coprar</Button>
+							onClick={buyProduct}
+						>comprar</Button>
 					</ThemeProvider>
 				</List>
 			</div>

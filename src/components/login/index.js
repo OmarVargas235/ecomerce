@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { getUser } from '../../redux/actions/getUser';
+import { getUserAction } from '../../redux/actions/userAction';
 import LoginPage from './LoginPage';
 import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
@@ -61,7 +61,7 @@ const Login = ({ history }) => {
 			dataUser.token = token;
 			window.localStorage.setItem( 'user-login', JSON.stringify(dataUser) );
 			history.push('/');
-			dispatch( getUser() );
+			dispatch( getUserAction() );
 
 			return;
 		}

@@ -145,6 +145,17 @@ export const CartStyle = styled.div`
 		cursor: pointer;
 	}
 
+	.price, .total-pay {
+		white-space: nowrap;
+		width: 90px; 
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.total-pay {
+		width: 120px; 
+	}
+
 	.incrementAndDecrement {
 		border-top: 1px solid #343535;
 		border-bottom: 1px solid #343535;
@@ -171,7 +182,7 @@ export const CartStyle = styled.div`
 	}
 
 	.total_to_pay {
-		width: 300px;
+		width: 290px;
 		position: absolute;
 		bottom: 20px;
 	}

@@ -4,6 +4,10 @@ import {
 
 const initialState = {
 	dataUser: {},
+	auth: {
+		isAuthenticated: false,
+		token: '',
+	}
 }
 
 export default function userReducer(state=initialState, { type, payload }) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUser } from '../../redux/actions/getUser';
+import { getUserAction } from '../../redux/actions/userAction';
 import NavbarPage from './components/NavbarPage';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
@@ -33,7 +33,7 @@ const Navbar = ({ history }) => {
 	// Estados del componente
   	const [activeSearch, setActiveSearch] = useState(false);
 
-  	useEffect(() => dispatch( getUser() ), [dispatch]);
+  	useEffect(() => dispatch( getUserAction() ), [dispatch]);
   	
   	// Detecta cuando esta en '/crear-cuenta' o '/iniciar-sesion' y agrega los estilos correspondientes
   	const isActiveLink = useMemo(() => {
