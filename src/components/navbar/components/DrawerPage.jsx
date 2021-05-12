@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DrawerPage = ({ dataUser, history, isActiveLink, setActiveSearch }) => {
+const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) => {
 
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -76,9 +76,13 @@ const DrawerPage = ({ dataUser, history, isActiveLink, setActiveSearch }) => {
 						/>
 					</div>
 
-					<div className="container-icon">
-						<Cart />
-					</div>	
+					{
+						auth.isAuthenticated
+						? <div className="container-icon">
+							<Cart />
+						</div>
+						: null
+					}	
 				</div>	
 			</AppBar>
 
@@ -120,7 +124,7 @@ const DrawerPage = ({ dataUser, history, isActiveLink, setActiveSearch }) => {
 				<List className="d-flex justify-content-center" dense>
 					<Paper className={classes.root}>
 						{
-							Object.keys(dataUser).length === 0
+							!auth.isAuthenticated
 							? <Tabs
 								value={isActiveLink}
 								indicatorColor="secondary"
@@ -143,7 +147,7 @@ const DrawerPage = ({ dataUser, history, isActiveLink, setActiveSearch }) => {
 								orientation="vertical"
 							>
 								<Tab 
-									icon={<AccountCircleIcon fontSize="large" color="secondary" />}
+									icon={<AccountCircleIcon fontSize="large" style={{color: 'black'}} />}
 									label={`${dataUser.name} ${dataUser.lastName}`}
 									// onClick={() => history.push('/crear-cuenta')}
 								/>

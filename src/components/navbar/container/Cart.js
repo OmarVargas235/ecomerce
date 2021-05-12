@@ -24,15 +24,6 @@ const Cart = () => {
 
 	const products = useSelector(state => state.cart.products);
 
-	const totalToPay =  useMemo(() => (
-
-		products.reduce((acc, product) => {
-			
-			acc += product.cont * parseFloat(product.price);
-			return acc;
-		}, 0)
-	), [products]);
-
 	const cartRef = useRef();
 
 	const classes = useStyles();
@@ -40,6 +31,17 @@ const Cart = () => {
 	const [open, setOpen] = useState(false);
 	const [mouseMove, setMouseMove] = useState(-1);
 	const [updateContProduct, setUpdateContProduct] = useState(false);
+
+	const totalToPay =  useMemo(() => (
+
+		products.reduce((acc, product) => {
+			
+			if (updateContProduct) {}
+			acc += product.cont * parseFloat(product.price);
+			return acc;
+		}, 0)
+
+	), [products, updateContProduct]);
 
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);

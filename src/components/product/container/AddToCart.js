@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import AddToCartPage from '../components/AddToCartPage';
 import { addAction } from '../../../redux/actions/cartAction';
@@ -27,7 +28,9 @@ const useStyles = makeStyles({
 const AddToCart = ({ product }) => {
 	
 	const dispatch = useDispatch();
+	const auth = useSelector(state => state.user.auth);
 
+	const history = useHistory();
 	const classes = useStyles();
 
 	const [turn, setTurn] = useState(false);
@@ -35,13 +38,23 @@ const AddToCart = ({ product }) => {
 
 	const addFavorite = () => {
 		
+		if (!auth.isAuthenticated) {
+
+			history.push('/iniciar-sesion');
+			return;
+		}
+
 		setTurn(!turn);
 
 		// Cuando termine la animacion de girar cambia de icono
 		setTimeout(() => setChangeIconFavorite(!changeIconFavorite), 500);
 	}
 
-	const addCart = () => dispatch( addAction(product) );
+	const addCart = () => {
+
+		auth.isAuthenticated 
+		? dispatch( addAction(product) ) : history.push('/iniciar-sesion');
+	}
 	
 	return (
 		<AddToCartPage

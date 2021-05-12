@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Navbar from '../components/navbar/';
@@ -12,8 +12,7 @@ import PublicRouter from './PublicRouter';
 
 const RouterApp = () => {
 
-	// const auth = useSelector(state => state.user.auth);
-	// console.log(auth)
+	const auth = useSelector(state => state.user.auth);
 	
 	return (
 		<Router>
@@ -21,18 +20,15 @@ const RouterApp = () => {
 
 			<Switch>
 				<Route exact path="/" component={Home} />
+				<Route exact path="/productos/:name" component={MoreProducts} />
+				<Route exact path="/producto/:id" component={Product} />
 
 				<PublicRouter
 					exact
 					component={ DashboardRoutesPublic }
-					isAuthenticated={ false }
+					isAuthenticated={ auth.isAuthenticated }
 				/>
 				
-				<Route exact path="/productos/:name" component={MoreProducts} />
-				<Route exact path="/producto/:id" component={Product} />
-				
-
-				<Redirect to="/" />
 			</Switch>
 		</Router>
 	)

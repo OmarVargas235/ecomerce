@@ -1,5 +1,6 @@
 import {
 	GET_DATA_USER,
+	LOGIN_USER,
 } from '../types/';
 
 const initialState = {
@@ -19,6 +20,16 @@ export default function userReducer(state=initialState, { type, payload }) {
 			return {
 				...state,
 				dataUser: JSON.parse(window.localStorage.getItem('user-login')) || {},
+			}
+
+		case LOGIN_USER:
+
+			return {
+				...state,
+				auth: {
+					isAuthenticated: true,
+					token: payload,
+				},
 			}
 
 		default: return state;

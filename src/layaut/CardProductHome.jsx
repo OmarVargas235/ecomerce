@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardActions, CardContent } from '@material-ui/core';
 import { CardMedia, Button, Typography } from '@material-ui/core';
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const CardProductHome = ({ history, product }) => {
+const CardProductHome = ({ history, product, theme }) => {
 
 	const classes = useStyles();
 	
@@ -46,14 +47,16 @@ const CardProductHome = ({ history, product }) => {
 			</CardActionArea>
 			
 			<CardActions className="mb-sm-3">
-				<Button
-					onClick={() => history.push(`/producto/${product.id}`)}
-					size="medium"
-					color="primary"
-					className="btn-block"
-				>
-					Mas informacion
-				</Button>
+				<ThemeProvider theme={theme}>
+					<Button
+						onClick={() => history.push(`/producto/${product.id}`)}
+						size="medium"
+						color="primary"
+						className="btn-block"
+					>
+						Mas informacion
+					</Button>
+				</ThemeProvider>
 			</CardActions>
 		</Card>
 	)

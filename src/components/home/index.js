@@ -9,7 +9,6 @@ import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,19 +29,19 @@ const Home = ({ history }) => {
 				matches={matches}
 			/>
 			
-			<ThemeProvider theme={theme}>
-				<ProductsCarrouselPage
-					history={history}
-					classes={classes}
-					theme={theme}
-				/>
-				
-				<ProductsCardPage
-					classes={classes}
-				/>
-				
-				<Footer />
-			</ThemeProvider>
+			<ProductsCarrouselPage
+				history={history}
+				classes={classes}
+				theme={theme}
+			/>
+			
+			<ProductsCardPage
+				classes={classes}
+				theme={theme}
+			/>
+			
+			<Footer />
+			
 		</ContainerHome>
 
 	)
