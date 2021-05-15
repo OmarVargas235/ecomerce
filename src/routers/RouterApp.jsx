@@ -6,15 +6,11 @@ import Navbar from '../components/navbar/';
 import Home from '../components/home/';
 import Product from '../components/product/';
 import MoreProducts from '../components/products_of/';
-import CreateProduct from '../components/create-product/';
-import EditUser from '../components/edit-user/';
-import MineProducts from '../components/mine-products/';
-import Notifications from '../components/notifications/';
-import Chat from '../components/chat/';
-import Profile from '../components/profile';
 
 import DashboardRoutesPublic from './DashboardRoutesPublic';
+import DashboardRoutesPrivate from './DashboardRoutesPrivate';
 import PublicRouter from './PublicRouter';
+import PrivateRouter from './PrivateRouter';
 
 const RouterApp = () => {
 
@@ -29,19 +25,17 @@ const RouterApp = () => {
 				<Route exact path="/productos/:name" component={MoreProducts} />
 				<Route exact path="/producto/:id" component={Product} />
 
-				<Route exact path="/crear-producto" component={CreateProduct} />
-				<Route exact path="/editar-perfil" component={EditUser} />
-				<Route exact path="/mis-productos" component={MineProducts} />
-				<Route exact path="/notificaciones" component={Notifications} />
-				<Route exact path="/mensajes" component={Chat} />
-				<Route exact path="/mi-perfil" component={Profile} />
-
 				<PublicRouter
 					exact
 					component={ DashboardRoutesPublic }
 					isAuthenticated={ auth.isAuthenticated }
 				/>
-				
+
+				<PrivateRouter
+					exact
+					component={ DashboardRoutesPrivate }
+					isAuthenticated={ auth.isAuthenticated }
+				/>	
 			</Switch>
 		</Router>
 	)
