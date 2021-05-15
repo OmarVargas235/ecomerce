@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { styleMaterialUiTheme } from '../utils/styleMaterialUi';
+
 import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardActions, CardContent } from '@material-ui/core';
@@ -15,9 +17,11 @@ const useStyles = makeStyles({
 	},
 });
 
-const CardProductHome = ({ history, product, theme }) => {
+const CardProductHome = ({ history, product }) => {
 
 	const classes = useStyles();
+
+	const [ theme ] = styleMaterialUiTheme();
 	
 	return (
 		<Card 
