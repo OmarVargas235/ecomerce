@@ -66,7 +66,10 @@ const PopoverPage = ({ dataUser, history }) => {
 				>
 					<div className={classes.list}>
 						<List component="nav" aria-label="main mailbox folders">
-							<ListItem>
+							<ListItem
+								onClick={() => history.push('/mi-perfil')}
+								className="pointer"
+							>
 								<ListItemIcon>
 				            		<AccountCircleIcon
 				            			fontSize="large"

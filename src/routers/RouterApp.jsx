@@ -11,6 +11,7 @@ import EditUser from '../components/edit-user/';
 import MineProducts from '../components/mine-products/';
 import Notifications from '../components/notifications/';
 import Chat from '../components/chat/';
+import Profile from '../components/profile';
 
 import DashboardRoutesPublic from './DashboardRoutesPublic';
 import PublicRouter from './PublicRouter';
@@ -33,6 +34,7 @@ const RouterApp = () => {
 				<Route exact path="/mis-productos" component={MineProducts} />
 				<Route exact path="/notificaciones" component={Notifications} />
 				<Route exact path="/mensajes" component={Chat} />
+				<Route exact path="/mi-perfil" component={Profile} />
 
 				<PublicRouter
 					exact
