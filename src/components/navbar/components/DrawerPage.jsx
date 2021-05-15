@@ -7,11 +7,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import SelectionMenu from '../../../layaut/SelectionMenu';
 import Cart from '../container/Cart';
 import { categorys } from '../../../utils/helper';
+import PopoverPage from './PopoverPage';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, IconButton, Divider } from '@material-ui/core';
 import { Paper, Tabs, Tab } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const drawerWidth = 240;
 
@@ -146,11 +146,11 @@ const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) 
 								textColor="primary"
 								orientation="vertical"
 							>
-								<Tab 
-									icon={<AccountCircleIcon fontSize="large" style={{color: 'black'}} />}
-									label={`${dataUser.name} ${dataUser.lastName}`}
-									// onClick={() => history.push('/crear-cuenta')}
+								<PopoverPage
+									dataUser={dataUser}
+									history={history}
 								/>
+
 								<Tab 
 									label="Ordenes"
 									// onClick={() => history.push('/iniciar-sesion')}

@@ -49,14 +49,15 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 						</Tabs>
 					</Paper>
 				</Grid>
-				: <Grid item sm={6} container alignContent="center">
+				: <Grid item sm={6} container alignContent="center" justify="center">
 
 					<div className="pl-3">
 						<PopoverPage
 							dataUser={dataUser}
+							history={history}
 						/>
 						
-						<Typography variant="body1" component="span" className="pointer">
+						<Typography variant="body1" component="span" className="pointer ml-4">
 							ordenes
 						</Typography>
 					</div>

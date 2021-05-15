@@ -1,12 +1,12 @@
 import React from 'react';
 
-import InfoUser from '../../layaut/InfoUser';
+import ControlPanel from '../../layaut/ControlPanel';
 import EditUserPage from './EditUserPage';
 
 const EditUser = () => {
 
 	return (
-		<InfoUser
+		<ControlPanel
 			component={EditUserPage}
 			title="Editar tu perfil"
 			text="Edita los datos que creas correspondientes aqui"

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
+
 import { getUserAction, loginAction } from '../../redux/actions/userAction';
 import NavbarPage from './components/NavbarPage';
 
@@ -24,6 +26,8 @@ const Navbar = ({ history }) => {
 	const dispatch = useDispatch();
 	const getUserRedux = useSelector(state => state.user.dataUser);
 	const auth = useSelector(state => state.user.auth);
+
+	const [ theme ] = styleMaterialUiTheme();
 	
 	// Estados del componente
   	const [activeSearch, setActiveSearch] = useState(false);
@@ -57,6 +61,7 @@ const Navbar = ({ history }) => {
 			isActiveLink={isActiveLink}
 			matches={matches}
 			setActiveSearch={setActiveSearch}
+			theme={theme}
 		/>
 	)
 }

@@ -37,7 +37,6 @@ const Home = ({ history }) => {
 			
 			<ProductsCardPage
 				classes={classes}
-				theme={theme}
 			/>
 			
 			<Footer />

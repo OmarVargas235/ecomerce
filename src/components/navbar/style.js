@@ -147,13 +147,13 @@ export const CartStyle = styled.div`
 
 	.price, .total-pay {
 		white-space: nowrap;
-		width: 90px; 
+		width: 90px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 
 	.total-pay {
-		width: 120px; 
+		width: 120px;
 	}
 
 	.incrementAndDecrement {

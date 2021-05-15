@@ -3229,6 +3229,10 @@ input[type="button"].btn-block {
   width: 100%;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .text-lightgray {
   color: #99999999 !important;
 }
