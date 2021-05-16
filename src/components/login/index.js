@@ -15,7 +15,7 @@ const Login = ({ history }) => {
 
 	const getLS = JSON.parse(window.localStorage.getItem('email-ecomerce')) || '';
 	
-  	const [ theme ] = styleMaterialUiTheme();
+  	const theme = styleMaterialUiTheme();
 
   	const dispatch = useDispatch();
 

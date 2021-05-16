@@ -46,7 +46,7 @@ const Cart = () => {
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);
 
-	const [ themeColour ] = styleMaterialUiTheme();
+	const themeColour = styleMaterialUiTheme();
 
 	const plusOrLess = (product, type="plus") => {
 

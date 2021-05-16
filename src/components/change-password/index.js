@@ -12,7 +12,7 @@ const ChangePassword = ({ history }) => {
 
 	const getLS = JSON.parse(window.localStorage.getItem('change-password-checked')) || {checked: false};
 
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 
 	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
 		email: getLS.checked ? getLS.email : '',

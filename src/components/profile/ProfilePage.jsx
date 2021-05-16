@@ -22,7 +22,7 @@ const links = [
 const ProfilePage = () => (
 	<ProfileStyle className="my-4 container">
 		<Grid container>
-			<Grid item xs={9}>
+			<Grid item xs={8}>
 				<Typography variant="h3" component="h3" className="font-weight-bold" paragraph>
 					Omar Vargas
 				</Typography>
@@ -68,7 +68,7 @@ const ProfilePage = () => (
 				</div>
 			</Grid>
 
-			<Grid item xs={3}>
+			<Grid item xs={4} container justify="center" className="px-4">
 				<AccountCircleIcon className="img-user" />
 
 				{
@@ -81,16 +81,18 @@ const ProfilePage = () => (
 					))
 				}
 
-				<Typography variant="h6" component="p" paragraph className="mt-4">
-					Reputacion
-				</Typography>
-
-				<div className="d-flex">
-					<StarIcon />
-					<StarIcon />
-					<StarIcon />
-					<StarIcon />
-					<StarIcon />
+				<div className="w-100 mt-3">
+					<Typography variant="h6" component="p" paragraph>
+						Reputacion
+					</Typography>
+					
+					<div className="d-flex">
+						<StarIcon />
+						<StarIcon />
+						<StarIcon />
+						<StarIcon />
+						<StarIcon />
+					</div>
 				</div>
 			</Grid>
 		</Grid>

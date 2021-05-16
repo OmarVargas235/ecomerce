@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { items } from '../../../utils/dataProducts';
+import { RedButton } from '../../../utils/styleMaterialUi';
 
 import Carousel from 'react-material-ui-carousel';
-import { Paper, Button, Grid } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
+import { Paper, Grid } from '@material-ui/core';
 
-const ProductsCarrouselPage = ({ history, classes, theme }) => (
+const ProductsCarrouselPage = ({ history, classes }) => (
 	<Carousel 
 		animation='slide'
 		className="my-4"
@@ -23,16 +23,14 @@ const ProductsCarrouselPage = ({ history, classes, theme }) => (
 							<h2>{item.name}</h2>
 							<p>{item.description}</p>
 							
-							<ThemeProvider theme={theme}>
-								<Button
-									className="CheckButton"
-									variant="contained"
-									color="primary"
-									onClick={() => history.push(`/producto/${item.id}`)}
-								>
-									Mas informacion
-								</Button>
-							</ThemeProvider>
+							<RedButton
+								className="CheckButton"
+								variant="contained"
+								color="primary"
+								onClick={() => history.push(`/producto/${item.id}`)}
+							>
+								Mas informacion
+							</RedButton>
 	        			</Grid>
 					</Grid>
 				</Paper>

@@ -27,7 +27,7 @@ const Navbar = ({ history }) => {
 	const getUserRedux = useSelector(state => state.user.dataUser);
 	const auth = useSelector(state => state.user.auth);
 
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 	
 	// Estados del componente
   	const [activeSearch, setActiveSearch] = useState(false);

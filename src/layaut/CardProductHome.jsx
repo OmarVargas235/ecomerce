@@ -1,12 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { styleMaterialUiTheme } from '../utils/styleMaterialUi';
+import { RedLightButton } from '../utils/styleMaterialUi';
 
-import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardActions, CardContent } from '@material-ui/core';
-import { CardMedia, Button, Typography } from '@material-ui/core';
+import { CardMedia, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
 	root: {
@@ -20,8 +19,6 @@ const useStyles = makeStyles({
 const CardProductHome = ({ history, product }) => {
 
 	const classes = useStyles();
-
-	const [ theme ] = styleMaterialUiTheme();
 	
 	return (
 		<Card 
@@ -51,16 +48,14 @@ const CardProductHome = ({ history, product }) => {
 			</CardActionArea>
 			
 			<CardActions className="mb-sm-3">
-				<ThemeProvider theme={theme}>
-					<Button
-						onClick={() => history.push(`/producto/${product.id}`)}
-						size="medium"
-						color="primary"
-						className="btn-block"
-					>
-						Mas informacion
-					</Button>
-				</ThemeProvider>
+				<RedLightButton
+					onClick={() => history.push(`/producto/${product.id}`)}
+					size="medium"
+					color="primary"
+					className="btn-block"
+				>
+					Mas informacion
+				</RedLightButton>
 			</CardActions>
 		</Card>
 	)

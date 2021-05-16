@@ -60,7 +60,7 @@ const ControlPanel = ({ component:Component, title, text }) => {
 	
 	const { name, lastName } = useSelector(state => state.user.dataUser);
 
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 
 	return (
 		<ControlPanelStyle className="container my-4">

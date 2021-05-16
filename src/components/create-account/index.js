@@ -31,7 +31,7 @@ const CreateAccount = ({ history }) => {
 	const classes = useStyles();
 	const matches = useMediaQuery('(max-width: 576px)');
 
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 
 	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
 		name: '',

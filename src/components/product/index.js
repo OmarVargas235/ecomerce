@@ -24,7 +24,7 @@ const Product = ({ match }) => {
 	
 	const productMemo = useMemo(() => products.find(product => product.id === match.params.id), [match]);
 
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 	
 	return (
 		<ProductPage

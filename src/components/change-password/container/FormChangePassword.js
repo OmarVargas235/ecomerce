@@ -10,7 +10,7 @@ import { alert } from '../../../utils/alert';
 
 const FormChangePassword = ({ history }) => {
 	
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 
 	// Obteniendo el token de la url
 	const getToken = history.location.pathname.split('/')[2];

@@ -30,7 +30,7 @@ const PopoverPage = ({ dataUser, history }) => {
 
 	const classes = useStyles();
 
-	const [ theme ] = styleMaterialUiTheme();
+	const theme = styleMaterialUiTheme();
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	
