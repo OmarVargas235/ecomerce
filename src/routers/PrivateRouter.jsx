@@ -9,7 +9,7 @@ const PrivateRoute = ({ isAuthenticated, component:Component, setPath, ...rest }
 			component={props => (
 				( isAuthenticated )
 				? <Component { ...props } setPath={setPath} />
-				: <Redirect to="/iniciar-sesion" />
+				: <Redirect to="/" />
 			)}
 		/>
 	)

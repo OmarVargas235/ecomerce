@@ -25,17 +25,19 @@ const RouterApp = () => {
 				<Route exact path="/productos/:name" component={MoreProducts} />
 				<Route exact path="/producto/:id" component={Product} />
 
-				<PublicRouter
-					exact
-					component={ DashboardRoutesPublic }
-					isAuthenticated={ auth.isAuthenticated }
-				/>
-
-				<PrivateRouter
-					exact
-					component={ DashboardRoutesPrivate }
-					isAuthenticated={ auth.isAuthenticated }
-				/>	
+				{
+					auth.isAuthenticated
+					? <PrivateRouter
+						exact
+						component={ DashboardRoutesPrivate }
+						isAuthenticated={ auth.isAuthenticated }
+					/>
+					: <PublicRouter
+						exact
+						component={ DashboardRoutesPublic }
+						isAuthenticated={ auth.isAuthenticated }
+					/>	
+				}
 			</Switch>
 		</Router>
 	)

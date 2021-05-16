@@ -13,15 +13,10 @@ const theme = createMuiTheme({
   },
 });
 
-export const styleMaterialUiTheme = () => {
-	
-	return [
-		theme,
-	]
-}
+export const styleMaterialUiTheme = () => theme;
 
 // =====================================
-// Boton y checkbox (colores)
+// Botones (colores)
 // =====================================
 export const TealButton = withStyles({
   root: {
@@ -32,6 +27,28 @@ export const TealButton = withStyles({
     }
   },
 })(Button);
+
+export const RedButton = withStyles({
+  root: {
+    backgroundColor: '#E12727',
+    '&:hover': {
+      backgroundColor: '#212121',
+    }
+  },
+})(Button);
+
+export const RedLightButton = withStyles({
+  root: {
+    color: '#E12727',
+    '&:hover': {
+      backgroundColor: '#FEF6F6',
+    }
+  },
+})(Button);
+
+// =====================================
+// Checkbox
+// =====================================
 
 export const TealCheckbox = withStyles({
   root: {
