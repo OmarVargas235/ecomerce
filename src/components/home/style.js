@@ -45,5 +45,4 @@ export const ContainerHome = styled.main`
 			}
 		}
 	}
-
 `;

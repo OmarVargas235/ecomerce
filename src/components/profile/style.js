@@ -35,4 +35,10 @@ export const ProfileStyle = styled.section`
 			color: #2896A9;
 		}
 	}
+
+	@media (max-width: 332px) {
+		.MuiTypography-body1 {
+			font-size: .9rem;
+		}
+	}
 `;

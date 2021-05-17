@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ProfileStyle } from './style';
 
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Hidden } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -19,10 +19,10 @@ const links = [
 	{icon: <YouTubeIcon className="mr-2" />, title: 'Youtube'},
 ]
 
-const ProfilePage = () => (
+const ProfilePage = ({ matches }) => (
 	<ProfileStyle className="my-4 container">
 		<Grid container>
-			<Grid item xs={8}>
+			<Grid item sm={8} className="order-2 order-sm-0 mt-5 mt-sm-0">
 				<Typography variant="h3" component="h3" className="font-weight-bold" paragraph>
 					Omar Vargas
 				</Typography>
@@ -66,22 +66,36 @@ const ProfilePage = () => (
 						Aquí en Udemy, he tenido la increíble experiencia de poder enseñar a muchos alumnos, y espero seguir mejorando mis cursos y los temas conforme la actualidad vaya cambiando.
 					</Typography>
 				</div>
+
+				<Hidden smUp>
+					{
+						links.map(links => (
+							
+							<div className="link w-100 p-4 d-flex justify-content-center align-items-center mb-2" key={links.title}>
+								{ links.icon }
+								<span className="font-weight-bold">{ links.title }</span>
+							</div>
+						))
+					}
+				</Hidden>
 			</Grid>
 
-			<Grid item xs={4} container justify="center" className="px-4">
+			<Grid item sm={4} container justify={matches ? 'flex-start' : 'center'} className="px-md-4 px-lg-5 order-0">
 				<AccountCircleIcon className="img-user" />
+				
+				<Hidden xsDown>
+					{
+						links.map(links => (
+							
+							<div className="link w-100 p-4 d-flex justify-content-center align-items-center mb-2" key={links.title}>
+								{ links.icon }
+								<span className="font-weight-bold">{ links.title }</span>
+							</div>
+						))
+					}
+				</Hidden>
 
-				{
-					links.map(links => (
-						
-						<div className="link w-100 p-4 d-flex justify-content-center align-items-center mb-2" key={links.title}>
-							{ links.icon }
-							<span className="font-weight-bold">{ links.title }</span>
-						</div>
-					))
-				}
-
-				<div className="w-100 mt-3">
+				<div className="w-100 mt-3 pl-4 pl-sm-0">
 					<Typography variant="h6" component="p" paragraph>
 						Reputacion
 					</Typography>

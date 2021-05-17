@@ -203,7 +203,7 @@ h6, .h6 {
   order: 12;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .order-sm-first {
     -ms-flex-order: -1;
     order: -1;
@@ -1734,7 +1734,7 @@ h6, .h6 {
   margin-left: auto !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 600px) {
   .m-sm-0 {
     margin: 0 !important;
   }
