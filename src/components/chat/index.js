@@ -1,16 +1,20 @@
-import React from 'react';
-import ChatPage from './ChatPage';
+import React, { useState } from 'react';
+
+import ChatPage from './components/ChatPage';
+
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Chat = () => {
-	
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const open = Boolean(anchorEl);
+
+	const matchesContainerMessages = useMediaQuery('(max-width: 767px)');
+
+	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);	
 
 	return (
 		<ChatPage
-			setAnchorEl={setAnchorEl}
-			anchorEl={anchorEl}
-			open={open}
+			matchesContainerMessages={matchesContainerMessages}
+			selectedMessage={selectedMessage}
+			setSelectedMessage={setSelectedMessage}
 		/>
 	)
 }

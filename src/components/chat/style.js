@@ -119,6 +119,10 @@ export const MessagesStyle = styled.section`
 		.container-icon {
 			border: 1px solid black;
 			border-bottom: none;
+
+			svg {
+				color: black;
+			}
 		}
 
 		input {
@@ -129,6 +133,27 @@ export const MessagesStyle = styled.section`
 		button {
 			position: relative;
 			left: calc(100% - 90px);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.px-5 {
+			padding-left: 6rem !important;
+			padding-right: 6rem !important;
+		}
+	}
+
+	@media (max-width: 500px) {
+		.px-5 {
+			padding-left: 3rem !important;
+			padding-right: 3rem !important;
+		}
+	}
+
+	@media (max-width: 350px) {
+		.px-5 {
+			padding-left: 1rem !important;
+			padding-right: 1rem !important;
 		}
 	}
 `;

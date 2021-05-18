@@ -5,7 +5,7 @@ import { EditUserStyle } from './style';
 
 import { Input, TextareaAutosize, Divider } from '@material-ui/core';
 
-const socialReds = [ 
+const socialRedsLinks = [ 
 	{link: 'http://twitter.com/', typeSocialRed: 'Twitter'},
 	{link: 'http://www.facebook.com/', typeSocialRed: 'Facebook'},
 	{link: 'https://www.instagram.com/', typeSocialRed: 'Instagram'},
@@ -61,8 +61,9 @@ const EditUserPage = () => (
 					name="price"
 					type="text"
 				/>
+				
 				{
-					socialReds.map((socialRed, index) => (
+					socialRedsLinks.map((socialRed, index) => (
 						
 						<div className="d-flex mb-3" key={index}>
 							<span

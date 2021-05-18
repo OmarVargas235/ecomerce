@@ -50,7 +50,7 @@ const CreateProductPage = ({ checked, handleChecked }) => (
 
 		<Divider light />
 
-		<div className="py-4 px-5 text-center">
+		<div className="py-4 px-5 mx-4 text-center">
 			<h5>Escoje las categorias del producto</h5>
 			
 			<FormGroup>

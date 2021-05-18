@@ -17,5 +17,18 @@ export const EditUserStyle = styled.section`
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
+
+		@media (max-width: 450px) {
+			span {
+				width: 150px;
+				overflow: hidden;
+			}
+		}
+
+		@media (max-width: 360px) {
+			span {
+				width: 100px;
+			}
+		}
 	}
 `;

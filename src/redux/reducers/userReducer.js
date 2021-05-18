@@ -8,6 +8,7 @@ const initialState = {
 	auth: {
 		isAuthenticated: false,
 		token: '',
+		loading: true,
 	}
 }
 
@@ -23,12 +24,13 @@ export default function userReducer(state=initialState, { type, payload }) {
 			}
 
 		case LOGIN_USER:
-
+			
 			return {
 				...state,
 				auth: {
 					isAuthenticated: true,
 					token: payload,
+					loading: false,
 				},
 			}
 

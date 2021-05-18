@@ -20,25 +20,29 @@ const RouterApp = () => {
 		<Router>
 			<Navbar />
 
-			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/productos/:name" component={MoreProducts} />
-				<Route exact path="/producto/:id" component={Product} />
+			{
+				auth.loading ? <div>Cargando</div>
+				: <Switch>
+					<Route exact path="/" component={Home} />
+					<Route exact path="/productos/:name" component={MoreProducts} />
+					<Route exact path="/producto/:id" component={Product} />
 
-				{
-					auth.isAuthenticated
-					? <PrivateRouter
-						exact
-						component={ DashboardRoutesPrivate }
-						isAuthenticated={ auth.isAuthenticated }
-					/>
-					: <PublicRouter
-						exact
-						component={ DashboardRoutesPublic }
-						isAuthenticated={ auth.isAuthenticated }
-					/>	
-				}
-			</Switch>
+					{
+						auth.isAuthenticated
+						? <PrivateRouter
+							exact
+							component={ DashboardRoutesPrivate }
+							isAuthenticated={ auth.isAuthenticated }
+						/>
+						: <PublicRouter
+							exact
+							component={ DashboardRoutesPublic }
+							isAuthenticated={ auth.isAuthenticated }
+						/>	
+					}
+				</Switch>
+			}
+
 		</Router>
 	)
 }
