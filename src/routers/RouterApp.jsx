@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { loadingAction } from '../redux/actions/userAction';
 import Navbar from '../components/navbar/';
 import Home from '../components/home/';
 import Product from '../components/product/';
@@ -13,15 +14,19 @@ import PublicRouter from './PublicRouter';
 import PrivateRouter from './PrivateRouter';
 
 const RouterApp = () => {
+	
+	const dispatch = useDispatch();
 
-	const auth = useSelector(state => state.user.auth);
+	const { auth, loading } = useSelector(state => state.user);
+
+	useEffect(() => dispatch( loadingAction() ), [dispatch]);
 	
 	return (
 		<Router>
 			<Navbar />
 
 			{
-				auth.loading ? <div>Cargando</div>
+				loading ? <div>Cargando</div>
 				: <Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/productos/:name" component={MoreProducts} />

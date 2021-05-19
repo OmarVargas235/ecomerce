@@ -3,6 +3,7 @@
 // =====================================
 export const GET_DATA_USER = 'GET_DATA_USER';
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOADING = 'LOADING';
 
 // =====================================
 // Acciones del carrito de compras

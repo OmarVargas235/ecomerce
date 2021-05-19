@@ -1,6 +1,7 @@
 import {
 	GET_DATA_USER,
 	LOGIN_USER,
+	LOADING,
 } from '../types/';
 
 const initialState = {
@@ -8,8 +9,8 @@ const initialState = {
 	auth: {
 		isAuthenticated: false,
 		token: '',
-		loading: true,
-	}
+	},
+	loading: true,
 }
 
 export default function userReducer(state=initialState, { type, payload }) {
@@ -29,9 +30,15 @@ export default function userReducer(state=initialState, { type, payload }) {
 				...state,
 				auth: {
 					isAuthenticated: true,
-					token: payload,
-					loading: false,
+					token: payload,	
 				},
+			}
+
+		case LOADING:
+		
+			return {
+				...state,
+				loading: false,
 			}
 
 		default: return state;
