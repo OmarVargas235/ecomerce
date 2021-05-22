@@ -11,3 +11,10 @@ export const LOADING = 'LOADING';
 export const ADD_CART = 'ADD_CART';
 export const DELETE_CART = 'DELETE_CART';
 export const CLEAR_CART = 'CLEAR_CART';
+
+// =====================================
+// Acciones de productos
+// =====================================
+export const GET_PRODUCT = 'GET_PRODUCT';
+export const GET_PRODUCT_FAIL = 'GET_PRODUCT_FAIL';
+export const LOADING_PRODUCT = 'LOADING_PRODUCT';

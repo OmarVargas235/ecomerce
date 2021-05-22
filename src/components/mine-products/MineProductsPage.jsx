@@ -1,19 +1,18 @@
 import React from 'react';
 
-import { accessories } from '../../utils/dataCardsHome';
-
 import { Grid, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { teal } from '@material-ui/core/colors';
 
-const MineProductsPage = ({ history }) => (
-	<Grid container className="py-4 px-5 text-center">
+const MineProductsPage = ({ history, loading, products=[] }) => (
+	<div className="py-4 px-5 text-center">
+		{console.log(loading)}
 		{
-			accessories.map((product, index) => (
-				<React.Fragment key={index}>
+			products.map((product, index) => (
+				<Grid container key={index} className="mb-3">
 					<Grid item xs={3} className="mb-3">
-						<img src={product.img} alt={product.name} className="img-fluid" />
+						<img src={`http://localhost:5000/${product.img}`} alt={product.name} className="img-fluid" />
 					</Grid>
 
 					<Grid item xs={6} container justify="center" direction="column">
@@ -42,10 +41,10 @@ const MineProductsPage = ({ history }) => (
 						/>
 						<DeleteIcon style={{ color: teal[500] }} className="pointer" />
 					</Grid>
-				</React.Fragment>
+				</Grid>
 			))
 		}
-	</Grid>
+	</div>
 )
 
 export default MineProductsPage;

@@ -19,13 +19,13 @@ export const requestWithoutToken = async (url = "", formData={}, method="GET") =
 	}
 }
 
-export const requestWithToken = async (url = "", formData={}, method="GET", token="") => {
+export const requestWithToken = async (url = "", token="", formData={}, method="GET") => {
 
-	// if (method === 'GET') {
+	if (method === 'GET') {
 
-	// 	return fetch(`http://localhost:5000/${url}`);
+		return await fetch(`http://localhost:5000/${url}`, { headers: {'x-token': token} });
 
-	// } else {
+	} else {
 
 		const resp = await fetch(`http://localhost:5000/${url}`, {
 			method,
@@ -39,5 +39,5 @@ export const requestWithToken = async (url = "", formData={}, method="GET", toke
 		const data = await resp.json();
 
 		return data;
-	// }
+	}
 }

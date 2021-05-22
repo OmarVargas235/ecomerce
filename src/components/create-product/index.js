@@ -58,7 +58,7 @@ const CreateProduct = () => {
 		formData.append('stock', productInfo.stock);
 		formData.append('id', dataUser.uid);
 
-		const { ok, messages } = await requestWithToken('create-product', formData, 'POST', token);
+		const { ok, messages } = await requestWithToken('create-product', token, formData, 'POST');
 		
 		alert(ok ? 'success' : 'error', messages);
 
