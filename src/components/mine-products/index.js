@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ControlPanel from '../../layaut/ControlPanel';
-import MineProductsPage from './MineProductsPage';
+import MineProductsPage from './components/MineProductsPage';
 import { getProductsActions } from '../../redux/actions/productActions';
 
 const MineProducts = ({ history }) => {
@@ -20,7 +20,7 @@ const MineProducts = ({ history }) => {
 
 		dispatch( getProductsActions({ token, id }) );
 
-	}, [dispatch]);
+	}, [dispatch, user]);
 	
 	return (
 		<ControlPanel

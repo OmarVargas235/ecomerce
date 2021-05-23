@@ -15,6 +15,8 @@ export const CLEAR_CART = 'CLEAR_CART';
 // =====================================
 // Acciones de productos
 // =====================================
+export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_PRODUCT = 'GET_PRODUCT';
+export const GET_PRODUCTS_FAIL = 'GET_PRODUCTS_FAIL';
 export const GET_PRODUCT_FAIL = 'GET_PRODUCT_FAIL';
 export const LOADING_PRODUCT = 'LOADING_PRODUCT';

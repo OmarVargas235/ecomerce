@@ -17,7 +17,7 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/notificaciones" component={Notifications} />
 		<Route exact path="/mensajes" component={Chat} />
 		<Route exact path="/mi-perfil" component={Profile} />
-		<Route exact path="/editar-producto" component={EditProduct} />
+		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<Redirect to="/" />
 	</Switch>
