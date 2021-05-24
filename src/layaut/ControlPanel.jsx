@@ -31,7 +31,7 @@ const ControlPanel = ({ component:Component, history, title, text }) => {
 
 		        		<div className="container__options-user mb-3">
 		        			<Link to="/mi-perfil">Mi perfil</Link>
-		        			<Link to="/">Fotografia</Link>
+		        			<Link to="/fotografia">Fotografia</Link>
 		        			<Link to="/mis-productos">Mi productos</Link>
 		        			<Link to="/crear-producto">Crear productos</Link>
 		        			<Link to="/editar-perfil">Editar perfil</Link>

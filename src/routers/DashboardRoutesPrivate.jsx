@@ -8,6 +8,7 @@ import Notifications from '../components/notifications/';
 import Chat from '../components/chat/';
 import Profile from '../components/profile';
 import EditProduct from '../components/edit-product';
+import EditImgProfile from '../components/edit-img-profile';
 
 const DashboardRoutesPrivate = () => (		
 	<Switch>
@@ -17,6 +18,7 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/notificaciones" component={Notifications} />
 		<Route exact path="/mensajes" component={Chat} />
 		<Route exact path="/mi-perfil" component={Profile} />
+		<Route exact path="/fotografia" component={EditImgProfile} />
 		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<Redirect to="/" />

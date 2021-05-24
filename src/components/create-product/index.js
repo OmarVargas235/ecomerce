@@ -10,7 +10,7 @@ import { alert } from '../../utils/alert';
 
 const categories = new Set();
 
-const CreateProduct = () => {
+const CreateProduct = ({ history }) => {
 
 	const dataUser = useSelector(state => state.user.dataUser);
 	const token = useSelector(state => state.user.auth.token);
@@ -61,6 +61,8 @@ const CreateProduct = () => {
 		const { ok, messages } = await requestWithToken('create-product', token, formData, 'POST');
 		
 		alert(ok ? 'success' : 'error', messages);
+
+		if (ok) history.push('/mis-productos');
 
 		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(!ok ? true : false);

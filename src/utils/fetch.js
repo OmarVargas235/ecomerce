@@ -26,15 +26,13 @@ export const requestWithToken = async (url = "", token="", formData={}, method="
 		return await fetch(`http://localhost:5000/${url}`, { headers: {'x-token': token} });
 
 	} else {
-
+		
 		const resp = await fetch(`http://localhost:5000/${url}`, {
 			method,
 			headers: {
-		      // 'Content-Type' : 'multipart/form-data',
 		      'x-token': token
 			},
 			body: formData,
-			// body: JSON.stringify(formData),
 		});
 		const data = await resp.json();
 
