@@ -7,10 +7,11 @@ import { getProductActions } from '../../redux/actions/productActions';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
+import { requestWithToken } from '../../utils/fetch';
 
 let categories = new Set();
 
-const EditProduct = ({ match }) => {
+const EditProduct = ({ history, match }) => {
 	
 	const { id } = match.params;
 	const user = useSelector(state => state.user);
@@ -40,7 +41,7 @@ const EditProduct = ({ match }) => {
 		const token = user.auth.token;
 		dispatch( getProductActions({ token, id }) );
 
-	}, [dispatch, user]);
+	}, [dispatch, user, id]);
 
 	if (Object.keys(product).length > 0) categories = product.categories;
 
@@ -51,6 +52,7 @@ const EditProduct = ({ match }) => {
 		const formDataRef = getDataRef();
 
 		const { img:images, ...productInfo } = formDataRef;
+		const token = user.auth.token;
 
 		if (categories.size === 0) alert('error', ['Debe de seleccionar al menos una categoria']);
 
@@ -59,12 +61,33 @@ const EditProduct = ({ match }) => {
 			setIsRequired({...required, images: images.length === 1});
 			return;
 		}
+
+		setIsRequired({required, images: false});
+
+		const formData = new FormData();
+		Array.from(images).forEach(img => formData.append('img-product', img) );
+		formData.append('categories', Array.from(categories));
+		formData.append('description', productInfo.description);
+		formData.append('name', productInfo.name);
+		formData.append('price', productInfo.price);
+		formData.append('stock', productInfo.stock);
+
+		const { ok, messages } = await requestWithToken(`edit-product/${id}`, token, formData, 'POST');
+
+		alert(ok ? 'success' : 'error', messages);
+
+		if (ok) return history.push('/mis-productos');
+		
+		// Desactivando el boton y luego activandolo cuando se quite la alerta
+		setDesactiveBtn(true);
+		setTimeout(() => setDesactiveBtn(false), 3000);
   	}
 
 	return (
 		<ControlPanel
 			component={() => <EditProductPage
 				categories={categories}
+				desactiveBtn={desactiveBtn}
 				editProduct={editProduct}
 				formRef={formRef}
 				isRequired={isRequired}

@@ -8,7 +8,7 @@ import Spinner from '../../../layaut/Spinner';
 
 import { Divider } from '@material-ui/core';
 
-const EditProductPage = ({ categories, editProduct, formRef, isRequired, loading, product }) => (
+const EditProductPage = ({ categories, desactiveBtn, editProduct, formRef, isRequired, loading, product }) => (
 	<EditProductStyle className="pt-4 text-center">
 		{
 			loading ? <Spinner />
@@ -31,6 +31,7 @@ const EditProductPage = ({ categories, editProduct, formRef, isRequired, loading
 					<TealButton
 						variant="contained"
 						type="submit"
+						disabled={desactiveBtn}
 					>Editar producto</TealButton>
 				</div>
 			</form>

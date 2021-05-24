@@ -1,7 +1,7 @@
 import {
 	GET_PRODUCTS,
-	GET_PRODUCT,
 	GET_PRODUCTS_FAIL,
+	GET_PRODUCT,
 	GET_PRODUCT_FAIL,
 	LOADING_PRODUCT,
 } from '../types/';
@@ -13,7 +13,7 @@ const initialState = {
 	loading: true,
 }
 
-export default function userReducer(state=initialState, { type, payload }) {
+export default function productReducer(state=initialState, { type, payload }) {
 
 	switch (type) {
 	
