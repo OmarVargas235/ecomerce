@@ -3,7 +3,7 @@ import React from 'react';
 import Spinner from '../../../layaut/Spinner';
 import ProductPage from './ProductPage';
 
-const MineProductsPage = ({ history, loading, products=[] }) => (
+const MineProductsPage = ({ delateProduct, history, loading, products=[] }) => (
 	<div className="py-4 px-5 text-center">
 		{
 			loading ? <Spinner />
@@ -11,6 +11,7 @@ const MineProductsPage = ({ history, loading, products=[] }) => (
 				? <div className="mt-5">No tienes ningun producto</div>
 				: products.map(product => ( <ProductPage
 					key={product.id}
+					delateProduct={delateProduct}
 					history={history}
 					product={product}
 				/> ))

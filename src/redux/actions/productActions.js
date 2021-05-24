@@ -12,7 +12,7 @@ export const getProductsActions = ({ id, token }) => async dispatch => {
 	dispatch( loading() );
 
 	try {
-		
+
 		const resp = await requestWithToken(`get-products/${id}`, token);
 		const { ok, messages } = await resp.json();
 		

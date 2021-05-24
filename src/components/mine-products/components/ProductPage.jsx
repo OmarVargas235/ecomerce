@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { teal } from '@material-ui/core/colors';
 
-const ProductPage = ({ history, product }) => (
+const ProductPage = ({ delateProduct, history, product }) => (
 	<Grid container className="mb-3">
 		<Grid item xs={3} className="mb-3">
 			<img src={`http://localhost:5000/${product.img}`} alt={product.name} className="img-fluid" />
@@ -35,7 +35,11 @@ const ProductPage = ({ history, product }) => (
 				className="pointer mb-3"
 				onClick={() => history.push(`/editar-producto/${product.id}`)}
 			/>
-			<DeleteIcon style={{ color: teal[500] }} className="pointer" />
+			<DeleteIcon
+				style={{ color: teal[500] }}
+				className="pointer"
+				onClick={() => delateProduct(product.id)}
+			/>
 		</Grid>
 	</Grid>
 )
