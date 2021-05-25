@@ -80,6 +80,7 @@ const CreateProduct = ({ history }) => {
 			/>}
 			title="Crear producto"
 			text="Crea el producto llenando todos los campos aqui"
+			textButton="crear producto"
 		/>
 	)
 }

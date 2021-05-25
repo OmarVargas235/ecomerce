@@ -79,6 +79,7 @@ const EditUser = () => {
 			/>}
 			title="Editar tu perfil"
 			text="Edita los datos que creas correspondientes aqui"
+			textButton="guardar cambios"
 		/>
 	)
 }

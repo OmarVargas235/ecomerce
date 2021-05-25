@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../utils/styleMaterialUi';
 import { ControlPanelStyle } from './style';
+import { TealButton } from '../utils/styleMaterialUi';
 
 import { Grid, Divider } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const ControlPanel = ({ component:Component, history, title, text }) => {
+const ControlPanel = ({ component:Component, history, title, text, textButton, desactiveBtn=false, photograph=false, handleClick }) => {
 	
 	const { name, lastName } = useSelector(state => state.user.dataUser);
 
@@ -48,6 +49,23 @@ const ControlPanel = ({ component:Component, history, title, text }) => {
 						<Divider light />
 
 						<Component />
+
+						{
+							!textButton
+							? null
+							: <React.Fragment>
+								<Divider light />
+
+								<div className={`mt-3 px-4 mr-5 text-${photograph ? 'center' : 'right'}`}>
+									<TealButton
+										variant="contained"
+										type="submit"
+										disabled={desactiveBtn}
+										onClick={handleClick}
+									>{textButton}</TealButton>
+								</div>
+							</React.Fragment>
+						}
 					</Grid>
 				</Grid>
 			</ThemeProvider>
