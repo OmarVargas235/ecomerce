@@ -24,8 +24,7 @@ const Navbar = ({ history }) => {
 
 	// Redux
 	const dispatch = useDispatch();
-	const getUserRedux = useSelector(state => state.user.dataUser);
-	const auth = useSelector(state => state.user.auth);
+	const { dataUser, auth } = useSelector(state => state.user);
 
 	const theme = styleMaterialUiTheme();
 	
@@ -34,10 +33,10 @@ const Navbar = ({ history }) => {
 
   	useEffect(() => {
 
-  		const getToken = window.localStorage.getItem('token') || '';
+  		const token = window.localStorage.getItem('token') || '';
 
-  		dispatch( getUserAction() );
-  		getToken && dispatch( loginAction(getToken) );
+  		dispatch( getUserAction(token) );
+  		token && dispatch( loginAction(token) );
 
   	}, [dispatch]);
   	
@@ -56,7 +55,7 @@ const Navbar = ({ history }) => {
 			auth={auth}
 			activeSearch={activeSearch}
 			classes={classes}
-			dataUser={getUserRedux}
+			dataUser={dataUser}
 			history={history}
 			isActiveLink={isActiveLink}
 			matches={matches}

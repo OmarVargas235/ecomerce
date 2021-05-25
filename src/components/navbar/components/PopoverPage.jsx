@@ -38,7 +38,10 @@ const PopoverPage = ({ dataUser, history }) => {
 		<ThemeProvider theme={theme}>
 			<div className="d-inline-block pointer">
 				<div onClick={event => setAnchorEl(event.currentTarget)}>
-					<AccountCircleIcon fontSize="large" />
+					{
+						!dataUser.img ? <AccountCircleIcon fontSize="large" />
+						: <img  className="img-user" src={`http://localhost:5000/${dataUser.img}`} alt="img" />
+					}
 			
 					<Typography
 						variant="body1"
@@ -71,10 +74,11 @@ const PopoverPage = ({ dataUser, history }) => {
 								className="pointer"
 							>
 								<ListItemIcon>
-				            		<AccountCircleIcon
-				            			fontSize="large"
-				            			color="secondary"
-				            		/>
+									{
+										!dataUser.img 
+										? <AccountCircleIcon fontSize="large" color="secondary" />
+										: <img className="img-user" src={`http://localhost:5000/${dataUser.img}`} alt="img" />
+									}
 				         		</ListItemIcon>
 
 								<ListItemText

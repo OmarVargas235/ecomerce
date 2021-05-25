@@ -52,13 +52,12 @@ const Login = ({ history }) => {
 		
 		// Enviando la data del formulario al backend
 		const data = await requestWithoutToken('login-user', formData, 'POST');
-		const { ok, messages, dataUser, token } = data;
+		const { ok, messages, token } = data;
 
 		alert(ok ? 'success' : 'error', messages);
 
 		if (ok) {
 
-			window.localStorage.setItem( 'user-login', JSON.stringify(dataUser) );
 			window.localStorage.setItem( 'token', token );
 			history.push('/');
 

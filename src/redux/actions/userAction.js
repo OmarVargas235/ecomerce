@@ -1,11 +1,33 @@
 import {
-	GET_DATA_USER,
+	GET_USER,
+	GET_USER_FAIL,
 	LOGIN_USER,
 	LOADING,
 } from '../types/';
+import { requestWithToken } from '../../utils/fetch';
 
-export const getUserAction = () => ({
-	type: GET_DATA_USER,
+export const getUserAction = token => async dispatch => {
+
+	try {
+
+		const resp = await requestWithToken('get-user', token);
+		const { ok, messages } = await resp.json();
+		
+		if (ok) dispatch( getUser(messages) );
+	
+	} catch {
+		
+		dispatch( getUserFail() );
+	}
+}
+
+const getUser = payload => ({
+	type: GET_USER,
+	payload,
+});
+
+const getUserFail = () => ({
+	type: GET_USER_FAIL,
 });
 
 export const loginAction = payload => ({

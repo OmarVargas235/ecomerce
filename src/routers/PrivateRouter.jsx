@@ -2,13 +2,13 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ isAuthenticated, component:Component, setPath, ...rest }) => {
+const PrivateRoute = ({ isAuthenticated, component:Component, ...rest }) => {
 
 	return (
 		<Route { ...rest }
 			component={props => (
 				( isAuthenticated )
-				? <Component { ...props } setPath={setPath} />
+				? <Component { ...props } />
 				: <Redirect to="/" />
 			)}
 		/>

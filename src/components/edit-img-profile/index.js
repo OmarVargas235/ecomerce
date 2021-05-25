@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import EditImgProfilePage from './EditImgProfilePage';
 import ControlPanel from '../../layaut/ControlPanel';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
+import { getUserAction } from '../../redux/actions/userAction';
 
 const EditImgProfile = () => {
 	
+	const dispatch = useDispatch();
 	const { auth, dataUser } = useSelector(state => state.user);
 
 	const [previewImage, setPreviewImage] = useState('');
@@ -39,6 +41,8 @@ const EditImgProfile = () => {
 
 		const { ok, messages } = await requestWithToken('upload-img', token, formData, 'POST');
 		alert(ok ? 'success' : 'error', messages);
+
+		dispatch( getUserAction(token) );
 	}
 	
 	return (

@@ -1,5 +1,6 @@
 import {
-	GET_DATA_USER,
+	GET_USER,
+	GET_USER_FAIL,
 	LOGIN_USER,
 	LOADING,
 } from '../types/';
@@ -11,17 +12,25 @@ const initialState = {
 		token: '',
 	},
 	loading: true,
+	error: '',
 }
 
 export default function userReducer(state=initialState, { type, payload }) {
 
 	switch (type) {
 	
-		case GET_DATA_USER:
+		case GET_USER:
 			
 			return {
 				...state,
-				dataUser: JSON.parse(window.localStorage.getItem('user-login')) || {},
+				dataUser: payload,
+			}
+
+		case GET_USER_FAIL:
+			
+			return {
+				...state,
+				error: 'A ocurrido un error',
 			}
 
 		case LOGIN_USER:

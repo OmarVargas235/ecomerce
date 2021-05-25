@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ControlPanel from '../../layaut/ControlPanel';
 import EditUserPage from './components/EditUserPage';
 
-// import { getProductActions } from '../../redux/actions/productActions';
+import { getUserAction } from '../../redux/actions/userAction';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
 import { requestWithToken } from '../../utils/fetch';
 
-const EditUser = () => {
-
+const EditUser = ({ history }) => {
+	
+	const dispatch = useDispatch();
 	const { dataUser, auth } = useSelector(state => state.user);
 
 	const [formRef, getDataRef, desactiveBtn, setDesactiveBtn] = useFormNotController({
@@ -44,12 +45,7 @@ const EditUser = () => {
 
 		if ( validate(data) ) return;
 		
-		const socialMedias = [
-			webPage, `http://twitter.com/${twitter}`,
-			`http://www.facebook.com/${facebook}`,
-			`https://www.instagram.com/${instagram}`,
-			`http://www.youtube.com/${youtube}`
-		];
+		const socialMedias = [ webPage, twitter, facebook, instagram, youtube];
 		const formData = new FormData();
 		formData.append('id', dataUser.uid);
 		formData.append('name', formDataRef.name);
@@ -61,7 +57,11 @@ const EditUser = () => {
 
 		alert(ok ? 'success' : 'error', messages);
 
-		// if (ok) return history.push('/mis-productos');
+		if (ok) {
+			
+			dispatch( getUserAction(token) );
+			return history.push('/mi-perfil');
+		}
 		
 		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(true);
@@ -73,13 +73,13 @@ const EditUser = () => {
 			component={() => <EditUserPage
 				dataUser={dataUser}
 				desactiveBtn={desactiveBtn}
-				editProfile={editProfile}
 				formRef={formRef}
 				isRequired={isRequired}
 			/>}
 			title="Editar tu perfil"
 			text="Edita los datos que creas correspondientes aqui"
-			textButton="guardar cambios"
+			textButton="editar perfil"
+			handleClick={editProfile}
 		/>
 	)
 }

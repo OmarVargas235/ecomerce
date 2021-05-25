@@ -12,7 +12,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const ControlPanel = ({ component:Component, history, title, text, textButton, desactiveBtn=false, photograph=false, handleClick }) => {
 	
-	const { name, lastName } = useSelector(state => state.user.dataUser);
+	const { name, lastName, img } = useSelector(state => state.user.dataUser);
 
 	const theme = styleMaterialUiTheme();
 
@@ -22,10 +22,11 @@ const ControlPanel = ({ component:Component, history, title, text, textButton, d
 				<Grid container className="box">
 					<Grid item xs={12} sm={3} className="divider-horizontal">
 		        		<div className="text-left text-sm-center pl-4 pl-sm-0 mb-4 mt-3 overflow-hidden">
-		        			<AccountCircleIcon
-		        				className="icon"
-		        				color="secondary"
-		        			/>
+		        			{
+		        				!img 
+		        				? <AccountCircleIcon className="icon" color="secondary" />
+		        				: <img className="img-user" src={`http://localhost:5000/${img}`} alt="img" />
+		        			}
 
 		        			<p className="mt-2">{name} {lastName}</p>
 		        		</div>

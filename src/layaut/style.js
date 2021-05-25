@@ -3,6 +3,11 @@ import styled from 'styled-components';
 export const ControlPanelStyle = styled.section`
 	background-color: white;
 
+	.img-user {
+		width: 50px;
+		height: 50px;
+	}
+
 	.box {
 		border: 1px solid #DEDFE0;
 	}

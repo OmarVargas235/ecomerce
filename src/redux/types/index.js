@@ -1,7 +1,8 @@
 // =====================================
 // Acciones del usuario
 // =====================================
-export const GET_DATA_USER = 'GET_DATA_USER';
+export const GET_USER = 'GET_USER';
+export const GET_USER_FAIL = 'GET_USER_FAIL';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOADING = 'LOADING';
 
