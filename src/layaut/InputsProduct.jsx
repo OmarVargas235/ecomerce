@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Input, TextareaAutosize, FormControl, FormHelperText } from '@material-ui/core';
 
-const Inputs = ({ formRef, isRequired, product }) => (
+const InputsProduct = ({ formRef, isRequired, product }) => (
 	<div className="py-4 px-5 text-center">
 		<div className="px-4">
 			<FormControl className="w-100 mb-3">
@@ -12,7 +12,7 @@ const Inputs = ({ formRef, isRequired, product }) => (
 					name="name"
 					type="text"
 					ref={formRef.name}
-					defaultValue={product.name}
+					defaultValue={product ? product.name : formRef.name.current?.firstChild.value}
 					autoComplete="off"
 				/>
 				<FormHelperText
@@ -27,7 +27,7 @@ const Inputs = ({ formRef, isRequired, product }) => (
 					name="price"
 					type="text"
 					ref={formRef.price}
-					defaultValue={product.price}
+					defaultValue={product ? product.price : formRef.price.current?.firstChild.value}
 				/>
 
 				<FormHelperText
@@ -42,7 +42,7 @@ const Inputs = ({ formRef, isRequired, product }) => (
 					name="stock"
 					type="text"
 					ref={formRef.stock}
-					defaultValue={product.stock}
+					defaultValue={product ? product.stock : formRef.stock.current?.firstChild.value}
 				/>
 
 				<FormHelperText
@@ -71,7 +71,7 @@ const Inputs = ({ formRef, isRequired, product }) => (
 					placeholder="Descripcion del producto"
 					name="description"
 					ref={formRef.description}
-					defaultValue={product.description}
+					defaultValue={product ? product.description : formRef.description.current?.value}
 				/>
 
 				<FormHelperText
@@ -82,4 +82,4 @@ const Inputs = ({ formRef, isRequired, product }) => (
 	</div>
 )
 
-export default Inputs;
+export default InputsProduct;

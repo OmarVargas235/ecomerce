@@ -6,11 +6,10 @@ import { EditUserStyle } from '../style';
 
 import { Divider } from '@material-ui/core';
 
-const EditUserPage = ({ dataUser, desactiveBtn, formRef, isRequired }) => (
+const EditUserPage = ({ dataUser, formRef, isRequired }) => (
 
 	<EditUserStyle className="pt-4 text-center">
 		<form>
-			
 			<InputsPage
 				dataUser={dataUser}
 				formRef={formRef}

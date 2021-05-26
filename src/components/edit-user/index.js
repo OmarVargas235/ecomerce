@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ControlPanel from '../../layaut/ControlPanel';
 import EditUserPage from './components/EditUserPage';
 
-import { getUserAction } from '../../redux/actions/userAction';
+import { getUserAction, logoutUser } from '../../redux/actions/userAction';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
@@ -53,9 +53,15 @@ const EditUser = ({ history }) => {
 		formData.append('description', formDataRef.description);
 		formData.append('socialMedias', socialMedias);
 		
-		const { ok, messages } = await requestWithToken('edit-user', token, formData, 'POST');
+		const { ok, messages, authBD } = await requestWithToken('edit-user', token, formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);
+
+		if (authBD) {
+			
+			dispatch( logoutUser() );
+			return;
+		}
 
 		if (ok) {
 			
@@ -67,12 +73,11 @@ const EditUser = ({ history }) => {
 		setDesactiveBtn(true);
 		setTimeout(() => setDesactiveBtn(false), 3000);
   	}
-
+	
 	return (
 		<ControlPanel
 			component={() => <EditUserPage
 				dataUser={dataUser}
-				desactiveBtn={desactiveBtn}
 				formRef={formRef}
 				isRequired={isRequired}
 			/>}
@@ -80,6 +85,7 @@ const EditUser = ({ history }) => {
 			text="Edita los datos que creas correspondientes aqui"
 			textButton="editar perfil"
 			handleClick={editProfile}
+			desactiveBtn={desactiveBtn}
 		/>
 	)
 }

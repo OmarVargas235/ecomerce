@@ -24,13 +24,12 @@ const SocialMediaPage = ({ formRef }) => (
 		/>
 		
 		{
-			socialRedsLinks.map((socialRed, index) => (
-				
+			socialRedsLinks.map((socialRed, index) => (			
 				<div className="d-flex mb-3" key={index}>
 					<span
 						className="url p-2 d-flex justify-content-center align-items-center"
 					>{socialRed.link}</span>
-
+					
 					<Input
 						disableUnderline
 						className="w-100"

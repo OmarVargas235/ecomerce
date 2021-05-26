@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ControlPanel from '../../layaut/ControlPanel';
-import EditProductPage from './components/EditProductPage';
+import EditProductPage from './EditProductPage';
 import { getProductActions } from '../../redux/actions/productActions';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
 import { requestWithToken } from '../../utils/fetch';
+import { logoutUser } from '../../redux/actions/userAction';
 
 let categories = new Set();
 
@@ -72,9 +73,15 @@ const EditProduct = ({ history, match }) => {
 		formData.append('price', productInfo.price);
 		formData.append('stock', productInfo.stock);
 
-		const { ok, messages } = await requestWithToken(`edit-product/${id}`, token, formData, 'POST');
+		const { ok, messages, authBD } = await requestWithToken(`edit-product/${id}`, token, formData, 'POST');
 
 		alert(ok ? 'success' : 'error', messages);
+
+		if (authBD) {
+			
+			dispatch( logoutUser() );
+			return;
+		}
 
 		if (ok) return history.push('/mis-productos');
 		
@@ -87,8 +94,6 @@ const EditProduct = ({ history, match }) => {
 		<ControlPanel
 			component={() => <EditProductPage
 				categories={categories}
-				desactiveBtn={desactiveBtn}
-				editProduct={editProduct}
 				formRef={formRef}
 				isRequired={isRequired}
 				loading={loading}
@@ -96,6 +101,9 @@ const EditProduct = ({ history, match }) => {
 			/>}
 			title="Editar producto"
 			text="Edita los datos que creas correspondientes aqui"
+			desactiveBtn={desactiveBtn}
+			textButton="Editar producto"
+			handleClick={editProduct}
 		/>
 	)
 }

@@ -50,7 +50,6 @@ const EditImgProfile = () => {
 			component={() => <EditImgProfilePage
 				handleChange={handleChange}
 				previewImage={previewImage}
-				uploadImage={uploadImage}
 			/>}
 			title="Fotografía"
 			text="Añade una foto tuya al perfil."

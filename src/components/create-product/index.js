@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { requestWithToken } from '../../utils/fetch';
+import { logoutUser } from '../../redux/actions/userAction';
 import ControlPanel from '../../layaut/ControlPanel';
-import CreateProductPage from './components/CreateProductPage';
+import CreateProductPage from './CreateProductPage';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
@@ -11,7 +12,8 @@ import { alert } from '../../utils/alert';
 const categories = new Set();
 
 const CreateProduct = ({ history }) => {
-
+	
+	const dispatch = useDispatch();
 	const dataUser = useSelector(state => state.user.dataUser);
 	const token = useSelector(state => state.user.auth.token);
 
@@ -30,6 +32,8 @@ const CreateProduct = ({ history }) => {
 		description: false,
 	});
 	const [isRequired, setIsRequired] = useState({});
+
+	useEffect(() => () => categories.clear(), []);
 
   	const createProduct = async e => {
 
@@ -58,9 +62,15 @@ const CreateProduct = ({ history }) => {
 		formData.append('stock', productInfo.stock);
 		formData.append('id', dataUser.uid);
 
-		const { ok, messages } = await requestWithToken('create-product', token, formData, 'POST');
+		const { ok, messages, authBD } = await requestWithToken('create-product', token, formData, 'POST');
 		
 		alert(ok ? 'success' : 'error', messages);
+
+		if (authBD) {
+			
+			dispatch( logoutUser() );
+			return;
+		}
 
 		if (ok) history.push('/mis-productos');
 
@@ -73,14 +83,14 @@ const CreateProduct = ({ history }) => {
 		<ControlPanel
 			component={() => <CreateProductPage
 				categories={categories}
-				createProduct={createProduct}
-				desactiveBtn={desactiveBtn}
 				formRef={formRef}
 				isRequired={isRequired}
 			/>}
 			title="Crear producto"
 			text="Crea el producto llenando todos los campos aqui"
 			textButton="crear producto"
+			handleClick={createProduct}
+			desactiveBtn={desactiveBtn}
 		/>
 	)
 }

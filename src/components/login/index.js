@@ -61,7 +61,7 @@ const Login = ({ history }) => {
 			window.localStorage.setItem( 'token', token );
 			history.push('/');
 
-			dispatch( getUserAction() );
+			dispatch( getUserAction(token) );
 			dispatch( loginAction(token) );
 
 			return;

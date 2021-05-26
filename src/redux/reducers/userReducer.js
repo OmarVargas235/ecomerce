@@ -2,6 +2,7 @@ import {
 	GET_USER,
 	GET_USER_FAIL,
 	LOGIN_USER,
+	LOGOUT_USER,
 	LOADING,
 } from '../types/';
 
@@ -40,6 +41,15 @@ export default function userReducer(state=initialState, { type, payload }) {
 				auth: {
 					isAuthenticated: true,
 					token: payload,	
+				},
+			}
+
+		case LOGOUT_USER:
+			return {
+				...state,
+				auth: {
+					isAuthenticated: false,
+					token: '',	
 				},
 			}
 

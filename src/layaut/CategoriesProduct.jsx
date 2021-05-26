@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { TealCheckbox } from '../../../utils/styleMaterialUi';
+import { TealCheckbox } from '../utils/styleMaterialUi';
 
 import { FormGroup, FormControlLabel } from '@material-ui/core';
 
-const Categories = ({ categories }) => {
+const CategoriesProduct = ({ categories }) => {
 
 	const [checked, setChecked] = useState({
 		checkedA: false,
@@ -95,4 +95,4 @@ const Categories = ({ categories }) => {
 	)
 }
 
-export default Categories;
+export default CategoriesProduct;

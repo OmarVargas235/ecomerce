@@ -6,6 +6,7 @@ import MineProductsPage from './components/MineProductsPage';
 import { getProductsActions } from '../../redux/actions/productActions';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
+import { logoutUser } from '../../redux/actions/userAction';
 
 const MineProducts = ({ history }) => {
 	
@@ -32,9 +33,16 @@ const MineProducts = ({ history }) => {
 
 		const token = user.auth.token;
 
-		const { ok, messages } = await requestWithToken('delete-product', token, formData, 'DELETE');
+		const { ok, messages, authBD } = await requestWithToken('delete-product', token, formData, 'DELETE');
 
 		alert(ok ? 'success' : 'error', messages);
+		
+		if (authBD) {
+			
+			dispatch( logoutUser() );
+			return;
+		}
+
 		dispatch( getProductsActions({ token, id: idUser }) );
 	}
 	
