@@ -39,8 +39,7 @@ const EditProduct = ({ history, match }) => {
 
 	useEffect(() => {
 		
-		const token = user.auth.token;
-		dispatch( getProductActions({ token, id }) );
+		dispatch( getProductActions(id) );
 
 	}, [dispatch, user, id]);
 
