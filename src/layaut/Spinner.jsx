@@ -10,9 +10,11 @@ function Spinner() {
 	const theme = styleMaterialUiTheme();
 
   	return (
-  		<ThemeProvider theme={theme}>
-			<CircularProgress color="secondary" className="mt-5" />
-		</ThemeProvider>
+  		<div className="mt-5 w-100 text-center">
+  			<ThemeProvider theme={theme}>
+  				<CircularProgress color="secondary" />
+  			</ThemeProvider>
+  		</div>
 	);
 }
 

@@ -22,13 +22,13 @@ const CardProductHome = ({ history, product }) => {
 	
 	return (
 		<Card 
-			className={`d-flex flex-column justify-content-between w-100 ${classes.root}`}
+			className={`d-flex flex-column justify-content-between mb-4 w-100 ${classes.root}`}
 			raised={true}
 		>
 			<CardActionArea>
 				<CardMedia
 					className={classes.media}
-					image={product.img}
+					image={`http://localhost:5000/${product.img}`}
 					title={product.name}
 				/>
 

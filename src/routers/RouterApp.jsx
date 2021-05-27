@@ -7,6 +7,7 @@ import Navbar from '../components/navbar/';
 import Home from '../components/home/';
 import Product from '../components/product/';
 import MoreProducts from '../components/products_of/';
+import ProductsSearch from '../components/products-search/';
 
 import DashboardRoutesPublic from './DashboardRoutesPublic';
 import DashboardRoutesPrivate from './DashboardRoutesPrivate';
@@ -31,6 +32,7 @@ const RouterApp = () => {
 					<Route exact path="/" component={Home} />
 					<Route exact path="/productos/:name" component={MoreProducts} />
 					<Route exact path="/producto/:id" component={Product} />
+					<Route exact path="/products-search" component={ProductsSearch} />
 
 					{
 						auth.isAuthenticated
