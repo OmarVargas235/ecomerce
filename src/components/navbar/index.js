@@ -34,7 +34,7 @@ const Navbar = ({ history }) => {
   	useEffect(() => {
 
   		const token = window.localStorage.getItem('token') || '';
-		
+			
   		dispatch( getUserAction(token) );
   		token && dispatch( loginAction(token) );
 

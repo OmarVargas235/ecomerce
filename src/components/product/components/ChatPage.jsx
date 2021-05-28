@@ -9,7 +9,7 @@ import StarIcon from '@material-ui/icons/Star';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Pagination from '@material-ui/lab/Pagination';
 
-const ChatPage = ({ classes, matches, theme }) => (
+const ChatPage = ({ classes, isAuthenticated, matches, nameUser, theme }) => (
 	<div className="mt-5 chat">
 		<Grid container alignItems="center">
 			<Grid item xs={3} sm={2}>
@@ -32,48 +32,55 @@ const ChatPage = ({ classes, matches, theme }) => (
 				</Typography>
 			</Grid>
 		</Grid>
-
-		<SelectionMenu
-			categorys={categorysScore}
-			value={categorysScoreValue}
-			title="Clasificacion"
-			theme={theme}
-		/>
+		
+		{
+			!isAuthenticated ? null
+			: <SelectionMenu
+				categorys={categorysScore}
+				value={categorysScoreValue}
+				title="Clasificacion"
+				theme={theme}
+			/>
+		}
 
 		<h3 className="mt-4">Preguntas y Respuesta</h3>
 
-		<h5 className="my-4">Pregunte a Omar</h5>
+		<h5 className="my-4">Pregunte a <span className="text-capitalize">{nameUser}</span></h5>
 
-		<form className={classes.root} noValidate autoComplete="off">
-			<Grid container spacing={3}>		
-				<Grid item xs={7} sm={6} className="px-0">
-					<Autocomplete
-						freeSolo
-						options={[].map((option) => option.title)}
-						renderInput={(params) => (
-							<TextField 
-								{...params}
-								label="Escribir comentario"
-								margin="normal"
-								variant="outlined"
-								color="secondary"
-							/>
-						)}
-					/>
-				</Grid>
+		{
+			!isAuthenticated ? null
+			: <form className="ml-3" noValidate autoComplete="off">
+				<Grid container spacing={3}>		
+					<Grid item xs={7} sm={6} className="px-0">
+						<Autocomplete
+							freeSolo
+							options={[].map((option) => option.title)}
+							renderInput={(params) => (
+								<TextField 
+									{...params}
+									label="Escribir comentario"
+									margin="normal"
+									variant="outlined"
+									color="secondary"
+								/>
+							)}
+						/>
+					</Grid>
 
-				<Grid item xs={5} sm={6} className="px-0">
-					<Button
-						variant="contained"
-						color="primary"
-						size={matches ? "small" : "large"}
-						className="ml-3 mt-4"
-					>
-					  	Secondary
-					</Button>			
+					<Grid item xs={5} sm={6} className="px-0">
+						<Button
+							variant="contained"
+							color="primary"
+							size={matches ? "small" : "large"}
+							className="ml-3 mt-4"
+						>
+						  	Secondary
+						</Button>			
+					</Grid>
 				</Grid>
-			</Grid>
-	    </form>
+		    </form>
+		}
+
 
 	    <CommentsPage />
 	    <CommentsPage />

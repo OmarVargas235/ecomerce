@@ -18,10 +18,9 @@ const MineProducts = ({ history }) => {
 
 	useEffect(() => {
 		
-		const token = user.auth.token;
 		const id = user.dataUser.uid;
 
-		dispatch( getProductsActions({ token, id }) );
+		dispatch( getProductsActions(id) );
 
 	}, [dispatch, user]);
 
@@ -43,7 +42,7 @@ const MineProducts = ({ history }) => {
 			return;
 		}
 
-		dispatch( getProductsActions({ token, id: idUser }) );
+		dispatch( getProductsActions(idUser) );
 	}
 	
 	return (

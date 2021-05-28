@@ -5,7 +5,7 @@ import { Card, CardContent, CardActions, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, turn }) => (
+const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, product, turn }) => (
 	<Card className={classes.root} variant="outlined">
 		<CardContent>
 			<Grid container spacing={3}>
@@ -13,9 +13,9 @@ const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, turn
 					<Typography
 						variant="h5"
 						component="h6"
-						className="font-weight-bold"
+						className="font-weight-bold text-capitalize"
 					>
-						Juego De Dardos MagnéticosCod 226
+						{product.name}
 					</Typography>
 				</Grid>
 				
@@ -36,15 +36,15 @@ const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, turn
 			</Grid>
 
 			<Typography variant="h4" component="h5" className="my-4 font-weight-light">
-				Bs.13.85
+				Bs {product.price}
 			</Typography>
-
+			
 			<Typography variant="body2" component="h5">
-				Cantidad 1
+				Cantidad 0
 			</Typography>
 
 			<Typography variant="body2" component="p" className="my-4">
-				Disponibles 6
+				Disponibles {product.stock}
 			</Typography>
 		</CardContent>
 

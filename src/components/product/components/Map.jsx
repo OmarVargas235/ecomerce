@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Typography, Card, CardActions  } from '@material-ui/core';
 
 const Map = ({ classes }) => (

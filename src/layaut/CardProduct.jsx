@@ -1,42 +1,64 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { RedLightButton } from '../utils/styleMaterialUi';
 
-const CardProduct = ({ classes, data }) => (
-	<Card raised={true} className={classes.card}>
-		<CardActionArea>
-			<CardMedia
-				component="img"
-				alt="Contemplative Reptile"
-				height="140"
-				image={data.img}
-				title={data.id}
-			/>
+import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardActionArea, CardActions, CardContent } from '@material-ui/core';
+import { CardMedia, Typography } from '@material-ui/core';
 
-			<CardContent>
-				<Typography gutterBottom variant="h6" component="h2">
-					${ data.price }
-				</Typography>
+const useStyles = makeStyles({
+	root: {
+		maxWidth: 345,
+	},
+	media: {
+		height: 140,
+	},
+});
 
-				<Typography
-					variant="body2"
-					color="textSecondary"
-					className="text-green"
+const CardProduct = ({ history, product }) => {
+
+	const classes = useStyles();
+	
+	return (
+		<Card 
+			className={`d-flex flex-column justify-content-between mb-4 w-100 ${classes.root}`}
+			raised={true}
+		>
+			<CardActionArea>
+				<CardMedia
+					className={classes.media}
+					image={`http://localhost:5000/${product.img}`}
+					title={product.name}
+				/>
+
+				<CardContent>
+					<Typography gutterBottom variant="h5" component="h2" align="center">
+						{product.name}
+					</Typography>
+
+					<Typography gutterBottom variant="h6" component="h3" align="center">
+						{product.price}
+					</Typography>
+
+					<Typography gutterBottom variant="h6" component="h4" align="center">
+						{product.description}
+					</Typography>
+				</CardContent>
+			</CardActionArea>
+			
+			<CardActions className="mb-sm-3">
+				<RedLightButton
+					onClick={() => history.push(`/producto/${product.id}`)}
+					size="medium"
+					color="primary"
+					className="btn-block"
 				>
-					Envio gratis
-				</Typography>
+					Mas informacion
+				</RedLightButton>
+			</CardActions>
+		</Card>
+	)
+}
 
-				<Typography
-					variant="body2"
-					color="textSecondary"
-					component="p"
-				>
-					{ data.name }
-				</Typography>
-			</CardContent>
-		</CardActionArea>
-	</Card>
-)
-
-export default CardProduct;
+export default withRouter(CardProduct);

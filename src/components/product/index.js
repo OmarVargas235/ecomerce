@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ProductPage from './components/ProductPage';
-import { items } from '../../utils/dataProducts';
-import { accessories } from '../../utils/dataCardsHome';
+import { getProductActions, getProductsActions } from '../../redux/actions/productActions';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,21 +16,37 @@ const useStyles = makeStyles({
 	},
 });
 
-const products = [...items, ...accessories];
-
 const Product = ({ match }) => {
+	
+	const { id } = match.params;
+	
+	const dispatch = useDispatch();
+	const { product, products } = useSelector(state => state.product);
+	const { isAuthenticated } = useSelector(state => state.user.auth);
 
 	const classes = useStyles();
-	
-	const productMemo = useMemo(() => products.find(product => product.id === match.params.id), [match]);
 
 	const theme = styleMaterialUiTheme();
+
+	const [idUser, setSidUser] = useState(null);
+
+	useEffect(() => product.user && setSidUser(product.user['_id'] || null), [product]);
+
+	useEffect(() => {
+		
+		dispatch( getProductActions(id) );
+		if (!idUser) return;
+
+		dispatch( getProductsActions(idUser) );
+
+	}, [dispatch, id, idUser]);
 	
 	return (
 		<ProductPage
 			classes={classes}
-			items={items}
-			productMemo={productMemo}
+			isAuthenticated={isAuthenticated}
+			product={product}
+			products={products}
 			theme={theme}
 		/>
 	)

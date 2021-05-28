@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import GalleryPage from '../components/GalleryPage';
+import React, { useState, useEffect } from 'react';
+import GalleryPage from '../components/GalleryPage'; 
 
-const Gallery = ({ items, name }) => {
+const Gallery = ({ product }) => {
+
+	const { images, name } = product;
 	
 	const [openModal, setOpenModal] = useState(false);
-	const [changeImg, setChangeImg] = useState({ img: items[0].img, id: items[0].id });
+	const [changeImg, setChangeImg] = useState({});
+
+	useEffect(() => setChangeImg({img: images[0], index: 0}), [images]);
 
 	const handleClickOpen = () => setOpenModal(true);
 	const handleClose = () => setOpenModal(false);
-
-	const indexCarrousel = items.findIndex(item => item.id === changeImg.id);
 
 	return (
 		<GalleryPage
 			changeImg={changeImg}
 			handleClose={handleClose}
 			handleClickOpen={handleClickOpen}
-			items={items}
-			indexCarrousel={indexCarrousel}
+			images={product.images}
 			name={name}
 			openModal={openModal}
 			setChangeImg={setChangeImg}

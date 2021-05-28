@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ProductStyle } from '../style';
+import Spinner from '../../../layaut/Spinner';
 import Gallery from '../container/Gallery';
 import Chat from '../container/Chat';
 import MorePosts from './MorePosts';
@@ -10,64 +11,75 @@ import Map from './Map';
 import { Container, Grid, Divider, Typography, Hidden  } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const ProductPage = ({ classes, items, productMemo, theme }) => (
-	<ProductStyle className="my-5 mx-2 mx-sm-5 py-5">
-		<ThemeProvider theme={theme}>
-			<Container maxWidth="lg">
-				<Grid container spacing={3}>
-					<Grid item sm={12} md={8}>
-						
-						<Gallery
-							items={items}
-							name={productMemo.name}
-						/>
+const ProductPage = ({ classes, isAuthenticated, product={}, products=[], theme }) => (
+	<React.Fragment>
+		{
+			Object.keys(product).length === 0 ? <Spinner />
+			: <ProductStyle className="my-5 mx-2 mx-sm-5 py-5">	
+				<ThemeProvider theme={theme}>
+					<Container maxWidth="lg">
+						<Grid container spacing={3}>
+							<Grid item sm={12} md={8}>
+								<Gallery
+									product={product}
+								/>
 
-						<Divider className="my-5" />
-						
-						<Hidden mdUp>
-							<AddToCart
-								product={productMemo}
-							/>
-						</Hidden>
-						
-						<h4 className="my-4">Mas publicaciones de Omar</h4>
+								<Divider className="my-5" />
+								
+								<Hidden mdUp>
+									<AddToCart
+										product={product}
+									/>
+								</Hidden>
 
-						<MorePosts
-							classes={classes}
-							items={items}
-						/>
+								<h4 className="my-4">Mas publicaciones de
+								<span className="text-capitalize"> {product.user.name}</span></h4>
+								
+								{
+									products.length === 0 ? <div className="text-center">Sin productos</div>
+									: <MorePosts
+										classes={classes}
+										idUser={product.user['_id']}
+										products={products}
+									/>
+								}
 
-						<Hidden mdUp>
-							<Divider className="my-4" />
-							<Map classes={classes} />
-						</Hidden>
-						
-						<Divider className="my-4" />
-			
-						<h3 className="mb-4">Descripción</h3>
+								<Hidden mdUp>
+									<Divider className="my-4" />
+									<Map classes={classes} />
+								</Hidden>
+								
+								<Divider className="my-4" />
+					
+								<h3 className="mb-4">Descripción</h3>
 
-						<Typography variant="body1">Juego de dardos magnéticosCod 22611,99 americanosEl set contiene: un tablero de 14” y 6 dados (3 amarillos y 3 rojos). Es un juego de dardos perfecto para principiantes. Ideal para niños y adultos. Diseñado con punta de dardos magnética de alta calidad. Los dardos cambian la punta afilada habitual por una punta magnética, lo que los hace seguros para los jugadores más jóvenes.. Posee un diseño de cuerpo ligero, que lo hace fácil de utilizar, brindando comodidad. Material: Imán + plástico. Peso: 400 grDIMENSIONES:Tablero: 34.5x34.5 cm. Dardos : 8 cmDESCRIPCIÓN:COLOR: Juego de colores: Amarillo con rojo, verde y negro</Typography>
-						
-						
-						<Divider className="my-4" />
+								<Typography variant="body1">
+									{product.description}
+								</Typography>
 
-						<Chat
-							classes={classes}
-							theme={theme}
-						/>
-					</Grid>
+								<Divider className="my-4" />
+								
+								<Chat
+									classes={classes}
+									isAuthenticated={isAuthenticated}
+									nameUser={product.user.name}
+									theme={theme}
+								/>
+							</Grid>
 
-					<Grid item sm={12} md={4}>
-						
-						<Hidden smDown>
-							<AddToCart product={productMemo} />
-							<Map classes={classes} />
-						</Hidden>
-					</Grid>
-				</Grid>
-			</Container>
-		</ThemeProvider>
-	</ProductStyle>
+							<Grid item sm={12} md={4}>
+								
+								<Hidden smDown>
+									<AddToCart product={product} />
+									<Map classes={classes} />
+								</Hidden>
+							</Grid>
+						</Grid>
+					</Container>
+				</ThemeProvider>
+			</ProductStyle>	
+		}
+	</React.Fragment>
 )
 
 export default ProductPage;

@@ -62,6 +62,7 @@ const AddToCart = ({ product }) => {
 			addCart={addCart}
 			classes={classes}
 			changeIconFavorite={changeIconFavorite}
+			product={product}
 			turn={turn}
 		/>
 	)

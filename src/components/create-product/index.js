@@ -65,7 +65,8 @@ const CreateProduct = ({ history }) => {
 		const { ok, messages, authBD } = await requestWithToken('create-product', token, formData, 'POST');
 		
 		alert(ok ? 'success' : 'error', messages);
-
+		
+		// Si el token ya a expirado se deslogea
 		if (authBD) {
 			
 			dispatch( logoutUser() );

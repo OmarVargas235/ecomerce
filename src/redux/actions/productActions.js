@@ -5,15 +5,15 @@ import {
 	GET_PRODUCT_FAIL,
 	LOADING_PRODUCT,
 } from '../types/';
-import { requestWithToken } from '../../utils/fetch';
+import { requestWithoutToken } from '../../utils/fetch';
 
-export const getProductsActions = ({ id, token }) => async dispatch => {
+export const getProductsActions = id => async dispatch => {
 	
 	dispatch( loading() );
 
 	try {
 
-		const resp = await requestWithToken(`get-products/${id}`, token);
+		const resp = await requestWithoutToken(`get-products/${id}`);
 		const { ok, messages } = await resp.json();
 		
 		if (ok) dispatch( getProducts(messages) );
@@ -33,15 +33,15 @@ const getProductsFail = () => ({
 	type: GET_PRODUCTS_FAIL,
 });
 
-export const getProductActions = ({ id, token }) => async dispatch => {
+export const getProductActions = id => async dispatch => {
 	
 	dispatch( loading() );
 
 	try {
 		
-		const resp = await requestWithToken(`get-product/${id}`, token);
-		const { ok, messages } = await resp.json();
-
+		const data = await requestWithoutToken(`get-product/${id}`);
+		const { ok, messages } = await data.json();
+		
 		const setCategories = new Set([...messages.categories]);
 		messages.categories = setCategories;
 		
@@ -64,4 +64,9 @@ const getProductFail = () => ({
 
 const loading = () => ({
 	type: LOADING_PRODUCT,
+});
+
+export const productsSearchActions = payload => ({
+	type: GET_PRODUCTS,
+	payload
 });

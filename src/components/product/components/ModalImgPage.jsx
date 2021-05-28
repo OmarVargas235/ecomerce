@@ -5,7 +5,7 @@ import { ModalStyle } from '../style';
 import Carousel from 'react-material-ui-carousel';
 import { Dialog, Container  } from '@material-ui/core';
 
-const ModalImgPage = ({ handleClose, items, indexCarrousel, openModal }) => (
+const ModalImgPage = ({ handleClose, indexImg, images, name, openModal }) => (
 	<Dialog
 		open={openModal}
 		onClose={handleClose}
@@ -20,11 +20,16 @@ const ModalImgPage = ({ handleClose, items, indexCarrousel, openModal }) => (
 					autoPlay={false}
 					navButtonsAlwaysVisible
 					indicators={false}
-					index={indexCarrousel}
+					index={indexImg}
 				>
 					{
-						items.map((img, index) => (
-							<img src={img.img} alt={img.name} key={index} className="img-modal" />
+						images.map((img, index) => (
+							<img
+								src={`http://localhost:5000/${img}`}
+								alt={name}
+								key={index}
+								className="img-modal"
+							/>
 						))
 					}
 				</Carousel>

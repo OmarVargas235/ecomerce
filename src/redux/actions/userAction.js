@@ -14,7 +14,7 @@ export const getUserAction = token => async dispatch => {
 		
 		const resp = await requestWithToken('get-user', token);
 		const { ok, messages, authBD } = await resp.json();
-
+		
 		if (authBD !== undefined && authBD) {
 			
 			dispatch( logoutUser() );
@@ -26,7 +26,7 @@ export const getUserAction = token => async dispatch => {
 		if (ok) dispatch( getUser(messages) );
 	
 	} catch {
-		console.log('error')
+		
 		dispatch( getUserFail() );
 	}
 }

@@ -1,5 +1,8 @@
-import React from 'react';
-import MoreProductsPage from './components/MoreProductsPage'; 
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import MoreProductsPage from './components/MoreProductsPage';
+import { getProductsActions } from '../../redux/actions/productActions';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -17,13 +20,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MoreProducts = () => {
+const MoreProducts = ({ match }) => {
+	
+	const dispatch = useDispatch();
+	const { products } = useSelector(state => state.product);
+	
+	const { id } = match.params;
 
 	const classes = useStyles();
+
+	useEffect(() => dispatch( getProductsActions(id) ), [dispatch, id]);
 	
 	return (
 		<MoreProductsPage
 			classes={classes}
+			products={products}
 		/>
 	)
 }

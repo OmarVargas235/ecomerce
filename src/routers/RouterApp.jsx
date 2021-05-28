@@ -30,7 +30,7 @@ const RouterApp = () => {
 				loading ? <div>Cargando</div>
 				: <Switch>
 					<Route exact path="/" component={Home} />
-					<Route exact path="/productos/:name" component={MoreProducts} />
+					<Route exact path="/productos/:id" component={MoreProducts} />
 					<Route exact path="/producto/:id" component={Product} />
 					<Route exact path="/products-search" component={ProductsSearch} />
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardProductHome from '../../layaut/CardProductHome';
+import CardProduct from '../../layaut/CardProduct';
 
 import { Grid, Container } from '@material-ui/core';
 
@@ -19,7 +19,7 @@ const ProductsSearchPage = ({ history, products }) => (
 							className='d-flex justify-content-center'
 							key={product.id}
 						>
-							<CardProductHome
+							<CardProduct
 								history={history}
 								product={product}
 							/>
