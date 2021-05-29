@@ -42,12 +42,12 @@ const CategoriesProduct = ({ categories }) => {
 				/>
 
 				<FormControlLabel
-					label="Consolas"
+					label="Juegos Moviles"
 					labelPlacement="end"
 					control={<TealCheckbox
 						name="checkedB"
 						onChange={handleChecked}
-						checked={categories.has("Consolas")}
+						checked={categories.has("Juegos Moviles")}
 					/>}
 				/>
 

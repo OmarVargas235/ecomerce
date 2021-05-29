@@ -3,6 +3,7 @@ import {
 	GET_USER_FAIL,
 	LOGIN_USER,
 	LOGOUT_USER,
+	FAVORITES_PRODUCTS,
 	LOADING,
 } from '../types/';
 
@@ -14,6 +15,7 @@ const initialState = {
 	},
 	loading: true,
 	error: '',
+	productsFavorites: [],
 }
 
 export default function userReducer(state=initialState, { type, payload }) {
@@ -51,6 +53,11 @@ export default function userReducer(state=initialState, { type, payload }) {
 					isAuthenticated: false,
 					token: '',	
 				},
+			}
+		case FAVORITES_PRODUCTS:
+			return {
+				...state,
+				productsFavorites: payload,
 			}
 
 		case LOADING:

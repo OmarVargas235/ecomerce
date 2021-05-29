@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import AddToCartPage from '../components/AddToCartPage';
 import { addAction } from '../../../redux/actions/cartAction';
+import { addFavoriteProductActions,
+	deleteFavoriteProductActions,
+	getFavoriteProductActions,
+} from '../../../redux/actions/userAction';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -28,13 +32,38 @@ const useStyles = makeStyles({
 const AddToCart = ({ product }) => {
 	
 	const dispatch = useDispatch();
-	const auth = useSelector(state => state.user.auth);
+	const { auth, dataUser, productsFavorites } = useSelector(state => state.user);
 
 	const history = useHistory();
 	const classes = useStyles();
 
 	const [turn, setTurn] = useState(false);
 	const [changeIconFavorite, setChangeIconFavorite] = useState(false);
+	const [getFavorites, setGetFavorites] = useState(false);
+
+	useEffect(() => {
+		
+		if (getFavorites) return;
+
+		dispatch( getFavoriteProductActions(dataUser.uid, auth.token) );
+
+		const isProductFavorite = productsFavorites.find(el => el.idProduct === product.id);
+		const stateFavorite = isProductFavorite ? isProductFavorite.state : false;
+		
+		setChangeIconFavorite(stateFavorite);
+
+		setGetFavorites(true);
+
+	}, [dispatch, dataUser, auth, product, productsFavorites, getFavorites]);
+
+	useEffect(() => {
+		
+		const isProductFavorite = productsFavorites.find(el => el.idProduct === product.id);
+		const stateFavorite = isProductFavorite ? isProductFavorite.state : false;
+		
+		setTimeout(() => setChangeIconFavorite(stateFavorite), 500);
+
+	}, [productsFavorites, product]);
 
 	const addFavorite = () => {
 		
@@ -44,10 +73,20 @@ const AddToCart = ({ product }) => {
 			return;
 		}
 
-		setTurn(!turn);
+		const formData = new FormData();
+		formData.append('idProduct', product.id);
 
-		// Cuando termine la animacion de girar cambia de icono
-		setTimeout(() => setChangeIconFavorite(!changeIconFavorite), 500);
+		if (!changeIconFavorite) {
+			
+			formData.append('state', true);
+			dispatch( addFavoriteProductActions(formData, dataUser.uid, auth.token) );
+		
+		} else {
+			
+			dispatch( deleteFavoriteProductActions(formData, dataUser.uid, auth.token) );
+		}
+
+		setTurn(!turn);
 	}
 
 	const addCart = () => {

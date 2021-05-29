@@ -43,7 +43,7 @@ export const categorysScore = [
 
 export const categorys = [
 	'Juegos PC',
-	'Consolas',
+	'Juegos Moviles',
 	'Accesorios',
 	'Juegos consolas',
 	'Componentes',
