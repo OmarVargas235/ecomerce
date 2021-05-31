@@ -5,7 +5,7 @@ import ProductsSearchPage from './ProductsSearchPage';
 
 const ProductsSearch = ({ history }) => {
 
-	const products = useSelector(state => state.product.products);
+	const products = useSelector(state => state.product.productsSearch);
 	
 	return (
 		<ProductsSearchPage

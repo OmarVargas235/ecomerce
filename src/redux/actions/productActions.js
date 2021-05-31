@@ -3,6 +3,7 @@ import {
 	GET_PRODUCT,
 	GET_PRODUCTS_FAIL,
 	GET_PRODUCT_FAIL,
+	GET_PRODUCT_SEARCH,
 	LOADING_PRODUCT,
 } from '../types/';
 import { requestWithoutToken } from '../../utils/fetch';
@@ -67,6 +68,6 @@ const loading = () => ({
 });
 
 export const productsSearchActions = payload => ({
-	type: GET_PRODUCTS,
+	type: GET_PRODUCT_SEARCH,
 	payload
 });

@@ -76,7 +76,9 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 				{
 					auth.isAuthenticated
 					? <div className="container-icon">
-						<Cart />
+						<Cart
+							idUser={dataUser.uid}
+						/>
 					</div>
 					: null
 				}	

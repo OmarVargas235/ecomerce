@@ -27,7 +27,7 @@ const ProfilePage = ({ dataUser, matches }) => (
 			: <Grid container>
 				<Grid item sm={8} className="order-2 order-sm-0 mt-5 mt-sm-0">
 					<Typography variant="h3" component="h3" className="font-weight-bold" paragraph>
-						{dataUser.name}
+						{ dataUser.name } { dataUser.lastName }
 					</Typography>
 
 					<div className="d-flex my-4">

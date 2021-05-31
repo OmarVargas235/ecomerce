@@ -3,11 +3,13 @@ import {
 	GET_PRODUCTS_FAIL,
 	GET_PRODUCT,
 	GET_PRODUCT_FAIL,
+	GET_PRODUCT_SEARCH,
 	LOADING_PRODUCT,
 } from '../types/';
 
 const initialState = {
 	products: [],
+	productsSearch: [],
 	product: {},
 	messageError: '',
 	loading: true,
@@ -43,6 +45,13 @@ export default function productReducer(state=initialState, { type, payload }) {
 			return {
 				...state,
 				messageError: 'No se pudo obtener el producto',
+			}
+
+		case GET_PRODUCT_SEARCH:
+			
+			return {
+				...state,
+				productsSearch: payload,
 			}
 
 		case LOADING_PRODUCT:

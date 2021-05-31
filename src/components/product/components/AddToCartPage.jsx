@@ -5,7 +5,7 @@ import { Card, CardContent, CardActions, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, product, turn }) => (
+const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, contProduct, product, turn }) => (
 	<Card className={classes.root} variant="outlined">
 		<CardContent>
 			<Grid container spacing={3}>
@@ -40,7 +40,7 @@ const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, prod
 			</Typography>
 			
 			<Typography variant="body2" component="h5">
-				Cantidad 0
+				Cantidad {!contProduct ? 0 : contProduct.cont}
 			</Typography>
 
 			<Typography variant="body2" component="p" className="my-4">

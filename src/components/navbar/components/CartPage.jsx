@@ -37,7 +37,7 @@ const CartPage = ({ buyProduct, cartRef, classes, deleteProduct, handleDrawerOpe
 			<Divider />
 			
 			<List ref={cartRef}>
-				{products.map((product, index) => (
+				{products?.map((product, index) => (
 				<ListItem
 					key={index}
 					selected={mouseMove === index}

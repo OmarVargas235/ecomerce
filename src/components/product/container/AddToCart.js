@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -33,6 +33,11 @@ const AddToCart = ({ product }) => {
 	
 	const dispatch = useDispatch();
 	const { auth, dataUser, productsFavorites } = useSelector(state => state.user);
+	const { products } = useSelector(state => state.cart);
+	
+	const getLS = useMemo(() => JSON.parse(window.localStorage.getItem(`cart-${dataUser.uid}`)) || [], [dataUser]);
+	const contProduct = products.length === 0 ? getLS.find(el => el.id === product.id)
+	: products.find(el => el.id === product.id);
 
 	const history = useHistory();
 	const classes = useStyles();
@@ -40,7 +45,8 @@ const AddToCart = ({ product }) => {
 	const [turn, setTurn] = useState(false);
 	const [changeIconFavorite, setChangeIconFavorite] = useState(false);
 	const [getFavorites, setGetFavorites] = useState(false);
-
+	
+	// Obtener los productos agregados a favoritos de la base de datos cuando se monta el componente
 	useEffect(() => {
 		
 		if (getFavorites) return;
@@ -55,7 +61,8 @@ const AddToCart = ({ product }) => {
 		setGetFavorites(true);
 
 	}, [dispatch, dataUser, auth, product, productsFavorites, getFavorites]);
-
+	
+	// Actualiza "changeIconFavorite" cada vez que se agrega o elimina un producto de favoritos
 	useEffect(() => {
 		
 		const isProductFavorite = productsFavorites.find(el => el.idProduct === product.id);
@@ -92,7 +99,8 @@ const AddToCart = ({ product }) => {
 	const addCart = () => {
 
 		auth.isAuthenticated 
-		? dispatch( addAction(product) ) : history.push('/iniciar-sesion');
+		? dispatch( addAction(product, dataUser.uid) ) : history.push('/iniciar-sesion');
+
 	}
 	
 	return (
@@ -101,6 +109,7 @@ const AddToCart = ({ product }) => {
 			addCart={addCart}
 			classes={classes}
 			changeIconFavorite={changeIconFavorite}
+			contProduct={contProduct}
 			product={product}
 			turn={turn}
 		/>

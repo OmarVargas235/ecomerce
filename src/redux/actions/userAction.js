@@ -19,7 +19,7 @@ export const getUserAction = token => async dispatch => {
 		if (authBD !== undefined && authBD) {
 			
 			dispatch( logoutUser() );
-			alert(ok ? 'success' : 'error', messages);
+			// alert(ok ? 'success' : 'error', messages);
 
 			return;
 		}

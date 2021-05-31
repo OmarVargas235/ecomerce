@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import CartPage from '../components/CartPage';
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
-import { deleteAction, clearAction } from '../../../redux/actions/cartAction';
+import { addAction, deleteAction, clearAction } from '../../../redux/actions/cartAction';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Cart = () => {
+const Cart = ({ idUser }) => {
 	
 	const dispatch = useDispatch();
-
 	const products = useSelector(state => state.cart.products);
+
+	const getLS = useMemo(() => JSON.parse(window.localStorage.getItem(`cart-${idUser}`)) || [], [idUser]);
 
 	const cartRef = useRef();
 
@@ -30,18 +31,16 @@ const Cart = () => {
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const [mouseMove, setMouseMove] = useState(-1);
-	const [updateContProduct, setUpdateContProduct] = useState(false);
 
 	const totalToPay =  useMemo(() => (
 
 		products.reduce((acc, product) => {
-			
-			if (updateContProduct) {}
+
 			acc += product.cont * parseFloat(product.price);
 			return acc;
 		}, 0)
 
-	), [products, updateContProduct]);
+	), [products]);
 
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);
@@ -51,14 +50,16 @@ const Cart = () => {
 	const plusOrLess = (product, type="plus") => {
 
 		product.cont = type === 'less' ? product.cont - 1 : product.cont + 1;
-		setUpdateContProduct(!updateContProduct);
+		const cont = product.cont;
 
-		if (product.cont < 1) dispatch( deleteAction(product) );
+		dispatch( addAction(product, idUser, type === 'less') );
+		
+		if (cont < 1) dispatch( deleteAction(product, idUser) );
 	}
 
-	const deleteProduct = product => dispatch( deleteAction(product) );
+	const deleteProduct = product => dispatch( deleteAction(product, idUser) );
 
-	const buyProduct = () => dispatch( clearAction() );
+	const buyProduct = () => dispatch( clearAction(idUser) );
 	
 	return (
 		<CartPage
@@ -70,7 +71,7 @@ const Cart = () => {
 			handleDrawerClose={handleDrawerClose}
 			mouseMove={mouseMove}
 			open={open}
-			products={products}
+			products={products.length === 0 ? getLS : products}
 			plusOrLess={plusOrLess}
 			setMouseMove={setMouseMove}
 			theme={theme}
