@@ -61,7 +61,7 @@ const InputsProduct = ({ formRef, isRequired, product }) => (
 			
 				<FormHelperText
 					error={isRequired.images}
-				>{isRequired.images ? 'Debe de seleccionar al menos 2 imagenes' : ''}</FormHelperText>
+				>{isRequired.images ? 'Debe de seleccionar al menos una imagen y menos de 6 imagenes' : ''}</FormHelperText>
 			</FormControl>
 			
 			<FormControl className="w-100">

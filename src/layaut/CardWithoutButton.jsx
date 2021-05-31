@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { CardWithoutButtonPriceStyle } from './style';
+
 import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
@@ -16,7 +18,9 @@ const CardWithoutButton = ({ classes, data }) => (
 
 			<CardContent>
 				<Typography gutterBottom variant="h6" component="h2">
-					${ data.price }
+					<CardWithoutButtonPriceStyle>
+						${ data.price }
+					</CardWithoutButtonPriceStyle>
 				</Typography>
 
 				<Typography

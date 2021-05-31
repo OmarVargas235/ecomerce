@@ -45,9 +45,9 @@ const CreateProduct = ({ history }) => {
 
 		if (categories.size === 0) alert('error', ['Debe de seleccionar al menos una categoria']);
 
-		if ( validate(productInfo) || images.length < 2) {
+		if ( validate(productInfo) || images.length > 6 || images.length === 0) {
 			
-			setIsRequired({...required, images: images.length < 2});
+			setIsRequired({...required, images: images.length > 6 || images.length === 0});
 			return;
 		}
 

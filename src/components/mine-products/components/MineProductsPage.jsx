@@ -2,9 +2,10 @@ import React from 'react';
 
 import Spinner from '../../../layaut/Spinner';
 import ProductPage from './ProductPage';
+import { MineProductsStyles } from '../style.js';
 
 const MineProductsPage = ({ delateProduct, history, loading, products=[] }) => (
-	<div className="py-4 px-5 text-center">
+	<MineProductsStyles className="py-4 px-5 text-center">
 		{
 			loading ? <Spinner />
 			: products.length === 0
@@ -16,7 +17,7 @@ const MineProductsPage = ({ delateProduct, history, loading, products=[] }) => (
 					product={product}
 				/> ))
 		}
-	</div>
+	</MineProductsStyles>
 )
 
 export default MineProductsPage;

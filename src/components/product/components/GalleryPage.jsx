@@ -26,6 +26,7 @@ const GalleryPage = ({ changeImg, handleClose, handleClickOpen, images, name, op
 				alt={name}
 				className="img-fluid text-center zoom-in"
 				onClick={handleClickOpen}
+				style={{maxHeight: '350px'}}
 			/>
 			
 			<ModalImgPage

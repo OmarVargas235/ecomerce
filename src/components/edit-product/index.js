@@ -56,9 +56,9 @@ const EditProduct = ({ history, match }) => {
 
 		if (categories.size === 0) alert('error', ['Debe de seleccionar al menos una categoria']);
 
-		if ( validate(productInfo) || images.length === 1) {
+		if ( validate(productInfo) || images.length > 6 || images.length === 0) {
 			
-			setIsRequired({...required, images: images.length === 1});
+			setIsRequired({...required, images: images.length > 6 || images.length === 0});
 			return;
 		}
 

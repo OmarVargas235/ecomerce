@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { teal } from '@material-ui/core/colors';
 
 const ProductPage = ({ delateProduct, history, product }) => (
-	<Grid container className="mb-3">
+	<Grid container className="mb-4">
 		<Grid item xs={3} className="mb-3">
 			<img src={`http://localhost:5000/${product.img}`} alt={product.name} className="img-fluid" />
 		</Grid>
@@ -15,16 +15,17 @@ const ProductPage = ({ delateProduct, history, product }) => (
 			<Typography
 				variant="body2"
 				component="p"
+				className="mb-1 font-weight-bold"
 				paragraph
 			>
 				{ product.name }
 			</Typography>
 		
-			<Typography variant="body2" component="p" paragraph>
+			<Typography variant="body2" component="p" className="mb-1" paragraph>
 				${ product.price }
 			</Typography>
 
-			<Typography variant="body2" component="p">
+			<Typography variant="body2" component="p" className="description text-left pl-2">
 				{ product.description }
 			</Typography>
 		</Grid>

@@ -20,7 +20,7 @@ const CardProduct = ({ history, product }) => {
 
 	const classes = useStyles();
 	
-	return (
+	return (	
 		<Card 
 			className={`d-flex flex-column justify-content-between mb-4 w-100 ${classes.root}`}
 			raised={true}
@@ -38,10 +38,16 @@ const CardProduct = ({ history, product }) => {
 					</Typography>
 
 					<Typography gutterBottom variant="h6" component="h3" align="center">
-						{product.price}
+						$ {product.price}
 					</Typography>
 
-					<Typography gutterBottom variant="h6" component="h4" align="center">
+					<Typography
+						gutterBottom
+						variant="h6"
+						component="h4"
+						align="center"
+						style={{maxHeight: '125px', overflow: 'hidden'}}
+					>
 						{product.description}
 					</Typography>
 				</CardContent>

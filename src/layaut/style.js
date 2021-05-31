@@ -76,3 +76,13 @@ export const ControlPanelStyle = styled.section`
 		}
 	}
 `;
+
+export const CardWithoutButtonPriceStyle = styled.div`
+	
+	@media (min-width: 960px) {
+		white-space: nowrap;
+		width: 100px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+`;
