@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MoreProducts = ({ match }) => {
+const MoreProducts = ({ history, match }) => {
 	
 	const dispatch = useDispatch();
 	const { products } = useSelector(state => state.product);
@@ -34,6 +34,7 @@ const MoreProducts = ({ match }) => {
 	return (
 		<MoreProductsPage
 			classes={classes}
+			history={history}
 			products={products}
 		/>
 	)

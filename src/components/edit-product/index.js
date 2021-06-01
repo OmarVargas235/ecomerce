@@ -37,11 +37,7 @@ const EditProduct = ({ history, match }) => {
 	});
 	const [isRequired, setIsRequired] = useState({});
 
-	useEffect(() => {
-		
-		dispatch( getProductActions(id) );
-
-	}, [dispatch, user, id]);
+	useEffect(() => dispatch( getProductActions(id) ), [dispatch, user, id]);
 
 	if (Object.keys(product).length > 0) categories = product.categories;
 
@@ -56,9 +52,9 @@ const EditProduct = ({ history, match }) => {
 
 		if (categories.size === 0) alert('error', ['Debe de seleccionar al menos una categoria']);
 
-		if ( validate(productInfo) || images.length > 6 || images.length === 0) {
+		if ( validate(productInfo) || images.length > 6) {
 			
-			setIsRequired({...required, images: images.length > 6 || images.length === 0});
+			setIsRequired({...required, images: images.length > 6});
 			return;
 		}
 

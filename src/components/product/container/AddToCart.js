@@ -99,7 +99,8 @@ const AddToCart = ({ product }) => {
 	const addCart = () => {
 
 		auth.isAuthenticated 
-		? dispatch( addAction(product, dataUser.uid) ) : history.push('/iniciar-sesion');
+		? dispatch( addAction(product, dataUser.uid, auth.token) )
+		: history.push('/iniciar-sesion');
 
 	}
 	

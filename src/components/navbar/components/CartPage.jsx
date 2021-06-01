@@ -46,7 +46,7 @@ const CartPage = ({ buyProduct, cartRef, classes, deleteProduct, handleDrawerOpe
 				>
 					<img src={`http://localhost:5000/${product.img}`} alt="prueba" />
 
-					<div className="ml-4">
+					<div className="ml-2">
 						<Typography variant="subtitle1" component="p">
 							{product.name}
 						</Typography>

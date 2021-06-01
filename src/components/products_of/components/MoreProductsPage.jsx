@@ -6,7 +6,7 @@ import AccordionPage from './AccordionPage';
 
 import { Grid, Container } from '@material-ui/core';
 
-const MoreProductsPage = ({ classes, products }) => (
+const MoreProductsPage = ({ classes, history, products }) => (
 	<MoreProductsStyle className="mt-5">
 		<Container className={classes.root}>
 			
@@ -20,10 +20,11 @@ const MoreProductsPage = ({ classes, products }) => (
 					<Grid container spacing={3} className="products_cards">
 						{
 							products.map((product, index) => (
-								<Grid item xs={12} sm={3} md={2} key={index}>
+								<Grid item key={index} xs={12} sm={3} md={2}>
 									<CardWithoutButton
 										classes={classes}
 										data={product}
+										history={history}
 									/>
 								</Grid>
 							))

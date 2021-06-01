@@ -147,7 +147,7 @@ export const CartStyle = styled.div`
 
 	.price, .total-pay {
 		white-space: nowrap;
-		width: 90px;
+		width: 80px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}

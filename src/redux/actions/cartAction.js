@@ -5,7 +5,7 @@ import {
 } from '../types/';
 import { alert } from '../../utils/alert';
 
-export const addAction = (product, id, isLess=false) => async dispatch => {	
+export const addAction = (product, id, token, isLess=false) => async dispatch => {	
 
 	// Obtener el localStorage
 	const getLS = JSON.parse(window.localStorage.getItem(`cart-${id}`)) || [];
@@ -35,12 +35,12 @@ export const addAction = (product, id, isLess=false) => async dispatch => {
 }
 
 
-const add = payload => ({
+export const add = payload => ({
 	type: ADD_CART,
 	payload,
 });
 
-export const deleteAction = (product, id) => async dispatch => {	
+export const deleteAction = (product, id, token) => async dispatch => {	
 
 	// Obtener el localStorage
 	const getLS = JSON.parse(window.localStorage.getItem(`cart-${id}`)) || [];
@@ -57,7 +57,7 @@ const deleteProduct = payload => ({
 	payload,
 });
 
-export const clearAction = id => async dispatch => {	
+export const clearAction = (id, token) => async dispatch => {	
 
 	dispatch( clear() );
 	
