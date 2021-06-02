@@ -53,16 +53,18 @@ const EditUser = ({ history }) => {
 		formData.append('description', formDataRef.description);
 		formData.append('socialMedias', socialMedias);
 		
-		const { ok, messages, authBD } = await requestWithToken('edit-user', token, formData, 'POST');
-
-		alert(ok ? 'success' : 'error', messages);
-
-		if (authBD) {
+		const { ok, messages, isExpiredToken } = await requestWithToken('edit-user', token, formData, 'POST');	
+		
+		if (isExpiredToken) {
 			
 			dispatch( logoutUser() );
+			alert('error', messages);
+
 			return;
 		}
 
+		alert(ok ? 'success' : 'error', messages);
+		
 		if (ok) {
 			
 			dispatch( getUserAction(token) );

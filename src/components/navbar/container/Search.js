@@ -35,7 +35,7 @@ const Search = ({ setActiveSearch }) => {
 		if (search.trim() === '') return;
 
 		const { ok, messages } = await requestWithoutToken('search-product', formData, 'POST');
-
+		
 		if (ok) {
 			
 			history.push('/products-search');

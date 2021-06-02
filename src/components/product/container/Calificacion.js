@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import CalificacionPage from '../components/CalificacionPage';
-import { requestWithToken } from '../../../utils/fetch';
+import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
+import { logoutUser } from '../../../redux/actions/userAction';
 import { alert } from '../../../utils/alert';
 
 const Calificacion = ({ auth, classes, dataUser, id, }) => {
+
+	const dispatch = useDispatch();
 
 	const [calificacionUser, setCalificacionUser] = useState(null);
 	const [point, setPoint] = useState(0);
@@ -15,7 +19,7 @@ const Calificacion = ({ auth, classes, dataUser, id, }) => {
 
 		async function callAPI() {
 
-			const resp = await requestWithToken(`get-calificar-product/${id}`, auth.token);
+			const resp = await requestWithoutToken(`get-calificar-product/${id}`);
 			const { ok, messages } = await resp.json();
 			
 			if (messages.length === 0) {
@@ -35,8 +39,8 @@ const Calificacion = ({ auth, classes, dataUser, id, }) => {
 					return (acc += Number(el.calificacion), acc);
 
 				}, 0);
-
-				setCalificacionUser(calificacion.calificacion);
+				
+				setCalificacionUser(!calificacion ? null : calificacion.calificacion);
 				setPoint(Math.round(totalCalificaciones / messages.length));
 				setReseñas(messages.length);
 
@@ -56,7 +60,15 @@ const Calificacion = ({ auth, classes, dataUser, id, }) => {
 		formData.append('idUser', dataUser.uid);	
 		
 		const resp = await requestWithToken(`calificar-product/${id}`, token, formData,'POST');
-		const { ok, messages } = await resp;
+		const { ok, messages, isExpiredToken } = await resp;
+
+		if (isExpiredToken) {
+			
+			dispatch( logoutUser() );
+			alert('error', messages);
+
+			return;
+		}
 
 		alert(ok ? 'success' : 'error', messages);
 

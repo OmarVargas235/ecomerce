@@ -47,6 +47,9 @@ export default function userReducer(state=initialState, { type, payload }) {
 			}
 
 		case LOGOUT_USER:
+			
+			window.localStorage.removeItem('token');
+
 			return {
 				...state,
 				auth: {
@@ -55,13 +58,14 @@ export default function userReducer(state=initialState, { type, payload }) {
 				},
 			}
 		case FAVORITES_PRODUCTS:
+
 			return {
 				...state,
 				productsFavorites: payload,
 			}
 
 		case LOADING:
-		
+			
 			return {
 				...state,
 				loading: false,

@@ -49,8 +49,7 @@ const AddToCart = ({ product }) => {
 	// Obtener los productos agregados a favoritos de la base de datos cuando se monta el componente
 	useEffect(() => {
 		
-		if (getFavorites) return;
-
+		if (getFavorites || !auth.isAuthenticated) return;
 		dispatch( getFavoriteProductActions(dataUser.uid, auth.token) );
 
 		const isProductFavorite = productsFavorites.find(el => el.idProduct === product.id);
@@ -111,6 +110,7 @@ const AddToCart = ({ product }) => {
 			classes={classes}
 			changeIconFavorite={changeIconFavorite}
 			contProduct={contProduct}
+			isAuthenticated={auth.isAuthenticated} 
 			product={product}
 			turn={turn}
 		/>

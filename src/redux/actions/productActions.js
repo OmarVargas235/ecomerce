@@ -13,7 +13,7 @@ export const getProductsActions = id => async dispatch => {
 	dispatch( loading() );
 
 	try {
-
+		
 		const resp = await requestWithoutToken(`get-products/${id}`);
 		const { ok, messages } = await resp.json();
 		

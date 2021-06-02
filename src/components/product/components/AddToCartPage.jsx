@@ -5,7 +5,7 @@ import { Card, CardContent, CardActions, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, contProduct, product, turn }) => (
+const AddToCartPage = ({ auth, addFavorite, addCart, classes, changeIconFavorite, contProduct, isAuthenticated, product, turn }) => (
 	<Card className={classes.root} variant="outlined">
 		<CardContent>
 			<Grid container spacing={3}>
@@ -21,16 +21,21 @@ const AddToCartPage = ({ addFavorite, addCart, classes, changeIconFavorite, cont
 				
 				<Grid item xs={2} className={classes.containerFavorite}>
 					{
-						!changeIconFavorite ? <FavoriteBorderIcon
-							color="primary"
-							className={`pointer ${turn ? classes.favorite : classes.favoriteTurn}`}
-							onClick={addFavorite}
-						/>
-						: <FavoriteIcon
-							color="primary"
-							className={`pointer ${turn ? classes.favorite : classes.favoriteTurn}`}
-							onClick={addFavorite}
-						/>
+						!isAuthenticated ?  <FavoriteBorderIcon color="primary" />
+						:<React.Fragment>
+							{
+								!changeIconFavorite ? <FavoriteBorderIcon
+									color="primary"
+									className={`pointer ${turn ? classes.favorite : classes.favoriteTurn}`}
+									onClick={addFavorite}
+								/>
+								: <FavoriteIcon
+									color="primary"
+									className={`pointer ${turn ? classes.favorite : classes.favoriteTurn}`}
+									onClick={addFavorite}
+								/>
+							}
+						</React.Fragment>
 					}
 				</Grid>
 			</Grid>

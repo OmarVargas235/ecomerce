@@ -5,7 +5,7 @@ import EditImgProfilePage from './EditImgProfilePage';
 import ControlPanel from '../../layaut/ControlPanel';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
-import { getUserAction } from '../../redux/actions/userAction';
+import { getUserAction, logoutUser } from '../../redux/actions/userAction';
 
 const EditImgProfile = () => {
 	
@@ -39,7 +39,17 @@ const EditImgProfile = () => {
 		formData.append('image', image);
 		formData.append('id', id);
 
-		const { ok, messages } = await requestWithToken('upload-img', token, formData, 'POST');
+		const { ok, messages, isExpiredToken } = await requestWithToken('upload-img', token, formData, 'POST');	
+		
+		// Si el token ya a expirado se deslogea
+		if (isExpiredToken) {
+			
+			dispatch( logoutUser() );
+			alert('error', messages);
+			
+			return;
+		}
+
 		alert(ok ? 'success' : 'error', messages);
 
 		dispatch( getUserAction(token) );

@@ -62,16 +62,18 @@ const CreateProduct = ({ history }) => {
 		formData.append('stock', productInfo.stock);
 		formData.append('id', dataUser.uid);
 
-		const { ok, messages, authBD } = await requestWithToken('create-product', token, formData, 'POST');
-		
-		alert(ok ? 'success' : 'error', messages);
+		const { ok, messages, isExpiredToken } = await requestWithToken('create-product', token, formData, 'POST');
 		
 		// Si el token ya a expirado se deslogea
-		if (authBD) {
+		if (isExpiredToken) {
 			
 			dispatch( logoutUser() );
+			alert('error', messages);
+			
 			return;
 		}
+
+		alert(ok ? 'success' : 'error', messages);
 
 		if (ok) history.push('/mis-productos');
 

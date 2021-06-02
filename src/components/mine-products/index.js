@@ -32,16 +32,18 @@ const MineProducts = ({ history }) => {
 
 		const token = user.auth.token;
 
-		const { ok, messages, authBD } = await requestWithToken('delete-product', token, formData, 'DELETE');
+		const { ok, messages, isExpiredToken } = await requestWithToken('delete-product', token, formData, 'DELETE');
 
-		alert(ok ? 'success' : 'error', messages);
-		
-		if (authBD) {
+		if (isExpiredToken) {
 			
 			dispatch( logoutUser() );
+			alert('error', messages);
+
 			return;
 		}
-
+		
+		alert(ok ? 'success' : 'error', messages);
+		
 		dispatch( getProductsActions(idUser) );
 	}
 	
