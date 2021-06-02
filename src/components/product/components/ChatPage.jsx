@@ -1,47 +1,13 @@
 import React from 'react';
 
 import CommentsPage from './CommentsPage';
-import SelectionMenu from '../../../layaut/SelectionMenu';
-import { categorysScore, categorysScoreValue } from '../../../utils/helper';
 
-import { TextField, Button, Typography, Grid } from '@material-ui/core';
-import StarIcon from '@material-ui/icons/Star';
+import { TextField, Button, Grid } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Pagination from '@material-ui/lab/Pagination';
 
-const ChatPage = ({ classes, isAuthenticated, matches, nameUser, theme }) => (
+const ChatPage = ({ isAuthenticated, matches, nameUser }) => (
 	<div className="mt-5 chat">
-		<Grid container alignItems="center">
-			<Grid item xs={3} sm={2}>
-				<Typography variant="h3" component="h1">
-			  		4.9
-				</Typography>
-			</Grid>
-
-			<Grid item xs={6} sm={4}>
-				<StarIcon color="disabled" />
-				<StarIcon color="disabled" />
-				<StarIcon color="disabled" />
-				<StarIcon color="disabled" />
-				<StarIcon color="disabled" />
-			</Grid>
-			
-			<Grid item xs={3} sm={6}>	
-				<Typography variant="body2" component="h1" color="textSecondary">
-			  		2069 reseñas, 24 preguntas y respuestas
-				</Typography>
-			</Grid>
-		</Grid>
-		
-		{
-			!isAuthenticated ? null
-			: <SelectionMenu
-				categorys={categorysScore}
-				value={categorysScoreValue}
-				title="Clasificacion"
-				theme={theme}
-			/>
-		}
 
 		<h3 className="mt-4">Preguntas y Respuesta</h3>
 

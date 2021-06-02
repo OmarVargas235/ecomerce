@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { styleMaterialUiTheme } from '../utils/styleMaterialUi';
 
@@ -12,15 +12,28 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const SelectionMenu = ({ categorys=[], value=[], title="" }) => {
+const SelectionMenu = ({ categorys=[], value=[], title="", setCalificacion=()=>{}, calificacionUser=undefined }) => {
 
 	const theme = styleMaterialUiTheme();
-
 	const classes = useStyles();
+
 	const [category, setCategory] = useState('');
   	const [openSelect, setOpen] = useState(false);
 
-  	const handleChange = (event, newValue) => setCategory(event.target.value);
+  	useEffect(() => {
+  		
+		if (calificacionUser === undefined) return;
+
+		if (calificacionUser === null) return setCategory('');
+		setCategory(calificacionUser);
+
+  	}, [calificacionUser, category]);
+
+  	const handleChange = event => {
+		
+		setCalificacion(event.target.value);
+  		setCategory(event.target.value);
+  	}
 
   	const handleClose = () => setOpen(false);
   	const handleOpen = () => setOpen(true);
@@ -33,7 +46,7 @@ const SelectionMenu = ({ categorys=[], value=[], title="" }) => {
 					id="demo-controlled-open-select-label"
 					className="ml-2"
 				>{title}</InputLabel>
-
+				
 				<Select
 					labelId="demo-controlled-open-select-label"
 					id="demo-controlled-open-select"
@@ -47,7 +60,7 @@ const SelectionMenu = ({ categorys=[], value=[], title="" }) => {
 					<MenuItem value="">
 						<em>{ title }</em>
 					</MenuItem>
-		
+
 					{
 						categorys.map((category, index) => (
 

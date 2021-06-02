@@ -3,6 +3,7 @@ import React from 'react';
 import { ProductStyle } from '../style';
 import Spinner from '../../../layaut/Spinner';
 import Gallery from '../container/Gallery';
+import Calificacion from '../container/Calificacion';
 import Chat from '../container/Chat';
 import MorePosts from './MorePosts';
 import AddToCart from '../container/AddToCart';
@@ -11,7 +12,7 @@ import Map from './Map';
 import { Container, Grid, Divider, Typography, Hidden  } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const ProductPage = ({ classes, isAuthenticated, product={}, products=[], theme }) => (
+const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }) => (
 	<React.Fragment>
 		{
 			Object.keys(product).length === 0 ? <Spinner />
@@ -59,11 +60,16 @@ const ProductPage = ({ classes, isAuthenticated, product={}, products=[], theme 
 
 								<Divider className="my-4" />
 								
-								<Chat
+								<Calificacion
+									auth={auth}
 									classes={classes}
-									isAuthenticated={isAuthenticated}
+									dataUser={dataUser}
+									id={product.id}
+								/>
+
+								<Chat	
+									isAuthenticated={auth.isAuthenticated}
 									nameUser={product.user.name}
-									theme={theme}
 								/>
 							</Grid>
 

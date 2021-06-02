@@ -22,7 +22,7 @@ const Product = ({ match }) => {
 	
 	const dispatch = useDispatch();
 	const { product, products } = useSelector(state => state.product);
-	const { isAuthenticated } = useSelector(state => state.user.auth);
+	const { auth, dataUser } = useSelector(state => state.user);
 
 	const classes = useStyles();
 
@@ -43,8 +43,9 @@ const Product = ({ match }) => {
 	
 	return (
 		<ProductPage
+			auth={auth}
 			classes={classes}
-			isAuthenticated={isAuthenticated}
+			dataUser={dataUser}
 			product={product}
 			products={products}
 			theme={theme}
