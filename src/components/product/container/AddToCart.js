@@ -50,12 +50,11 @@ const AddToCart = ({ product }) => {
 	useEffect(() => {
 		
 		if (getFavorites || !auth.isAuthenticated) return;
-		dispatch( getFavoriteProductActions(dataUser.uid, auth.token) );
-
-		const isProductFavorite = productsFavorites.find(el => el.idProduct === product.id);
-		const stateFavorite = isProductFavorite ? isProductFavorite.state : false;
 		
-		setChangeIconFavorite(stateFavorite);
+		dispatch( getFavoriteProductActions(dataUser.uid, auth.token) );
+		const isProductFavorite = productsFavorites.some(el => el.idProduct === product.id);
+		
+		setChangeIconFavorite(isProductFavorite);
 
 		setGetFavorites(true);
 
@@ -64,10 +63,9 @@ const AddToCart = ({ product }) => {
 	// Actualiza "changeIconFavorite" cada vez que se agrega o elimina un producto de favoritos
 	useEffect(() => {
 		
-		const isProductFavorite = productsFavorites.find(el => el.idProduct === product.id);
-		const stateFavorite = isProductFavorite ? isProductFavorite.state : false;
+		const isProductFavorite = productsFavorites.some(el => el === product.id);
 		
-		setTimeout(() => setChangeIconFavorite(stateFavorite), 500);
+		setTimeout(() => setChangeIconFavorite(isProductFavorite), 500);
 
 	}, [productsFavorites, product]);
 
@@ -81,10 +79,9 @@ const AddToCart = ({ product }) => {
 
 		const formData = new FormData();
 		formData.append('idProduct', product.id);
-
+		
 		if (!changeIconFavorite) {
 			
-			formData.append('state', true);
 			dispatch( addFavoriteProductActions(formData, dataUser.uid, auth.token) );
 		
 		} else {

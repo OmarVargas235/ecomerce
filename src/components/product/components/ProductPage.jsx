@@ -3,7 +3,7 @@ import React from 'react';
 import { ProductStyle } from '../style';
 import Spinner from '../../../layaut/Spinner';
 import Gallery from '../container/Gallery';
-import Calificacion from '../container/Calificacion';
+import Qualification from '../container/Qualification';
 import Chat from '../container/Chat';
 import MorePosts from './MorePosts';
 import AddToCart from '../container/AddToCart';
@@ -60,7 +60,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 
 								<Divider className="my-4" />
 								
-								<Calificacion
+								<Qualification
 									auth={auth}
 									classes={classes}
 									dataUser={dataUser}

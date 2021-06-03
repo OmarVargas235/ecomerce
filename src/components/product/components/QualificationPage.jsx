@@ -6,7 +6,7 @@ import { categorysScore, categorysScoreValue } from '../../../utils/helper';
 import { Typography, Grid } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 
-const CalificacionPage = ({ classes, isAuthenticated, point, setCalificacion, calificacionUser, reseñas }) => (
+const QualificationPage = ({ classes, isAuthenticated, point, qualificationUser, reviews,setQualification }) => (
 	<React.Fragment>
 		<Grid container alignItems="center">
 			<Grid item xs={3} sm={2}>
@@ -25,7 +25,7 @@ const CalificacionPage = ({ classes, isAuthenticated, point, setCalificacion, ca
 			
 			<Grid item xs={3} sm={6}>	
 				<Typography variant="body2" component="h1" color="textSecondary">
-			  		{reseñas} reseñas, 24 preguntas y respuestas
+			  		{reviews} reseñas, 24 preguntas y respuestas
 				</Typography>
 			</Grid>
 		</Grid>
@@ -36,11 +36,11 @@ const CalificacionPage = ({ classes, isAuthenticated, point, setCalificacion, ca
 				categorys={categorysScore}
 				value={categorysScoreValue}
 				title="Clasificacion"
-				setCalificacion={setCalificacion}
-				calificacionUser={calificacionUser}
+				setQualification={setQualification}
+				qualificationUser={qualificationUser}
 			/>
 		}
 	</React.Fragment>
 )
 
-export default CalificacionPage;
+export default QualificationPage;

@@ -21,7 +21,9 @@ const AddToCartPage = ({ auth, addFavorite, addCart, classes, changeIconFavorite
 				
 				<Grid item xs={2} className={classes.containerFavorite}>
 					{
-						!isAuthenticated ?  <FavoriteBorderIcon color="primary" />
+						!isAuthenticated ?  <FavoriteBorderIcon color="primary"
+							className="pointer" onClick={addFavorite}
+						/>
 						:<React.Fragment>
 							{
 								!changeIconFavorite ? <FavoriteBorderIcon
