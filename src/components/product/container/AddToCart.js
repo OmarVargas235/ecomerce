@@ -38,6 +38,9 @@ const AddToCart = ({ product }) => {
 	const getLS = useMemo(() => JSON.parse(window.localStorage.getItem(`cart-${dataUser.uid}`)) || [], [dataUser]);
 	const contProduct = products.length === 0 ? getLS.find(el => el.id === product.id)
 	: products.find(el => el.id === product.id);
+	
+	// Comprueba si el producto esta agregado a favoritos
+	const isProductFavorite = useMemo(() => productsFavorites.some(el => el.idProduct === product.id), [productsFavorites, product]);
 
 	const history = useHistory();
 	const classes = useStyles();
@@ -46,28 +49,22 @@ const AddToCart = ({ product }) => {
 	const [changeIconFavorite, setChangeIconFavorite] = useState(false);
 	const [getFavorites, setGetFavorites] = useState(false);
 	
-	// Obtener los productos agregados a favoritos de la base de datos cuando se monta el componente
+	// Dispara el dispatch para obtener los productos agregados a favoritos
 	useEffect(() => {
 		
 		if (getFavorites || !auth.isAuthenticated) return;
 		
 		dispatch( getFavoriteProductActions(dataUser.uid, auth.token) );
-		const isProductFavorite = productsFavorites.some(el => el.idProduct === product.id);
-		
-		setChangeIconFavorite(isProductFavorite);
-
 		setGetFavorites(true);
 
-	}, [dispatch, dataUser, auth, product, productsFavorites, getFavorites]);
+	}, [dispatch, dataUser, auth, getFavorites]);
 	
 	// Actualiza "changeIconFavorite" cada vez que se agrega o elimina un producto de favoritos
 	useEffect(() => {
 		
-		const isProductFavorite = productsFavorites.some(el => el === product.id);
-		
 		setTimeout(() => setChangeIconFavorite(isProductFavorite), 500);
 
-	}, [productsFavorites, product]);
+	}, [productsFavorites, isProductFavorite]);
 
 	const addFavorite = () => {
 		
@@ -97,7 +94,6 @@ const AddToCart = ({ product }) => {
 		auth.isAuthenticated 
 		? dispatch( addAction(product, dataUser.uid, auth.token) )
 		: history.push('/iniciar-sesion');
-
 	}
 	
 	return (

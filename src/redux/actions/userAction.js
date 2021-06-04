@@ -84,7 +84,7 @@ export const deleteFavoriteProductActions = (formData, id, token) => async dispa
 			
 			return;
 		}
-
+		
 		if (ok) dispatch( productFavorite(messages) );
 		else alert('error', messages);
 	
@@ -97,10 +97,12 @@ export const deleteFavoriteProductActions = (formData, id, token) => async dispa
 export const getFavoriteProductActions = (id, token) => async dispatch => {
 	
 	try {
+		
+		if (!id) return;
 
 		const data = await requestWithToken(`get-favorite-product/${id}`, token);
 		const { ok, messages, isExpiredToken } = await data.json();
-
+		
 		if (isExpiredToken) {
 			
 			dispatch( logoutUser() );
@@ -113,7 +115,7 @@ export const getFavoriteProductActions = (id, token) => async dispatch => {
 		else alert('error', messages);
 	
 	} catch {
-		
+
 		alert('error', ['A ocurrido un error']);
 	}
 }
