@@ -38,3 +38,18 @@ export const ModalStyle = styled.article`
 		width: 70%;
 	}
 `;
+
+export const MapStyle = styled.article`
+	div {
+		height: 500px;
+	}
+
+	.mapboxgl-ctrl {
+		height: 87px;
+		width: 30px;
+	}
+
+	.mapboxgl-ctrl-bottom-right, .mapboxgl-ctrl-logo {
+		display: none !important;
+	}
+`;

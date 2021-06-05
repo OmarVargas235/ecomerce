@@ -7,7 +7,7 @@ import Qualification from '../container/Qualification';
 import Chat from '../container/Chat';
 import MorePosts from './MorePosts';
 import AddToCart from '../container/AddToCart';
-import Map from './Map';
+import Map from '../container/Map';
 
 import { Container, Grid, Divider, Typography, Hidden  } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
