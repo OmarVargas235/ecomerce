@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
-import { getUserAction, loginAction } from '../../redux/actions/userAction';
+import { getUserAction, loginAction, logoutUser } from '../../redux/actions/userAction';
 import NavbarPage from './components/NavbarPage';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 }));
+
+let cont = 0;
 
 const Navbar = ({ history }) => {
 	
@@ -39,6 +41,14 @@ const Navbar = ({ history }) => {
   		token && dispatch( loginAction(token) );
 
   	}, [dispatch]);
+	
+	// Esta pendiente de cuando se a vencido el token
+  	useEffect(() => {
+  		
+  		if (Object.keys(dataUser).length === 0 && cont === 2) dispatch(logoutUser());
+  		cont++;
+  		
+  	}, [dataUser, dispatch]);
   	
   	// Detecta cuando esta en '/crear-cuenta' o '/iniciar-sesion' y agrega los estilos correspondientes
   	const isActiveLink = useMemo(() => {

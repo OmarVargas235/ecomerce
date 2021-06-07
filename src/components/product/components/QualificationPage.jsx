@@ -36,7 +36,7 @@ const QualificationPage = ({ classes, isAuthenticated, point, qualificationUser,
 				categorys={categorysScore}
 				value={categorysScoreValue}
 				title="Clasificacion"
-				setQualification={setQualification}
+				setChange={setQualification}
 				qualificationUser={qualificationUser}
 			/>
 		}

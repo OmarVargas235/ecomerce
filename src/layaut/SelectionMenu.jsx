@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const SelectionMenu = ({ categorys=[], value=[], title="", setQualification=()=>{}, qualificationUser=true }) => {
-
+const SelectionMenu = ({ categorys=[], value=[], title="", setChange=()=>{}, qualificationUser=true }) => {
+	
 	const theme = styleMaterialUiTheme();
 	const classes = useStyles();
 
@@ -22,9 +22,9 @@ const SelectionMenu = ({ categorys=[], value=[], title="", setQualification=()=>
 	
 	// Agrega la calificacion que el usuario le dio al select, cuando carga el componente
   	useEffect(() => {
-  		
-		if (qualificationUser) return;
 
+		if (qualificationUser) return;
+		
 		if (qualificationUser === null) return setCategory('');
 		setCategory(qualificationUser);
 
@@ -32,7 +32,7 @@ const SelectionMenu = ({ categorys=[], value=[], title="", setQualification=()=>
 
   	const handleChange = event => {
 		
-		setQualification(event.target.value);
+		setChange(event.target.value);
   		setCategory(event.target.value);
   	}
 
@@ -61,7 +61,6 @@ const SelectionMenu = ({ categorys=[], value=[], title="", setQualification=()=>
 					<MenuItem value="">
 						<em>{ title }</em>
 					</MenuItem>
-
 					{
 						categorys.map((category, index) => (
 
