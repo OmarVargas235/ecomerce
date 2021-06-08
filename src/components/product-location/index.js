@@ -1,14 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import $ from "jquery";
-import mapboxgl from 'mapbox-gl';
 
 import ProductLocationPage from './ProductLocationPage';
 import ControlPanel from '../../layaut/ControlPanel';
+import { requestWithToken } from '../../utils/fetch';
+import { alert } from '../../utils/alert';
+import { getProductsActions } from '../../redux/actions/productActions';
+import { logoutUser } from '../../redux/actions/userAction';
 
 const key = '213438341b3e7032370ce3ccbe621efd';
 const urlCountries = `https://geo-battuta.net/api/country/all/?key=${key}&callback=?`;
 
 const ProductLocation = () => {
+
+	const { auth, dataUser } = useSelector(state => state.user);
+	const { products } = useSelector(state => state.product);
+
+	const dispatch = useDispatch();
 
 	const mapRef = useRef();
 	
@@ -17,55 +26,36 @@ const ProductLocation = () => {
 	const [regions, setRegions] = useState({});
 	const [citys, setCitys] = useState([]);
 	const [codeCountry, setCodeCountry] = useState('');
-	const [latLng, setLatLng] = useState({});
+	const [latLng, setLatLng] = useState([]);
+	const [idProduct, setIdProduct] = useState(null);
+	const [desactiveBtn, setDesactiveBtn] = useState(false);
+	
+	// Obtener productos del usuario
+	useEffect(() => {
+		
+		const id = dataUser.uid;
+		dispatch( getProductsActions(id) );
 
+	}, [dispatch, dataUser]);
+	
+	// Hacer la peticion a la api
 	useEffect(() => {
 		
 		// Guarda todos los paises de la api
-		$.getJSON(urlCountries, countries => {
+		// $.getJSON(urlCountries, countries => {
 
-			const codes = countries.map(countrie => countrie.code);
-			const names = countries.map(countrie => countrie.name);
+		// 	const codes = countries.map(countrie => countrie.code);
+		// 	const names = countries.map(countrie => countrie.name);
 			
-			setCountries({ title: 'Escoje un pais', categorys: names, value: codes });
-			setCodeCountriesMemo({ title: 'Escoje un pais', categorys: names, value: codes });
-		});
+		// 	setCountries({ title: 'Escoje un pais', categorys: names, value: codes });
+		// 	setCodeCountriesMemo({ title: 'Escoje un pais', categorys: names, value: codes });
+		// });
 
 		return () => setCountries([]);
 
 	}, []);
 
-	useEffect( () => {
-
-        const map = new mapboxgl.Map({
-            container: mapRef.current,
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-66.87919, 10.48801],
-            zoom: 5
-        });
-        
-        // Agregando controles para aumentar zoom o para disminuir.
-        const nav = new mapboxgl.NavigationControl();
-        map.addControl(nav, 'top-right');
-
-		new mapboxgl.Marker({
-			anchor: 'top-left',
-			color: '#2896A9'
-		})
-		.setLngLat([-66.0, 8.0])
-		.addTo(map)
-		.setDraggable( true );
-
-    }, []);
-
-	const prev = () => {
-
-		if (countries.title === "Escoje una region") setCountries( countriesMemo );
-		else if (countries.title === "Escoje una ciudad") setCountries( regions );
-
-		setLatLng({});
-		setCitys([]);
-	}
+    const selectedProduct = index => setIdProduct(products[index].id);
 
 	const selected = code => {
 		
@@ -76,7 +66,7 @@ const ProductLocation = () => {
 			const findCity = citys.find(city => city.city === code);
 			
 			setCountries({ title: 'Escoje una ciudad', categorys: names, value: names });
-			setLatLng({lat: findCity.latitude, lng: findCity.longitude});
+			setLatLng([findCity.longitude, findCity.latitude]);
 
 			return;
 		}
@@ -108,25 +98,58 @@ const ProductLocation = () => {
 			setCitys(citys);
 		});
 	}
-	
-	const addLocation = () => {
 
-		console.log(latLng);
+	const prev = () => {
+		
+		if (countries.title === "Escoje un pais") setIdProduct(null);
+		else if (countries.title === "Escoje una region") setCountries( countriesMemo );
+		else if (countries.title === "Escoje una ciudad") setCountries( regions );
+
+		setLatLng([]);
+		setCitys([]);
+	}
+	
+	const addLocation = async () => {
+
+		const { token } = auth;
+		const formData = new FormData();
+		
+		formData.append('id', idProduct);
+		formData.append('latLng', latLng);
+
+		const { ok, messages, isExpiredToken } = await requestWithToken('save-coordinates', token, formData, 'POST');
+
+		if (isExpiredToken) {
+			
+			dispatch( logoutUser() );
+			alert('error', messages);
+
+			return;
+		}
+
+		if (ok) alert('success', ['Las coordenadas fueron agregadas al producto']);
+		else alert('error', ['No se pudo agregar las coordenadas al producto']);
+
+		// Desactivando el boton y luego activandolo cuando se quite la alerta
+		setDesactiveBtn(true);
+		setTimeout(() => setDesactiveBtn(false), 3000);
 	}
 	
 	return (
 		<ControlPanel
 			component={() => <ProductLocationPage
 				countries={countries}
+				idProduct={idProduct}
 				latLng={latLng}
 				mapRef={mapRef}
 				prev={prev}
+				products={products}
 				selected={selected}
+				selectedProduct={selectedProduct}
 			/>}
 			title="Ubicacion del producto"
 			text="Agrega la ubicacion del producto"
-			// desactiveBtn={desactiveBtn}
-			desactiveBtn={Object.keys(latLng).length === 0}
+			desactiveBtn={desactiveBtn || latLng.length === 0}
 			textButton="agregar ubicacion"
 			handleClick={addLocation}
 		/>

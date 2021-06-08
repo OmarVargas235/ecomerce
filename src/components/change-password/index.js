@@ -23,7 +23,6 @@ const ChangePassword = ({ history }) => {
 	});
 
 	const [isRequired, setIsRequired] = useState({});
-
 	const [checked, setChecked] = useState(getLS.checked);
 
 	const changPassword = async e => {
