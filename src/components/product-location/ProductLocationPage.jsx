@@ -6,11 +6,11 @@ import { TealButton } from '../../utils/styleMaterialUi';
 
 import { Divider } from '@material-ui/core';
 
-const ProductLocationPage = ({ countries, idProduct, latLng, mapRef, prev, products, selected, selectedProduct }) => (
+const ProductLocationPage = ({prev, products, state, selected, selectedProduct }) => (
 	<div className="py-4 px-5 text-center">
 		<div className="px-4">
 			{
-				idProduct ? null
+				state.idProduct ? null
 				: <SelectionMenu
 					categorys={products.map(product => product.name)}
 					setChange={selectedProduct}
@@ -22,17 +22,17 @@ const ProductLocationPage = ({ countries, idProduct, latLng, mapRef, prev, produ
 			<div className="mb-4"></div>
 			
 			{
-				!idProduct ? null
+				!state.idProduct ? null
 				: <React.Fragment> {
-					Object.keys(countries).length === 0 ? <Spinner />
+					Object.keys(state.countries).length === 0 ? <Spinner />
 					: <React.Fragment>
-						<h5>{countries.title}</h5>
+						<h5>{state.countries.title}</h5>
 
 						<SelectionMenu
-							categorys={countries.categorys}
+							categorys={state.countries.categorys}
 							setChange={selected}
-							title={countries.title}
-							value={countries.value}
+							title={state.countries.title}
+							value={state.countries.value}
 						/>
 
 						<Divider className="my-4" />

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import $ from "jquery";
 
 import ProductLocationPage from './ProductLocationPage';
+import { reducer, initialState } from './reducer';
 import ControlPanel from '../../layaut/ControlPanel';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
@@ -18,16 +19,9 @@ const ProductLocation = () => {
 	const { products } = useSelector(state => state.product);
 
 	const dispatch = useDispatch();
-
-	const mapRef = useRef();
 	
-	const [countries, setCountries] = useState({});
-	const [countriesMemo, setCodeCountriesMemo] = useState({});
-	const [regions, setRegions] = useState({});
-	const [citys, setCitys] = useState([]);
-	const [codeCountry, setCodeCountry] = useState('');
-	const [latLng, setLatLng] = useState([]);
-	const [idProduct, setIdProduct] = useState(null);
+	const [state, dispatchUseReducer] = useReducer(reducer, initialState);
+
 	const [desactiveBtn, setDesactiveBtn] = useState(false);
 	
 	// Obtener productos del usuario
@@ -42,31 +36,44 @@ const ProductLocation = () => {
 	useEffect(() => {
 		
 		// Guarda todos los paises de la api
-		// $.getJSON(urlCountries, countries => {
+		$.getJSON(urlCountries, countries => {
 
-		// 	const codes = countries.map(countrie => countrie.code);
-		// 	const names = countries.map(countrie => countrie.name);
-			
-		// 	setCountries({ title: 'Escoje un pais', categorys: names, value: codes });
-		// 	setCodeCountriesMemo({ title: 'Escoje un pais', categorys: names, value: codes });
-		// });
+			const codes = countries.map(countrie => countrie.code);
+			const names = countries.map(countrie => countrie.name);
+			const obj = { title: 'Escoje un pais', categorys: names, value: codes };
 
-		return () => setCountries([]);
+			dispatchUseReducer({ type: 'COUNTRIES', payload: obj });
+		    dispatchUseReducer({ type: 'COUNTRIES_MEMO', payload: obj });
+		});
+
+		return () => dispatchUseReducer({ type: 'COUNTRIES', payload: [] });
 
 	}, []);
 
-    const selectedProduct = index => setIdProduct(products[index].id);
+    const selectedProduct = index => dispatchUseReducer({
+    	type: 'ID_PRODUCT',
+    	payload: products[index].id,
+    });
 
 	const selected = code => {
 		
-		// Obtener la ciudad con su latitud y longitud para dibujarla en el mapa
+		const { citys, codeCountry } = state;
+
+		// Obtener la ciudad con su latitud y longitud
 		if (citys.length > 0) {
 
 			const names = citys.map(city => city.city);
 			const findCity = citys.find(city => city.city === code);
 			
-			setCountries({ title: 'Escoje una ciudad', categorys: names, value: names });
-			setLatLng([findCity.longitude, findCity.latitude]);
+			dispatchUseReducer({
+		    	type: 'COUNTRIES',
+		    	payload: { title: 'Escoje una ciudad', categorys: names, value: names },
+		    });
+
+			dispatchUseReducer({
+		    	type: 'LATITUDE_LONGITUDE',
+		    	payload: [findCity.longitude, findCity.latitude],
+		    });
 
 			return;
 		}
@@ -79,11 +86,13 @@ const ProductLocation = () => {
 			$.getJSON(urlRegions, regions => {
 				
 				const names = regions.map(region => region.region);
-				setCountries({ title: 'Escoje una region', categorys: names, value: names });
-				setRegions({ title: 'Escoje una region', categorys: names, value: names });
-			});
+				const obj = { title: 'Escoje una region', categorys: names, value: names };
 
-			setCodeCountry(code);
+				dispatchUseReducer({ type: 'COUNTRIES', payload: obj });
+			    dispatchUseReducer({ type: 'REGIONS_MEMO', payload: obj });
+			});
+			
+			dispatchUseReducer({ type: 'CODE_COUNTRY', payload: code });
 
 			return;
 		}
@@ -93,24 +102,36 @@ const ProductLocation = () => {
 
 		$.getJSON(urlCitys, citys => {
 			
-			const names = citys.map(city => city.city);		
-			setCountries({ title: 'Escoje una ciudad', categorys: names, value: names });
-			setCitys(citys);
+			const names = citys.map(city => city.city);
+			dispatchUseReducer({
+		    	type: 'COUNTRIES',
+		    	payload: { title: 'Escoje una ciudad', categorys: names, value: names },
+		    });
+
+		    dispatchUseReducer({ type: 'CITYS', payload: citys });
 		});
 	}
 
 	const prev = () => {
 		
-		if (countries.title === "Escoje un pais") setIdProduct(null);
-		else if (countries.title === "Escoje una region") setCountries( countriesMemo );
-		else if (countries.title === "Escoje una ciudad") setCountries( regions );
+		const { countries, countriesMemo, regionsMemo } = state;
 
-		setLatLng([]);
-		setCitys([]);
+		if (countries.title === "Escoje un pais") 
+			dispatchUseReducer({ type: 'ID_PRODUCT', payload: null });
+
+		else if (countries.title === "Escoje una region") 
+			dispatchUseReducer({ type: 'COUNTRIES', payload: countriesMemo });
+
+		else if (countries.title === "Escoje una ciudad") 
+			dispatchUseReducer({ type: 'COUNTRIES', payload: regionsMemo });
+		
+		dispatchUseReducer({ type: 'LATITUDE_LONGITUDE', payload: [] });
+		dispatchUseReducer({ type: 'CITYS', payload: [] });
 	}
 	
 	const addLocation = async () => {
-
+		
+		const { idProduct, latLng } = state;
 		const { token } = auth;
 		const formData = new FormData();
 		
@@ -138,18 +159,15 @@ const ProductLocation = () => {
 	return (
 		<ControlPanel
 			component={() => <ProductLocationPage
-				countries={countries}
-				idProduct={idProduct}
-				latLng={latLng}
-				mapRef={mapRef}
 				prev={prev}
 				products={products}
+				state={state}
 				selected={selected}
 				selectedProduct={selectedProduct}
 			/>}
 			title="Ubicacion del producto"
 			text="Agrega la ubicacion del producto"
-			desactiveBtn={desactiveBtn || latLng.length === 0}
+			desactiveBtn={desactiveBtn || state.latLng.length === 0}
 			textButton="agregar ubicacion"
 			handleClick={addLocation}
 		/>
