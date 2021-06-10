@@ -47,7 +47,10 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 
 								<Hidden mdUp>
 									<Divider className="my-4" />
-									<Map classes={classes} />
+									<Map
+										classes={classes}
+										pointStart={product.location}
+									/>
 								</Hidden>
 								
 								<Divider className="my-4" />
@@ -77,7 +80,10 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 								
 								<Hidden smDown>
 									<AddToCart product={product} />
-									<Map classes={classes} />
+									<Map
+										classes={classes}
+										pointStart={product.location}
+									/>
 								</Hidden>
 							</Grid>
 						</Grid>

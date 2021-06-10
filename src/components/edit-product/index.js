@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ControlPanel from '../../layaut/ControlPanel';
 import EditProductPage from './EditProductPage';
-import { getProductActions } from '../../redux/actions/productActions';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
 import { requestWithToken } from '../../utils/fetch';
+import { getProductActions } from '../../redux/actions/productActions';
 import { logoutUser } from '../../redux/actions/userAction';
+import { useMapbox } from '../../customHooks/useMapbox';
+import { SocketContext } from '../../context/SocketContext';
 
 let categories = new Set();
 
@@ -16,10 +18,13 @@ const EditProduct = ({ history, match }) => {
 	
 	const { id } = match.params;
 	const user = useSelector(state => state.user);
-	const product = useSelector(state => state.product.product);
-	const loading = useSelector(state => state.product.loading);
+	const { product, loading } = useSelector(state => state.product);
 
 	const dispatch = useDispatch();
+
+	const [ mapRef, newCoordinates ] = useMapbox(product.location, true);
+
+	const { socket, online } = useContext( SocketContext );
 
 	const [formRef, getDataRef, desactiveBtn, setDesactiveBtn] = useFormNotController({
 		name: React.createRef(''),
@@ -36,9 +41,11 @@ const EditProduct = ({ history, match }) => {
 		description: false,
 	});
 	const [isRequired, setIsRequired] = useState({});
-
+	
+	// Obtener el producto
 	useEffect(() => dispatch( getProductActions(id) ), [dispatch, user, id]);
-
+	
+	// Sobreescribir las categorias
 	if (Object.keys(product).length > 0) categories = product.categories;
 
 	const editProduct = async e => {
@@ -78,6 +85,12 @@ const EditProduct = ({ history, match }) => {
 
 			return;
 		}
+		
+		// Sobreescribir las coordenadas mediante sockets
+		const coordinates = newCoordinates.length === 0 ? product.location : newCoordinates;
+		const sendSocket = { coordinates, id };
+		
+		if (online) socket.emit('edit-coordinates', sendSocket);
 
 		alert(ok ? 'success' : 'error', messages);
 
@@ -95,6 +108,7 @@ const EditProduct = ({ history, match }) => {
 				formRef={formRef}
 				isRequired={isRequired}
 				loading={loading}
+				mapRef={mapRef}
 				product={product}
 			/>}
 			title="Editar producto"

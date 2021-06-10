@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import './assets/bootstrap.css';
 import RouterApp from './routers/RouterApp';
+import SocketProvider from './context/SocketContext';
 
 const Body = createGlobalStyle`
 	main, section {
@@ -21,8 +22,10 @@ const App = () => {
 	return (
 		<React.Fragment>
 			<Body />
-
-			<RouterApp />
+			
+			<SocketProvider>
+				<RouterApp />
+			</SocketProvider>
 		</React.Fragment>
 	)
 }

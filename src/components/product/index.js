@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ProductPage from './components/ProductPage';
-import { getProductActions, getProductsActions } from '../../redux/actions/productActions';
+import {
+	getProductActions,
+	getProductsActions,
+	getProduct, 
+} from '../../redux/actions/productActions';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
+import { SocketContext } from '../../context/SocketContext';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,6 +29,8 @@ const Product = ({ match }) => {
 	const { product, products } = useSelector(state => state.product);
 	const { auth, dataUser } = useSelector(state => state.user);
 
+	const { socket, online } = useContext( SocketContext );
+
 	const classes = useStyles();
 
 	const theme = styleMaterialUiTheme();
@@ -40,6 +47,12 @@ const Product = ({ match }) => {
 		dispatch( getProductsActions(idUser) );
 
 	}, [dispatch, id, idUser]);
+
+	useEffect(() => {
+		
+		if (online) socket.on('get-coordinates', resp => dispatch(getProduct(resp) ) );
+		
+	}, [socket, online, dispatch]);
 	
 	return (
 		<ProductPage

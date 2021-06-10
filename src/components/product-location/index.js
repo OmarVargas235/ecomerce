@@ -13,7 +13,7 @@ import { logoutUser } from '../../redux/actions/userAction';
 const key = '213438341b3e7032370ce3ccbe621efd';
 const urlCountries = `https://geo-battuta.net/api/country/all/?key=${key}&callback=?`;
 
-const ProductLocation = () => {
+const ProductLocation = ({ history }) => {
 
 	const { auth, dataUser } = useSelector(state => state.user);
 	const { products } = useSelector(state => state.product);
@@ -148,8 +148,12 @@ const ProductLocation = () => {
 			return;
 		}
 
-		if (ok) alert('success', ['Las coordenadas fueron agregadas al producto']);
-		else alert('error', ['No se pudo agregar las coordenadas al producto']);
+		if (ok) {
+
+			alert('success', ['Las coordenadas fueron agregadas al producto']);
+			history.push(`editar-producto/${idProduct}`);
+		
+		} else alert('error', ['No se pudo agregar las coordenadas al producto']);
 
 		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(true);

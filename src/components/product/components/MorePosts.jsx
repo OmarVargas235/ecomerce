@@ -79,6 +79,7 @@ const MorePosts = ({ classes, history, idUser, products }) => (
 										<CardWithoutButton
 											classes={classes}
 											data={products[index]}
+											history={history}
 										/>
 									</Grid>
 								))

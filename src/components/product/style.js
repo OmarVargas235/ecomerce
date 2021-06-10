@@ -40,7 +40,7 @@ export const ModalStyle = styled.article`
 `;
 
 export const MapStyle = styled.article`
-	div {
+	.map {
 		height: 500px;
 	}
 

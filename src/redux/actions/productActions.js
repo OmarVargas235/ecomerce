@@ -54,7 +54,7 @@ export const getProductActions = id => async dispatch => {
 	}
 }
 
-const getProduct = payload => ({
+export const getProduct = payload => ({
 	type: GET_PRODUCT,
 	payload,
 });

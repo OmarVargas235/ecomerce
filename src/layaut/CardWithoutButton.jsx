@@ -5,7 +5,7 @@ import { CardWithoutButtonPriceStyle } from './style';
 import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-const CardWithoutButton = ({ classes, data, history }) => (
+const CardWithoutButton = ({ classes, data={}, history={} }) => (
 	<Card raised={true} className={classes.card}>
 		<CardActionArea onClick={() => history.push(`/producto/${data.id}`)}>
 			<CardMedia
