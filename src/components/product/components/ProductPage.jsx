@@ -5,7 +5,7 @@ import Spinner from '../../../layaut/Spinner';
 import Gallery from '../container/Gallery';
 import Qualification from '../container/Qualification';
 import Chat from '../container/Chat';
-import MorePosts from './MorePosts';
+import MorePosts from '../container/MorePosts';
 import AddToCart from '../container/AddToCart';
 import Map from '../container/Map';
 

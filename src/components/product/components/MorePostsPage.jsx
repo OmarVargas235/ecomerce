@@ -2,25 +2,26 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import CardWithoutButton from '../../../layaut/CardWithoutButton';
+import Spinner from '../../../layaut/Spinner';
 
 import Carousel from 'react-material-ui-carousel';
 import { Grid, Typography, Hidden, Button } from '@material-ui/core';
 
-const MorePosts = ({ classes, history, idUser, products }) => (
+const MorePostsPage = ({ classes, history, idUser, products }) => (
 	<React.Fragment>
 		<Hidden mdUp>
 			<Grid container>
 				{
-					products.map((e, index) => {
-						
-						if (index < 3) {
+					products.length === 0 ? <Spinner />
+					: <React.Fragment>
+						{			
+							products[0].map(product => (
 
-							return (
-								<React.Fragment key={index}>
+								<React.Fragment key={product.id}>
 									<Grid item xs={4} sm={3} className="mb-3">
 										<img
-											src={`http://localhost:5000/${products[index]?.img}`}
-											alt={products[index]?.name}
+											src={`http://localhost:5000/${product.img}`}
+											alt={product.name}
 											className="imgUpMorePost"
 										/>
 									</Grid>
@@ -31,11 +32,11 @@ const MorePosts = ({ classes, history, idUser, products }) => (
 											color="textSecondary"
 											component="p"
 										>
-											{ products[index]?.name }
+											{ product.name }
 										</Typography>
 									
 										<Typography gutterBottom variant="h6" component="h2">
-											$ { products[index]?.price }
+											$ { product.price }
 										</Typography>
 									
 										<Typography
@@ -47,11 +48,9 @@ const MorePosts = ({ classes, history, idUser, products }) => (
 										</Typography>
 									</Grid>
 								</React.Fragment>
-							)
+							))
 						}
-
-						return null;
-					})
+					</React.Fragment>
 				}
 
 				<Button
@@ -71,14 +70,14 @@ const MorePosts = ({ classes, history, idUser, products }) => (
 				indicators={false}
 			>
 				{
-					products.map((el, index) => (
+					products.map((product, index) => (
 						<Grid container spacing={3} key={index}>
 							{
-								[1,2,3,4].map((product, index) => (
-									<Grid item md={3} key={index}>
+								product.map(product => (
+									<Grid item md={3} key={product.id}>
 										<CardWithoutButton
 											classes={classes}
-											data={products[index]}
+											data={product}
 											history={history}
 										/>
 									</Grid>
@@ -92,4 +91,4 @@ const MorePosts = ({ classes, history, idUser, products }) => (
 	</React.Fragment>
 )
 
-export default withRouter(MorePosts);
+export default withRouter(MorePostsPage);
