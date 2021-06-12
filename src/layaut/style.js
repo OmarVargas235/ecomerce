@@ -62,17 +62,23 @@ export const ControlPanelStyle = styled.section`
 		.container__options-user p {
 			padding-left: 10px;
 		}
+	}
 
+	@media (max-width: 429px) {
 		.px-5 {
-			padding-left: 0 !important;
-			padding-right: 0 !important;
+			padding-left: .5rem !important;
+			padding-right: .5rem !important;
 		}
 	}
 
-	@media (max-width: 502px) {
+	@media (max-width: 345px) {
 		.px-5 {
-			padding-left: 0 !important;
-			padding-right: 0 !important;
+			padding-left: .1rem !important;
+			padding-right: .1rem !important;
+		}
+
+		.btn.px-4 {
+			padding-right: 0rem !important;
 		}
 	}
 `;

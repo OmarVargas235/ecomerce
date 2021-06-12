@@ -13,7 +13,6 @@ const MineProducts = ({ history }) => {
 	const user = useSelector(state => state.user);
 	const loading = useSelector(state => state.product.loading);
 	const products = useSelector(state => state.product.products);
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {

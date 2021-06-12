@@ -14,7 +14,13 @@ export const getUserAction = token => async dispatch => {
 	try {
 		
 		const resp = await requestWithToken('get-user', token);
-		const { ok, messages } = await resp.json();
+		const { ok, messages, isExpiredToken } = await resp.json();
+
+		if (isExpiredToken) {
+			
+			dispatch( logoutUser() );
+			return;
+		}
 		
 		if (ok) dispatch( getUser(messages) );
 	

@@ -11,7 +11,7 @@ const ProductPage = ({ delateProduct, history, product }) => (
 			<img src={`http://localhost:5000/${product.img}`} alt={product.name} className="img-fluid" />
 		</Grid>
 		
-		<Grid item xs={6} container justify="center" direction="column">
+		<Grid item xs={5} container justify="center" direction="column">
 			<Typography
 				variant="body2"
 				component="p"
@@ -26,10 +26,10 @@ const ProductPage = ({ delateProduct, history, product }) => (
 			</Typography>
 		</Grid>
 
-		<Grid item xs={3} container alignContent="center" justify="center">
+		<Grid item xs={4} container alignContent="center" justify="center">
 			<DeleteIcon
 				style={{ color: teal[500] }}
-				className="pointer mb-2"
+				className="pointer mt-2"
 				onClick={() => delateProduct(product.id)}
 			/>
 

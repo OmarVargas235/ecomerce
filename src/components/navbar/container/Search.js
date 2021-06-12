@@ -14,11 +14,11 @@ const Search = ({ setActiveSearch }) => {
 
 	const history = useHistory();
 
-	const [animationEnter, setAnimationEnter] = useState(true);
-
 	const [ formData, handleChange ] = useForm({
 		search: '',
 	});
+
+	const [animationEnter, setAnimationEnter] = useState(true);
 
 	const closeInputSearch = () => {
 

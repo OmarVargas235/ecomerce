@@ -16,15 +16,13 @@ let categories = new Set();
 
 const EditProduct = ({ history, match }) => {
 	
-	const { id } = match.params;
 	const user = useSelector(state => state.user);
 	const { product, loading } = useSelector(state => state.product);
-
 	const dispatch = useDispatch();
 
-	const [ mapRef, newCoordinates ] = useMapbox(product.location, true);
+	const { id } = match.params;
 
-	const { socket, online } = useContext( SocketContext );
+	const [ mapRef, newCoordinates ] = useMapbox(product.location, true);
 
 	const [formRef, getDataRef, desactiveBtn, setDesactiveBtn] = useFormNotController({
 		name: React.createRef(''),
@@ -40,6 +38,9 @@ const EditProduct = ({ history, match }) => {
 		stock: false,
 		description: false,
 	});
+
+	const { socket, online } = useContext( SocketContext );
+
 	const [isRequired, setIsRequired] = useState({});
 	
 	// Obtener el producto

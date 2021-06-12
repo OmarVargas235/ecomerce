@@ -57,7 +57,7 @@ const ControlPanel = ({ component:Component, history, title, text, textButton, d
 							: <React.Fragment>
 								<Divider light />
 
-								<div className={`mt-3 px-4 mr-5 text-${photograph ? 'center' : 'right'}`}>
+								<div className={`mt-3 btn px-4 mr-5 text-${photograph ? 'center' : 'right'}`}>
 									<TealButton
 										variant="contained"
 										type="submit"

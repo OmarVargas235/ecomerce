@@ -13,11 +13,11 @@ import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
 const Login = ({ history }) => {
 
+  	const dispatch = useDispatch();
+
 	const getLS = JSON.parse(window.localStorage.getItem('email-ecomerce')) || '';
 	
   	const theme = styleMaterialUiTheme();
-
-  	const dispatch = useDispatch();
 
   	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
 		email: getLS ? getLS.email : '',

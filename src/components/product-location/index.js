@@ -17,7 +17,6 @@ const ProductLocation = ({ history }) => {
 
 	const { auth, dataUser } = useSelector(state => state.user);
 	const { products } = useSelector(state => state.product);
-
 	const dispatch = useDispatch();
 	
 	const [state, dispatchUseReducer] = useReducer(reducer, initialState);

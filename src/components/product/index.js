@@ -22,21 +22,21 @@ const useStyles = makeStyles({
 });
 
 const Product = ({ match }) => {
-	
-	const { id } = match.params;
-	
+		
 	const dispatch = useDispatch();
 	const { product, products } = useSelector(state => state.product);
 	const { auth, dataUser } = useSelector(state => state.user);
 
-	const { socket, online } = useContext( SocketContext );
-
 	const classes = useStyles();
-
 	const theme = styleMaterialUiTheme();
 
-	const [idUser, setSidUser] = useState(null);
+	const { id } = match.params;
 
+	const { socket, online } = useContext( SocketContext );
+
+	const [idUser, setSidUser] = useState(null);
+	
+	// Obtener el id del usuario, si este existe.
 	useEffect(() => product.user && setSidUser(product.user['_id'] || null), [product]);
 
 	useEffect(() => {
@@ -47,7 +47,8 @@ const Product = ({ match }) => {
 		dispatch( getProductsActions(idUser) );
 
 	}, [dispatch, id, idUser]);
-
+	
+	// Actualiza las coordenadas en tiempo real.
 	useEffect(() => {
 		
 		if (online) socket.on('get-coordinates', resp => dispatch(getProduct(resp) ) );

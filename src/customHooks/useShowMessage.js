@@ -22,7 +22,6 @@ export const useShowMessage = (history, url) => {
 			// Mensaje de cuenta activada o de token expirado
 			if (empty) return;
 			alert(ok ? 'success' : 'error', messages);
-
 		}
 
 		showMessage();

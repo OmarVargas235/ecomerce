@@ -23,11 +23,13 @@ const Cart = ({ idUser }) => {
 	const dispatch = useDispatch();
 	const products = useSelector(state => state.cart.products);
 	const token = useSelector(state => state.user.auth.token);
+	
+	const classes = useStyles();
+	const theme = useTheme();
+	const themeColour = styleMaterialUiTheme();
 
 	const cartRef = useRef();
 
-	const classes = useStyles();
-	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const [mouseMove, setMouseMove] = useState(-1);
 
@@ -51,8 +53,6 @@ const Cart = ({ idUser }) => {
 
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);
-
-	const themeColour = styleMaterialUiTheme();
 
 	const plusOrLess = (product, type="plus") => {
 

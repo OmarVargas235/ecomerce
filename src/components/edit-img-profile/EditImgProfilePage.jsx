@@ -7,7 +7,7 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 
 const EditImgProfilePage = ({ handleChange, previewImage }) => (
 	<React.Fragment>
-		<EditImgProfileStyle className="container my-4 px-5">
+		<EditImgProfileStyle className="container my-4">
 			<Typography variant="subtitle1" className="mb-3">
 				Vista previa de imagen
 			</Typography>

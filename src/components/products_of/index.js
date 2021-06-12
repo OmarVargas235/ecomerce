@@ -25,9 +25,9 @@ const MoreProducts = ({ history, match }) => {
 	const dispatch = useDispatch();
 	const { products } = useSelector(state => state.product);
 	
-	const { id } = match.params;
-
 	const classes = useStyles();
+
+	const { id } = match.params;
 
 	useEffect(() => dispatch( getProductsActions(id) ), [dispatch, id]);
 	
