@@ -1,82 +1,92 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import QualificationPage from '../components/QualificationPage';
-import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { alert } from '../../../utils/alert';
+import { SocketContext } from '../../../context/SocketContext';
 
 const Qualification = ({ auth, classes, dataUser, id, }) => {
 
 	const dispatch = useDispatch();
 
+	const { socket, online } = useContext( SocketContext );
+
 	const [qualificationUser, setQualificationUser] = useState(null);
 	const [point, setPoint] = useState(0);
 	const [reviews, setReviews] = useState(0);
 	const [update, setUpdate] = useState(false);
-	
-	useEffect(() => {
+
+	const qualificationProduct = useCallback(resp => {
 		
-		// Obtener la calificacion del producto cuando se carga el componente
-		async function callAPI() {
-
-			const resp = await requestWithoutToken(`get-qualification-product/${id}`);
-			const { ok, messages } = await resp.json();
+		// Si "resp" es cero, significa que el producto aun no se a calificado
+		if (resp.length === 0) {
 			
-			// Si "messages" es cero, significa que el producto aun no se a calificado
-			if (messages.length === 0) {
-				
-				setQualificationUser(null);
-				setPoint(0);
-				setReviews(0);
+			setQualificationUser(null);
+			setPoint(0);
+			setReviews(0);
 
-				return;
-			}
-
-			if (ok) {
-				
-				// Obtener la calificacion que el usuario le dio al producto
-				const qualification = messages.find(el => el.idUser === dataUser.uid);
-				
-				// Obetner la suma de todas las calificaciones dadas por los diferentes usuarios
-				const totalQualification = messages.reduce((acc, el) => {
-					
-					return (acc += Number(el.qualification), acc);
-
-				}, 0);
-				
-				setQualificationUser(!qualification ? null : qualification.qualification);
-				setPoint(Math.round(totalQualification / messages.length));
-				setReviews(messages.length);
-
-			} else alert('error', messages);
+			return;
 		}
 
-		callAPI();
+		// Obtener la calificacion que el usuario le dio al producto
+		const qualification = resp.find(el => el.idUser === dataUser.uid);
+		
+		// Obetner la suma de todas las calificaciones dadas por los diferentes usuarios
+		const totalQualification = resp.reduce((acc, el) => {
+			
+			return (acc += Number(el.qualification), acc);
 
-	}, [auth, dataUser, id, update]);
+		}, 0);
+		
+		setPoint(Math.round(totalQualification / resp.length));
+		setReviews(resp.length);
+		
+		// if (!qualification) return setQualificationUser(null);
+		if (!qualification) return;
+		setQualificationUser(qualification.qualification);
+
+	}, [dataUser]);
+	
+	// Obtiene la calificacion cada vez que que el usuario cambia su calificacion
+	useEffect(() => {
+
+		socket.on('get-qualification-product', resp => qualificationProduct(resp));
+
+		return () => socket.off('get-qualification-product');
+
+	}, [auth, dataUser, id, update, socket, qualificationProduct]);
+	
+	// Obtiene la calificacion cuando se monta el componente
+	useEffect(() => {
+
+		socket.emit('get-qualification-product', id, resp => qualificationProduct(resp));
+
+		return () => socket.off('get-qualification-product');
+		
+	}, [socket, id, dataUser, qualificationProduct]);
 
 	const setQualification = async selected => {
 		
 		const { token } = auth;
 
-		const formData = new FormData();
-		formData.append('qualification', selected);
-		formData.append('idUser', dataUser.uid);	
-		
-		const resp = await requestWithToken(`qualification-product/${id}`, token, formData,'POST');
-		const { ok, messages, isExpiredToken } = await resp;
-		
-		// Si el token a expirado
-		if (isExpiredToken) {
+		const formData = {
+			qualification: selected,
+			idUser: dataUser.uid,
+			idProduct: id,
+			token,
+		};
+
+		if (online) socket.emit('qualification-product', formData);
+
+		socket.on('get-qualification-message', resp => {
+
+			const { ok, messages } = resp;
+			alert(ok ? 'success' : 'error', messages);
 			
-			dispatch( logoutUser() );
-			alert('error', messages);
-
-			return;
-		}
-
-		alert(ok ? 'success' : 'error', messages);
+			// Si el token a expirado
+			if (!ok) dispatch( logoutUser() );
+		});
 		
 		setUpdate(!update);
 	}

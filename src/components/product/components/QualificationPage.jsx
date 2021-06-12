@@ -9,6 +9,7 @@ import StarIcon from '@material-ui/icons/Star';
 const QualificationPage = ({ classes, isAuthenticated, point, qualificationUser, reviews,setQualification }) => (
 	<React.Fragment>
 		<Grid container alignItems="center">
+
 			<Grid item xs={3} sm={2}>
 				<Typography variant="h3" component="h1" className="text-center">
 			  		{point}
