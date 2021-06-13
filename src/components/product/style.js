@@ -31,6 +31,10 @@ export const ProductStyle = styled.section`
 		width: 90px;
 		height: 90px;
 	}
+
+	.MuiAutocomplete-endAdornment {
+		display: none;
+	}
 `;
 
 export const ModalStyle = styled.article`

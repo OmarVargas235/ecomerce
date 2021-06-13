@@ -4,9 +4,9 @@ import CommentsPage from './CommentsPage';
 
 import { TextField, Button, Grid } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Pagination from '@material-ui/lab/Pagination';
+// import Pagination from '@material-ui/lab/Pagination';
 
-const ChatPage = ({ isAuthenticated, matches, nameUser }) => (
+const ChatPage = ({ handleChange, isAuthenticated, isRequired, leaveComment, matches, nameUser }) => (
 	<div className="mt-5 chat">
 
 		<h3 className="mt-4">Preguntas y Respuesta</h3>
@@ -15,7 +15,7 @@ const ChatPage = ({ isAuthenticated, matches, nameUser }) => (
 
 		{
 			!isAuthenticated ? null
-			: <form className="ml-3" noValidate autoComplete="off">
+			: <form className="ml-3" noValidate autoComplete="off" onSubmit={leaveComment}>
 				<Grid container spacing={3}>		
 					<Grid item xs={7} sm={6} className="px-0">
 						<Autocomplete
@@ -25,20 +25,26 @@ const ChatPage = ({ isAuthenticated, matches, nameUser }) => (
 								<TextField 
 									{...params}
 									label="Escribir comentario"
+									name="comment"
 									margin="normal"
 									variant="outlined"
-									color="secondary"
+									color={isRequired.comment ? "primary" : "secondary"}
+									onChange={handleChange}
+									error={isRequired.comment}
+									helperText={isRequired.comment ?"El campo esta vacio" : ""}
+									required
 								/>
 							)}
 						/>
 					</Grid>
-
+					
 					<Grid item xs={5} sm={6} className="px-0">
 						<Button
 							variant="contained"
 							color="primary"
 							size={matches ? "small" : "large"}
 							className="ml-3 mt-4"
+							type="submit"
 						>
 						  	Secondary
 						</Button>			
@@ -46,9 +52,8 @@ const ChatPage = ({ isAuthenticated, matches, nameUser }) => (
 				</Grid>
 		    </form>
 		}
-
-
-	    <CommentsPage />
+<CommentsPage />
+{/*	    <CommentsPage />
 	    <CommentsPage />
 	    <CommentsPage />
 	    <CommentsPage />
@@ -62,7 +67,7 @@ const ChatPage = ({ isAuthenticated, matches, nameUser }) => (
 				count={10}
 				color="secondary"
 			/>
-    	</div>
+    	</div>*/}
 	</div>
 )
 

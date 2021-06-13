@@ -71,8 +71,9 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 								/>
 
 								<Chat	
-									isAuthenticated={auth.isAuthenticated}
-									nameUser={product.user.name}
+									auth={auth}
+									idProduct={product.id}
+									user={product.user}
 								/>
 							</Grid>
 
