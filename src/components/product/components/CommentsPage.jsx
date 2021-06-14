@@ -2,55 +2,47 @@ import React from 'react';
 
 import { Avatar, Typography, Divider } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
-import { makeStyles } from '@material-ui/core/styles';
-import { deepOrange } from '@material-ui/core/colors';
 
-const useStyles = makeStyles((theme) => ({
-  orange: {
-    color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500],
-  },
-}));
+import { CommentStyle } from '../style';
 
-const CommentsPage = () => {
-	
-	const classes = useStyles();
+const CommentsPage = ({ classes, comment, nameFirstLetter, point, time }) => (
+	<CommentStyle>
+		<div className="my-4 d-flex">
+			{
+				comment.img
+				? <img  className="comment-img" src={`http://localhost:5000/${comment.img}`} alt="img" />
+				: <Avatar alt="Remy Sharp" className={classes.orange}>{nameFirstLetter}</Avatar>
+			}
 
-	return (
-		<React.Fragment>
-			<div className="my-4 d-flex">
-				<Avatar alt="Remy Sharp" className={classes.orange}>B</Avatar>
+			<span className="ml-3 ml-sm-4">
+				<Typography variant="h6" component="p">
+			  		{comment.name}
+				</Typography>
 
-				<span className="ml-3 ml-sm-4">
-					<Typography variant="h6" component="p">
-				  		Luis Gil
+				<div className="d-flex align-items-center mb-2">
+					<span className="mr-2">
+						<StarIcon color={`${point > 0 ? 'primary' : 'disabled'}`} />
+						<StarIcon color={`${point > 1 ? 'primary' : 'disabled'}`} />
+						<StarIcon color={`${point > 2 ? 'primary' : 'disabled'}`} />
+						<StarIcon color={`${point > 3 ? 'primary' : 'disabled'}`} />
+						<StarIcon color={`${point > 4 ? 'primary' : 'disabled'}`} />
+					</span>
+
+					<Typography variant="body2" component="h1" color="textSecondary">
+			  			{time}
 					</Typography>
+				</div>
 
-					<div className="d-flex align-items-center mb-2">
-						<span className="mr-2">
-							<StarIcon color="primary" />
-							<StarIcon color="primary" />
-							<StarIcon color="primary" />
-							<StarIcon color="primary" />
-							<StarIcon color="primary" />
-						</span>
+				<Typography variant="body2" component="h1" className="comment">
+			  		{comment.comment}.
+				</Typography>
 
-						<Typography variant="body2" component="h1" color="textSecondary">
-				  			hace 2 meses
-						</Typography>
-					</div>
+				<a href="/">Denunciar</a>
+			</span>
+		</div>
 
-					<Typography variant="body2" component="h1">
-				  		El cursos es demasiado bueno, superó mis expectativas, y eso que ya he tomado más cursos de Fernando; sin duda es una buena opción para aprender React.
-					</Typography>
-
-					<a href="/">Denunciar</a>
-				</span>
-			</div>
-
-			<Divider />
-		</React.Fragment>
-	)
-}
+		<Divider />
+	</CommentStyle>
+)
 
 export default CommentsPage;

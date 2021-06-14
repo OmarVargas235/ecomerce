@@ -57,3 +57,16 @@ export const MapStyle = styled.article`
 		display: none !important;
 	}
 `;
+
+export const CommentStyle = styled.article`
+	.comment-img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
+
+	.comment {
+		width: 500px;
+		overflow: hidden;
+	}
+`;

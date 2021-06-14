@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useRouteMatch  } from 'react-router-dom';
-// import moment from 'moment';
 
 import ChatPage from '../components/ChatPage';
 import { useForm } from '../../../customHooks/useForm';
 import { useValidateForm } from '../../../customHooks/useValidateForm';
 import { SocketContext } from '../../../context/SocketContext';
+import { alert } from '../../../utils/alert';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -16,8 +16,7 @@ const Chat = ({ auth, idProduct, user }) => {
 	const match = useRouteMatch();
 	const { id } = match.params;
 
-	// const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
-	const [ formData, handleChange ] = useForm({
+	const [ formData, handleChange, desactiveBtn, setDesactiveBtn ] = useForm({
 		comment: '',
 	});
 
@@ -28,36 +27,53 @@ const Chat = ({ auth, idProduct, user }) => {
 	const { socket, online } = useContext( SocketContext );
 
 	const [isRequired, setIsRequired] = useState({});
-	const [qualificationUser, setQualificationUser] = useState({});
+	const [qualifications, setQualifications] = useState([]);
+	const [comments, setComments] = useState([]);
+	const [initial, setInitial] = useState(0);
+	const [end, setEnd] = useState(5);
 
-	// Obtener la calificacion que el usuario le dio al producto del producto
+	// Obtener la calificaciones del producto
 	useEffect(() => {
-
-		if (!auth.isAuthenticated) return;
 		
-		socket.emit('get-qualification-product', id, resp => {
-			
-			const qualification = resp.find(el => el.idUser === user['_id']);
-			setQualificationUser(qualification);
-		});
+		socket.emit('get-qualification-product', id, resp => setQualifications(resp));
 
 		return () => socket.off('get-qualification-product');
 		
-	}, [socket, id, auth, user]);
+	}, [socket, id]);
 	
 	// Obtener los comentarios del producto cuando el componente se monta
 	useEffect(() => {
 		
-		socket.emit('get-comment', {id, token: auth.token} , resp => {
-
-			console.log(resp);
+		socket.emit('get-comment', id, resp => {
+			
+			const { ok, messages } = resp;
+			
+			if (ok) setComments(messages);
+			else alert('error', messages);
 		});
 		
-		return () => {
+		return () => socket.off('get-comment');
 		
-		}
+	}, [socket, id]);
+
+	// Agregar comentario
+	useEffect(() => {
 		
-	}, [socket, auth, id]);
+		socket.on('get-comment', resp => {
+			
+			const { ok, messages } = resp;
+			const { __v, _id, idProduct, ...body } = messages;
+
+			const arr = [...comments];
+			arr.unshift(body);
+			
+			if (ok) setComments(arr);
+			else alert('error', comments);
+		});
+		
+		return () => socket.off('get-comment');
+		
+	}, [socket, comments]);
 
 	const leaveComment = e => {
 		
@@ -70,35 +86,45 @@ const Chat = ({ auth, idProduct, user }) => {
 
 		if ( validate({ comment }) ) return;
 
-		// const time = moment("20111031", "YYYYMMDD").fromNow();
-		// console.log(time);
-
 		const sendSocket = {
 			comment,
-			qualification: qualificationUser.qualification,
-			name: user.name,
-			idUser: user['_id'],
+			name: user.name + ' ' + user.lastName,
+			img: user.img,
+			idUser: user['uid'],
 			idProduct,
 			token: auth.token,
 		}
 
 		if (online) socket.emit('add-comment', sendSocket);
 
-		// alert(ok ? 'success' : 'error', messages);
+		// Desactivando el boton y luego activandolo cuando se quite la alerta
+		setDesactiveBtn(true);
+		setTimeout(() => setDesactiveBtn(false), 1000);
+	}
 
-		// // Desactivando el boton y luego activandolo cuando se quite la alerta
-		// setDesactiveBtn(!ok ? true : false);
-		// setTimeout(() => setDesactiveBtn(false), 3000);
+	const handleChangePage  = (e, newPage) => {
+		
+		const endPage = newPage * 5;
+		const initialPage = endPage - 5;
+
+		setInitial( initialPage );
+		setEnd(endPage);
 	}
 	
 	return (
 		<ChatPage
+			comments={comments}
+			desactiveBtn={desactiveBtn}
+			end={end}
 			handleChange={handleChange}
+			handleChangePage={handleChangePage}
+			initial={initial}
 			isAuthenticated={auth.isAuthenticated}
 			isRequired={isRequired}
 			leaveComment={leaveComment}
 			matches={matches}
 			nameUser={user.name}
+			qualifications={qualifications}
 		/>
 	)
 }

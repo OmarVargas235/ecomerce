@@ -1,12 +1,12 @@
 import React from 'react';
 
-import CommentsPage from './CommentsPage';
+import Comments from '../container/Comments';
 
 import { TextField, Button, Grid } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-// import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@material-ui/lab/Pagination';
 
-const ChatPage = ({ handleChange, isAuthenticated, isRequired, leaveComment, matches, nameUser }) => (
+const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage, initial, isAuthenticated, isRequired, leaveComment, matches, nameUser, qualifications }) => (
 	<div className="mt-5 chat">
 
 		<h3 className="mt-4">Preguntas y Respuesta</h3>
@@ -45,6 +45,7 @@ const ChatPage = ({ handleChange, isAuthenticated, isRequired, leaveComment, mat
 							size={matches ? "small" : "large"}
 							className="ml-3 mt-4"
 							type="submit"
+							disabled={desactiveBtn}
 						>
 						  	Secondary
 						</Button>			
@@ -52,22 +53,35 @@ const ChatPage = ({ handleChange, isAuthenticated, isRequired, leaveComment, mat
 				</Grid>
 		    </form>
 		}
-<CommentsPage />
-{/*	    <CommentsPage />
-	    <CommentsPage />
-	    <CommentsPage />
-	    <CommentsPage />
-	    <CommentsPage />
 
-	    <div className="mt-4 d-flex justify-content-center">
-			<Pagination
-				defaultPage={1}
-				siblingCount={0}
-				boundaryCount={1}
-				count={10}
-				color="secondary"
-			/>
-    	</div>*/}
+		{
+			comments.length === 0 ? <div className="text-center mt-5">No hay comentarios</div>
+			: <React.Fragment>
+				{
+					comments.slice(initial, end).map((comment, index) => (
+						<Comments
+							key={index}
+							comment={comment}
+							qualifications={qualifications}
+						/>
+					))
+				}
+			</React.Fragment>
+		}
+		
+		{
+			comments.length === 0 ? null
+			: <div className="mt-4 d-flex justify-content-center">
+				<Pagination
+					defaultPage={1}
+					siblingCount={0}
+					boundaryCount={1}
+					count={Math.ceil(comments.length / 5)}
+					color="secondary"
+					onChange={handleChangePage}
+				/>
+	    	</div>
+		}
 	</div>
 )
 

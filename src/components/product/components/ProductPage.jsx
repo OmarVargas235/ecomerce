@@ -73,7 +73,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 								<Chat	
 									auth={auth}
 									idProduct={product.id}
-									user={product.user}
+									user={dataUser}
 								/>
 							</Grid>
 
