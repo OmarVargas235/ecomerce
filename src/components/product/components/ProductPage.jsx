@@ -67,7 +67,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 									auth={auth}
 									classes={classes}
 									dataUser={dataUser}
-									id={product.id}
+									id={product['_id']}
 								/>
 
 								<Chat

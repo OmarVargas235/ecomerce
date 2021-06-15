@@ -2,8 +2,7 @@ import React from 'react';
 
 import Logo from '../../../assets/img/logo.jpg';
 import SearchIcon from '@material-ui/icons/Search';
-import { categorys } from '../../../utils/helper';
-import SelectionMenu from '../../../layaut/SelectionMenu';
+import SelectedCategory from '../container/SelectedCategory';
 import Cart from '../container/Cart';
 import PopoverPage from './PopoverPage';
 
@@ -22,10 +21,7 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 			</Grid>
 
 			<Grid item sm={2}>		
-				<SelectionMenu
-					title="Categorias"
-					categorys={categorys}
-				/>
+				<SelectedCategory />
 			</Grid>
 			
 			{

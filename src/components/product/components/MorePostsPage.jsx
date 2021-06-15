@@ -15,12 +15,12 @@ const MorePostsPage = ({ classes, history, idUser, products }) => (
 					products.length === 0 ? <Spinner />
 					: <React.Fragment>
 						{			
-							products[0].map(product => (
+							products[0].map((product) => (
 
-								<React.Fragment key={product.id}>
+								<React.Fragment key={product['_id']}>
 									<Grid item xs={4} sm={3} className="mb-3">
 										<img
-											src={`http://localhost:5000/${product.img}`}
+											src={`http://localhost:5000/${product.images[0]}`}
 											alt={product.name}
 											className="imgUpMorePost"
 										/>
@@ -74,7 +74,7 @@ const MorePostsPage = ({ classes, history, idUser, products }) => (
 						<Grid container spacing={3} key={index}>
 							{
 								product.map(product => (
-									<Grid item md={3} key={product.id}>
+									<Grid item md={3} key={product['_id']}>
 										<CardWithoutButton
 											classes={classes}
 											data={product}

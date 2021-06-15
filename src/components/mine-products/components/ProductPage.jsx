@@ -8,7 +8,7 @@ import { teal } from '@material-ui/core/colors';
 const ProductPage = ({ delateProduct, history, product }) => (
 	<Grid container className="mb-4">
 		<Grid item xs={3} className="mb-3">
-			<img src={`http://localhost:5000/${product.img}`} alt={product.name} className="img-fluid" />
+			<img src={`http://localhost:5000/${product.images[0]}`} alt={product.name} className="img-fluid" />
 		</Grid>
 
 		<Grid item xs={6} container justify="center" direction="column">

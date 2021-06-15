@@ -66,7 +66,6 @@ export const CommentStyle = styled.article`
 	}
 
 	.comment {
-		width: 500px;
 		overflow: hidden;
 	}
 `;

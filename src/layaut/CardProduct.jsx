@@ -28,7 +28,7 @@ const CardProduct = ({ history, product }) => {
 			<CardActionArea>
 				<CardMedia
 					className={classes.media}
-					image={`http://localhost:5000/${product.img}`}
+					image={`http://localhost:5000/${product.images[0]}`}
 					title={product.name}
 				/>
 
@@ -55,7 +55,7 @@ const CardProduct = ({ history, product }) => {
 			
 			<CardActions className="mb-sm-3">
 				<RedLightButton
-					onClick={() => history.push(`/producto/${product.id}`)}
+					onClick={() => history.push(`/producto/${product['_id']}`)}
 					size="medium"
 					color="primary"
 					className="btn-block"

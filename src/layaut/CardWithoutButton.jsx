@@ -12,7 +12,7 @@ const CardWithoutButton = ({ classes, data={}, history={} }) => (
 				component="img"
 				alt="Contemplative Reptile"
 				height="140"
-				image={`http://localhost:5000/${data.img}`}
+				image={`http://localhost:5000/${data.images[0]}`}
 				title={data.id}
 			/>
 

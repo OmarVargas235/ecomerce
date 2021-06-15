@@ -11,7 +11,7 @@ const MineProductsPage = ({ delateProduct, history, loading, products=[] }) => (
 			: products.length === 0
 				? <div className="mt-5">No tienes ningun producto</div>
 				: products.map(product => ( <ProductPage
-					key={product.id}
+					key={product['_id']}
 					delateProduct={delateProduct}
 					history={history}
 					product={product}

@@ -4,9 +4,8 @@ import { ReactComponent as BtnToggle } from '../../../assets/icons/btn_toggle.sv
 import CloseIcon from '@material-ui/icons/Close';
 import Logo from '../../../assets/img/logo.jpg';
 import SearchIcon from '@material-ui/icons/Search';
-import SelectionMenu from '../../../layaut/SelectionMenu';
+import SelectedCategory from '../container/SelectedCategory';
 import Cart from '../container/Cart';
-import { categorys } from '../../../utils/helper';
 import PopoverPage from './PopoverPage';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -115,10 +114,7 @@ const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) 
 				<Divider />
 
 				<List>
-					<SelectionMenu
-						title="Categorias"
-						categorys={categorys}
-					/>
+					<SelectedCategory />
 				</List>
 
 				<List className="d-flex justify-content-center" dense>

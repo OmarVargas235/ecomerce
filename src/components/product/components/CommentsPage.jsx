@@ -16,7 +16,7 @@ const CommentsPage = ({ classes, comment, editOrdeleteComment, idUser, nameFirst
 				: <Avatar alt="Remy Sharp" className={classes.orange}>{nameFirstLetter}</Avatar>
 			}
 			
-			<span className="ml-3 ml-sm-4">
+			<span className="ml-3 ml-sm-4 w-100">
 				<Typography variant="h6" component="p">
 			  		{comment.name}
 				</Typography>
