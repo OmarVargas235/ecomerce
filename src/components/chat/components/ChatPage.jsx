@@ -5,7 +5,7 @@ import SelectionMenu from '../../../layaut/SelectionMenu';
 import HeaderPage from './HeaderPage';
 import SearchMessagePage from './SearchMessagePage';
 import MessagesPage from './MessagesPage';
-import MenuThreePoints from './MenuThreePoints';
+import MenuThreePoints from '../../../layaut/MenuThreePoints';
 import SendMessagePage from './SendMessagePage';
 import MessagesChatPage from './MessagesChatPage';
 
@@ -71,7 +71,9 @@ const ChatPage = ({ matchesContainerMessages, selectedMessage, setSelectedMessag
 								</Typography>
 							</div>
 							
-							<MenuThreePoints />
+							<MenuThreePoints
+								options={['Marcar como leido', 'Marcar como no leido', 'Bloquear']}
+							/>
 						</div>
 
 						<Divider className="divider mb-4" />

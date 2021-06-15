@@ -4,10 +4,16 @@ import { Menu } from '@material-ui/core';
 import { IconButton, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const MenuThreePoints = () => {
+const MenuThreePoints = ({ handleChange=()=>{}, options }) => {
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
+
+	const handleClick = option => {
+		
+		setAnchorEl(null);
+		handleChange(option);
+	}
 	
 	return (
 		<React.Fragment>
@@ -34,10 +40,14 @@ const MenuThreePoints = () => {
 					},
 				}}
 			>
-				{['Marcar como leido', 'Marcar como no leido', 'Bloquear'].map((option) => (
-				<MenuItem key={option} selected={option === 'Pyxis'} onClick={() => setAnchorEl(null)}>
-				{option}
-				</MenuItem>
+				{options.map((option) => (
+					<MenuItem
+						key={option}
+						selected={option === 'Pyxis'}
+						onClick={() => handleClick(option)}
+					>
+						{option}
+					</MenuItem>
 				))}
 			</Menu>
 		</React.Fragment>

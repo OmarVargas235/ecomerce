@@ -9,7 +9,7 @@ import { alert } from '../../../utils/alert';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const Chat = ({ auth, idProduct, user }) => {
+const Chat = ({ auth, ownerProduct, user }) => {
 
 	const matches = useMediaQuery('(max-width: 399px)');
 	
@@ -32,7 +32,7 @@ const Chat = ({ auth, idProduct, user }) => {
 	const [initial, setInitial] = useState(0);
 	const [end, setEnd] = useState(5);
 
-	// Obtener la calificaciones del producto
+	// Obtener las calificaciones del producto
 	useEffect(() => {
 		
 		socket.emit('get-qualification-product', id, resp => setQualifications(resp));
@@ -44,7 +44,7 @@ const Chat = ({ auth, idProduct, user }) => {
 	// Obtener los comentarios del producto cuando el componente se monta
 	useEffect(() => {
 		
-		socket.emit('get-comment', id, resp => {
+		socket.emit('get-comments', id, resp => {
 			
 			const { ok, messages } = resp;
 			
@@ -52,7 +52,7 @@ const Chat = ({ auth, idProduct, user }) => {
 			else alert('error', messages);
 		});
 		
-		return () => socket.off('get-comment');
+		return () => socket.off('get-comments');
 		
 	}, [socket, id]);
 
@@ -62,7 +62,7 @@ const Chat = ({ auth, idProduct, user }) => {
 		socket.on('get-comment', resp => {
 			
 			const { ok, messages } = resp;
-			const { __v, _id, idProduct, ...body } = messages;
+			const { __v, ...body } = messages;
 
 			const arr = [...comments];
 			arr.unshift(body);
@@ -74,6 +74,21 @@ const Chat = ({ auth, idProduct, user }) => {
 		return () => socket.off('get-comment');
 		
 	}, [socket, comments]);
+
+	// Obtener comentarios editados o los comentarios despues de haber eliminado uno
+	useEffect(() => {
+		
+		socket.on('get-comments-edit-delete', resp => {
+			
+			const { ok, messages } = resp;
+			
+			if (ok) setComments(messages);
+			else alert('error', messages);
+		});
+		
+		return () => socket.off('get-comments-edit-delete');
+		
+	}, [socket]);
 
 	const leaveComment = e => {
 		
@@ -91,7 +106,7 @@ const Chat = ({ auth, idProduct, user }) => {
 			name: user.name + ' ' + user.lastName,
 			img: user.img,
 			idUser: user['uid'],
-			idProduct,
+			idProduct: id,
 			token: auth.token,
 		}
 
@@ -101,7 +116,8 @@ const Chat = ({ auth, idProduct, user }) => {
 		setDesactiveBtn(true);
 		setTimeout(() => setDesactiveBtn(false), 1000);
 	}
-
+	
+	// Avanzar o retroceder a la siguiente seccion de comentarios
 	const handleChangePage  = (e, newPage) => {
 		
 		const endPage = newPage * 5;
@@ -123,8 +139,9 @@ const Chat = ({ auth, idProduct, user }) => {
 			isRequired={isRequired}
 			leaveComment={leaveComment}
 			matches={matches}
-			nameUser={user.name}
+			ownerProduct={ownerProduct}
 			qualifications={qualifications}
+			user={user}
 		/>
 	)
 }

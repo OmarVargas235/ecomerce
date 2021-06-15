@@ -6,12 +6,12 @@ import { TextField, Button, Grid } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Pagination from '@material-ui/lab/Pagination';
 
-const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage, initial, isAuthenticated, isRequired, leaveComment, matches, nameUser, qualifications }) => (
+const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage, initial, isAuthenticated, isRequired, leaveComment, matches, ownerProduct, qualifications, user }) => (
 	<div className="mt-5 chat">
 
-		<h3 className="mt-4">Preguntas y Respuesta</h3>
+		<h3 className="mt-4">Deja tu comentario aqui</h3>
 
-		<h5 className="my-4">Pregunte a <span className="text-capitalize">{nameUser}</span></h5>
+		<h5 className="my-4">Pregunte a <span className="text-capitalize">{ownerProduct}</span></h5>
 
 		{
 			!isAuthenticated ? null
@@ -53,7 +53,7 @@ const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage,
 				</Grid>
 		    </form>
 		}
-
+		
 		{
 			comments.length === 0 ? <div className="text-center mt-5">No hay comentarios</div>
 			: <React.Fragment>
@@ -62,6 +62,7 @@ const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage,
 						<Comments
 							key={index}
 							comment={comment}
+							idUser={user.uid}
 							qualifications={qualifications}
 						/>
 					))
