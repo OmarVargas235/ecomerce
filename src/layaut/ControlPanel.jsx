@@ -37,6 +37,7 @@ const ControlPanel = ({ component:Component, history, title, text, textButton, d
 		        			<Link to="/favoritos">Favoritos</Link>
 		        			<Link to="/mis-productos">Mis productos</Link>
 		        			<Link to="/ubicacion-producto">Agregar ubicacion</Link>
+		        			<Link to="/conectados">Conectados</Link>
 		        			<p>Cerrar sesion</p>
 		        		</div>
 					</Grid>

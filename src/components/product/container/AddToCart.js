@@ -37,8 +37,8 @@ const AddToCart = ({ product }) => {
 	
 	const getLS = useMemo(() => JSON.parse(window.localStorage.getItem(`cart-${dataUser.uid}`)) || [], [dataUser]);
 
-	const contProduct = products.length === 0 ? getLS.find(el => el.id === product.id)
-	: products.find(el => el.id === product.id);
+	const contProduct = products.length === 0 ? getLS.find(el => el['_id'] === product['_id'])
+	: products.find(el => el['_id'] === product['_id']);
 
 	const history = useHistory();
 	const classes = useStyles();
@@ -48,7 +48,7 @@ const AddToCart = ({ product }) => {
 	const [getFavorites, setGetFavorites] = useState(false);
 
 	// Comprueba si el producto esta agregado a favoritos
-	const isProductFavorite = useMemo(() => productsFavorites.some(el => el.idProduct === product.id), [productsFavorites, product]);
+	const isProductFavorite = useMemo(() => productsFavorites.some(el => el.idProduct === product['_id']), [productsFavorites, product]);
 	
 	// Dispara el dispatch para obtener los productos agregados a favoritos
 	useEffect(() => {
@@ -76,7 +76,7 @@ const AddToCart = ({ product }) => {
 		}
 
 		const formData = new FormData();
-		formData.append('idProduct', product.id);
+		formData.append('idProduct', product['_id']);
 		
 		if (!changeIconFavorite) {
 			

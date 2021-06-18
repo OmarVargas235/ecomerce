@@ -25,3 +25,9 @@ export const GET_PRODUCTS_FAIL = 'GET_PRODUCTS_FAIL';
 export const GET_PRODUCT_FAIL = 'GET_PRODUCT_FAIL';
 export const GET_PRODUCT_SEARCH = 'GET_PRODUCT_SEARCH';
 export const LOADING_PRODUCT = 'LOADING_PRODUCT';
+
+// =====================================
+// Mensajes del usuario
+// =====================================
+export const REMITTER = 'REMITTER';
+export const RECEPTOR = 'RECEPTOR';

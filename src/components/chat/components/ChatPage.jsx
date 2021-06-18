@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ matchesContainerMessages, selectedMessage, setSelectedMessage }) => (
+const ChatPage = ({ matchesContainerMessages, receptor, selectedMessage, setSelectedMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -48,55 +48,63 @@ const ChatPage = ({ matchesContainerMessages, selectedMessage, setSelectedMessag
 						}
 					</div>
 				</Hidden>
-			</Grid>	
-
+			</Grid>
+			
 			<Grid
 				item
 				xs={matchesContainerMessages ? 12 : 7}
 				className="d-flex flex-column justify-content-between chat py-3"
 			>
 				{
-					selectedMessage
-					? <React.Fragment>
-						<div className="d-flex justify-content-between px-4">
-							<div className="d-flex align-items-center">
-								<Avatar className="mr-4">H</Avatar>
-								
-								<Typography
-									variant="subtitle1"
-									component="span"
-									className="font-weight-bold"
-								>
-									Omar Vargas
-								</Typography>
-							</div>
-							
-							<MenuThreePoints
-								options={['Marcar como leido', 'Marcar como no leido', 'Bloquear']}
-							/>
-						</div>
+					Object.keys(receptor).length === 0
+					? <div className="text-center mt-5 pt-5">Mensajes sin leer</div>
+					: <React.Fragment>
+						{
+							selectedMessage
+							? <React.Fragment>
+								<div className="d-flex justify-content-between px-4">
+									<div className="d-flex align-items-center">
+										<Avatar
+											className="mr-4 text-uppercase"
+										>{receptor.name.charAt(0)}</Avatar>
+										
+										<Typography
+											variant="subtitle1"
+											component="span"
+											className="font-weight-bold text-capitalize"
+										>
+											{receptor.name} {receptor.lastName}
+										</Typography>
+									</div>
+									
+									<MenuThreePoints
+										options={['Marcar como leido', 'Marcar como no leido', 'Bloquear']}
+									/>
+								</div>
 
-						<Divider className="divider mb-4" />
+								<Divider className="divider mb-4" />
 
-						<div className="container__messsage-send px-3">
-							{
-								[1, 2].map((el, index) => (
-									<MessagesChatPage key={index} index={index} />	
-								))
-							}
-						</div>
+								<div className="container__messsage-send px-3">
+									{
+										[1, 2].map((el, index) => (
+											<MessagesChatPage key={index} index={index} />	
+										))
+									}
+								</div>
 
-						<Divider className="divider my-2" />
+								<Divider className="divider my-2" />
 
-						<SendMessagePage />
+								<SendMessagePage />
+							</React.Fragment>
+							: <Typography
+								variant="subtitle1"
+								component="h6"
+								className="font-weight-bold text-center"
+							>
+								Selecciona una cadena de mensajes para leerla aquí.
+							</Typography>
+						}
 					</React.Fragment>
-					: <Typography
-						variant="subtitle1"
-						component="h6"
-						className="font-weight-bold text-center"
-					>
-						Selecciona una cadena de mensajes para leerla aquí.
-					</Typography>
 				}
 			</Grid>
 		</Grid>

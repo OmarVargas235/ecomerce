@@ -11,7 +11,7 @@ export const addAction = (product, id, token, isLess=false) => async dispatch =>
 	const getLS = JSON.parse(window.localStorage.getItem(`cart-${id}`)) || [];
 	
 	// Verificar si el producto existe en el arreglo del localStorage
-	const index = getLS.findIndex(el => el.id === product.id);
+	const index = getLS.findIndex(el => el['_id'] === product['_id']);
 
 	// Verifica que si "product" no existe y "product.cont" si, lo resetee en null
 	if (index === -1 && product.cont) product.cont = null;	
@@ -45,7 +45,7 @@ export const deleteAction = (product, id, token) => async dispatch => {
 	// Obtener el localStorage
 	const getLS = JSON.parse(window.localStorage.getItem(`cart-${id}`)) || [];
 
-	const deleteProductLS = getLS.filter(el => el.id !== product.id);
+	const deleteProductLS = getLS.filter(el => el['_id'] !== product['_id']);
 
 	dispatch( deleteProduct(deleteProductLS) );
 	

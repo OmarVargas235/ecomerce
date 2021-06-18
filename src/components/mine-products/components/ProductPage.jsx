@@ -34,12 +34,12 @@ const ProductPage = ({ delateProduct, history, product }) => (
 			<EditIcon
 				style={{ color: teal[500] }}
 				className="pointer mb-3"
-				onClick={() => history.push(`/editar-producto/${product.id}`)}
+				onClick={() => history.push(`/editar-producto/${product['_id']}`)}
 			/>
 			<DeleteIcon
 				style={{ color: teal[500] }}
 				className="pointer"
-				onClick={() => delateProduct(product.id)}
+				onClick={() => delateProduct(product['_id'])}
 			/>
 		</Grid>
 	</Grid>

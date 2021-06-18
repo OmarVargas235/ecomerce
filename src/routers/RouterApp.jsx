@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,6 +9,8 @@ import Product from '../components/product/';
 import MoreProducts from '../components/products_of/';
 import ProductsSearch from '../components/products-search/';
 
+import { SocketContext } from '../context/SocketContext';
+
 import DashboardRoutesPublic from './DashboardRoutesPublic';
 import DashboardRoutesPrivate from './DashboardRoutesPrivate';
 import PublicRouter from './PublicRouter';
@@ -18,9 +20,34 @@ const RouterApp = () => {
 	
 	const dispatch = useDispatch();
 
-	const { auth, loading } = useSelector(state => state.user);
+	const { auth, dataUser, loading } = useSelector(state => state.user);
 
+	const { socket } = useContext( SocketContext );
+	
 	useEffect(() => dispatch( loadingAction() ), [dispatch]);
+
+	// Cuando este autenticado el usuario se conecta al servidor
+  	useEffect(() => {
+
+  		if (auth.isAuthenticated) {
+
+  			window.localStorage.setItem('id-user', dataUser.uid);
+	  		socket.emit('connect-user', dataUser.uid);
+
+  		} else {
+
+  			const getLS = window.localStorage.getItem('id-user');
+  			socket.emit('disconnect-user', getLS);
+  		}
+
+
+		return () => {
+
+			socket.off('connect-user');
+			socket.off('disconnect-user');
+		}
+  		
+  	}, [auth, dataUser, socket]);
 	
 	return (
 		<Router>

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 const CardWithoutButton = ({ classes, data={}, history={} }) => (
 	<Card raised={true} className={classes.card}>
-		<CardActionArea onClick={() => history.push(`/producto/${data.id}`)}>
+		<CardActionArea onClick={() => history.push(`/producto/${data['_id']}`)}>
 			<CardMedia
 				component="img"
 				alt="Contemplative Reptile"

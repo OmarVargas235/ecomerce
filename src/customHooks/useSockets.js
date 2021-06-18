@@ -2,10 +2,16 @@ import { useState, useEffect, useMemo } from 'react';
 import io from "socket.io-client";
 
 export const useSocket = ( serverPath ) => {
+
+	const token = localStorage.getItem('token');
 	
 	const socket = useMemo( () => ( io.connect(serverPath, {
-		transports: ['websocket'] })
-	), [serverPath] );
+		transports: ['websocket'],
+		query: {
+            'x-token': token
+        }
+	})
+	), [serverPath, token] );
 
 	const [online, setOnline] = useState( false );
 

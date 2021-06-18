@@ -5,7 +5,7 @@ import EditImgProfilePage from './EditImgProfilePage';
 import ControlPanel from '../../layaut/ControlPanel';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
-import { getUserAction, logoutUser } from '../../redux/actions/userAction';
+import { getUserAction, logoutUserAction } from '../../redux/actions/userAction';
 
 const EditImgProfile = () => {
 	
@@ -44,7 +44,7 @@ const EditImgProfile = () => {
 		// Si el token ya a expirado se deslogea
 		if (isExpiredToken) {
 			
-			dispatch( logoutUser() );
+			dispatch( logoutUserAction(id) );
 			alert('error', messages);
 			
 			return;

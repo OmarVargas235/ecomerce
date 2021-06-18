@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { requestWithToken } from '../../utils/fetch';
-import { logoutUser } from '../../redux/actions/userAction';
+import { logoutUserAction } from '../../redux/actions/userAction';
 import ControlPanel from '../../layaut/ControlPanel';
 import CreateProductPage from './CreateProductPage';
 import { useFormNotController } from '../../customHooks/useFormNotController';
@@ -67,7 +67,7 @@ const CreateProduct = ({ history }) => {
 		// Si el token ya a expirado se deslogea
 		if (isExpiredToken) {
 			
-			dispatch( logoutUser() );
+			dispatch( logoutUserAction(dataUser.uid) );
 			alert('error', messages);
 			
 			return;

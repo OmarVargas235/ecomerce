@@ -11,6 +11,7 @@ import EditProduct from '../components/edit-product/';
 import EditImgProfile from '../components/edit-img-profile/';
 import Favorites from '../components/products-favorites/';
 import ProductLocation from '../components/product-location/';
+import ListConnected from '../components/connected/';
 
 const DashboardRoutesPrivate = () => (		
 	<Switch>
@@ -23,6 +24,7 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/notificaciones" component={Notifications} />
 		<Route exact path="/mensajes" component={Chat} />
 		<Route exact path="/ubicacion-producto" component={ProductLocation} />
+		<Route exact path="/conectados" component={ListConnected} />
 		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<Redirect to="/" />
