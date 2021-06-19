@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ matchesContainerMessages, receptor, selectedMessage, setSelectedMessage }) => (
+const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, messages, receptor, selectedMessage, setSelectedMessage, writeMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -38,10 +38,13 @@ const ChatPage = ({ matchesContainerMessages, receptor, selectedMessage, setSele
 				
 				<Hidden mdDown={matchesContainerMessages}>
 					<div className="container__messages pr-2">
+						{console.log(chats)}
 						{
-							[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((el, index) => (
+							chats.map((el, index) => (
 								<MessagesPage
 									key={index}
+									data={el}
+									idUser={dataUser.uid}
 									setSelectedMessage={setSelectedMessage}
 								/>
 							))
@@ -86,15 +89,22 @@ const ChatPage = ({ matchesContainerMessages, receptor, selectedMessage, setSele
 
 								<div className="container__messsage-send px-3">
 									{
-										[1, 2].map((el, index) => (
-											<MessagesChatPage key={index} index={index} />	
+										messages.map(el => (
+											<MessagesChatPage
+												key={el['_id']}
+												idUser={dataUser.uid}
+												message={el}
+											/>	
 										))
 									}
 								</div>
 
 								<Divider className="divider my-2" />
 
-								<SendMessagePage />
+								<SendMessagePage
+									handleChange={handleChange}
+									writeMessage={writeMessage}
+								/>
 							</React.Fragment>
 							: <Typography
 								variant="subtitle1"

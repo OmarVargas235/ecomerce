@@ -100,17 +100,20 @@ export const MessagesStyle = styled.section`
 			max-height: 240px;
 		}
 
+		.message-send, .message-received {
+			overflow: hidden;
+			width: 350px;
+		}
+
 		.message-send {
 			background-color: #F2F3F5;
 			border-radius: 6px;
-			width: 350px;
 		}
 
 		.message-received {
 			position: relative;
 			left: calc(100% - 350px);
 			background-color: #D3F0BC;
-			width: 350px;
 			border-radius: 6px;
 		}
 	}

@@ -2,11 +2,12 @@ import React from 'react';
 import { Typography, Avatar } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-const MessagesPage = ({ setSelectedMessage }) => (
+const MessagesPage = ({ data, idUser, setSelectedMessage }) => (
 	<div
 		className="message pl-3 p-2 mb-1 pointer"
 		onClick={() => setSelectedMessage(true)}
 	>
+		{console.log(data)}
 		<div className="profile d-flex justify-content-between">
 			<div className="d-flex">
 				<Avatar className="avatar mr-2">H</Avatar>
@@ -14,7 +15,7 @@ const MessagesPage = ({ setSelectedMessage }) => (
 				<Typography
 					variant="subtitle1"
 					component="span"
-					className="name font-weight-bold"
+					className="name font-weight-bold text-capitalize"
 				>
 					Omar Vargas
 				</Typography>

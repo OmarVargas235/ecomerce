@@ -29,5 +29,5 @@ export const LOADING_PRODUCT = 'LOADING_PRODUCT';
 // =====================================
 // Mensajes del usuario
 // =====================================
-export const REMITTER = 'REMITTER';
-export const RECEPTOR = 'RECEPTOR';
+// export const REMITTER = 'REMITTER';
+export const RECEPTOR = 'RECEPTOR';	
