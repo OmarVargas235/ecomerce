@@ -37,8 +37,8 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 				</Hidden>
 				
 				<Hidden mdDown={matchesContainerMessages}>
+					{console.log(chats)}
 					<div className="container__messages pr-2">
-						{console.log(chats)}
 						{
 							chats.map((el, index) => (
 								<MessagesPage
@@ -60,7 +60,7 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 			>
 				{
 					Object.keys(receptor).length === 0
-					? <div className="text-center mt-5 pt-5">Mensajes sin leer</div>
+					? <div className="text-center mt-5 pt-5 not-read-message">Selecciona una cadena de mensajes para leerla aquí.</div>
 					: <React.Fragment>
 						{
 							selectedMessage

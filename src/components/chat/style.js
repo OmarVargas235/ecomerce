@@ -45,6 +45,10 @@ export const MessagesStyle = styled.section`
 		max-height: 400px;
 	}
 
+	.not-read-message {
+		height: 55vh;
+	}
+
 	.message {
 		position: relative;
 		border-radius: 6px;
@@ -74,6 +78,13 @@ export const MessagesStyle = styled.section`
 			}
 		}
 
+		.text-message {
+			white-space: nowrap;
+			width: 250px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
 		&:hover {
 			background-color: white;
 			border: 1px solid #dedfe0;
@@ -85,8 +96,8 @@ export const MessagesStyle = styled.section`
 			position: absolute;
 			width: 10px;
 			height: 10px;
-			background-color: #007791;
-			// border: 1px solid lightgray;
+			// background-color: #007791;
+			border: 1px solid lightgray;
 			border-radius: 50%;
 			left: 5px;
 		}
@@ -97,7 +108,7 @@ export const MessagesStyle = styled.section`
 
 		.container__messsage-send {
 			overflow-y: scroll;
-			max-height: 240px;
+			height: 240px;
 		}
 
 		.message-send, .message-received {

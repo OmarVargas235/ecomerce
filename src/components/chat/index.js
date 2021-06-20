@@ -30,19 +30,24 @@ const Chat = () => {
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
 		
-		socket.on('message-personal', resp => setMessages([...messages, resp]));
+		socket.on('message-personal', resp => {
 
-		socket.on('message-received', resp => {
-			
-			const isChat = chats.some(chat => chat['of'] === resp['of']);
-			if (!isChat) setChats([...chats, resp]);
-		});
+			// Guardar mensaje
+			setMessages([...messages, resp]);
+
+			// Mostrar y actualizar lista de chats
+			const arr = [...chats];
+			const indexChat = chats.findIndex(chat => chat['of'] === resp['for'] || chat['of'] === resp['of']);
 		
-		return () => {
+			if (indexChat !== -1) {
 
-			socket.off('message-personal');
-			socket.off('message-received');
-		}
+				arr[indexChat] = resp;
+				setChats(arr);
+			
+			} else setChats([...chats, resp]);
+		})
+		
+		return () => socket.off('message-personal');
 		
 	}, [socket, messages, chats]);
 
@@ -60,6 +65,8 @@ const Chat = () => {
 			const obj = {
 				of: dataUser.uid,
 				for: receptor.id,
+				nameRemitter: dataUser.name + ' ' + dataUser.lastName,
+				nameReceptor: receptor.name + ' ' + receptor.lastName,
 				message,
 			};
 
