@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, messages, receptor, selectedMessage, setSelectedMessage, writeMessage }) => (
+const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, setSelectedMessage, viewMessage, writeMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -37,7 +37,6 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 				</Hidden>
 				
 				<Hidden mdDown={matchesContainerMessages}>
-					{console.log(chats)}
 					<div className="container__messages pr-2">
 						{
 							chats.map((el, index) => (
@@ -46,6 +45,7 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 									data={el}
 									idUser={dataUser.uid}
 									setSelectedMessage={setSelectedMessage}
+									viewMessage={viewMessage}
 								/>
 							))
 						}
@@ -59,7 +59,7 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 				className="d-flex flex-column justify-content-between chat py-3"
 			>
 				{
-					Object.keys(receptor).length === 0
+					Object.keys(selectedUserChat).length === 0
 					? <div className="text-center mt-5 pt-5 not-read-message">Selecciona una cadena de mensajes para leerla aquí.</div>
 					: <React.Fragment>
 						{
@@ -69,18 +69,19 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 									<div className="d-flex align-items-center">
 										<Avatar
 											className="mr-4 text-uppercase"
-										>{receptor.name.charAt(0)}</Avatar>
+										>{selectedUserChat.name.charAt(0)}</Avatar>
 										
 										<Typography
 											variant="subtitle1"
 											component="span"
 											className="font-weight-bold text-capitalize"
 										>
-											{receptor.name} {receptor.lastName}
+											{selectedUserChat.name} {selectedUserChat.lastName}
 										</Typography>
 									</div>
 									
 									<MenuThreePoints
+										handleChange={selectedOption}
 										options={['Marcar como leido', 'Marcar como no leido', 'Bloquear']}
 									/>
 								</div>

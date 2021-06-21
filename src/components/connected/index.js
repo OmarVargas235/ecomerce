@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ControlPanel from '../../layaut/ControlPanel';
 import ListConnectedPage from './components/ListConnectedPage';
 import { SocketContext } from '../../context/SocketContext';
-import { receptorAction } from '../../redux/actions/messagesAction';
+import { selectedUserChatAction } from '../../redux/actions/messagesAction';
 
 const ListConnected = ({ history }) => {
 
@@ -35,7 +35,7 @@ const ListConnected = ({ history }) => {
 	const handleClick = user => {
 
 		history.push('/mensajes');
-		dispatch( receptorAction(user) );
+		dispatch( selectedUserChatAction(user) );
 	}
 	
 	return (

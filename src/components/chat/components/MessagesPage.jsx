@@ -4,11 +4,12 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import moment from 'moment';
 import 'moment/locale/es';
 
-const MessagesPage = ({ data, idUser, setSelectedMessage }) => (
+const MessagesPage = ({ data, idUser, setSelectedMessage, viewMessage }) => (
 	<div
-		className="message pl-3 p-2 mb-1 pointer"
+		className={`${viewMessage ? 'message-new' : 'message'} pl-3 p-2 mb-1 pointer`}
 		onClick={() => setSelectedMessage(true)}
 	>
+		{console.log(viewMessage)}
 		<div className="profile d-flex justify-content-between">
 			<div className="d-flex">
 				<Avatar className="avatar mr-3 text-uppercase">

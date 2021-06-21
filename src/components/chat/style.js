@@ -49,7 +49,7 @@ export const MessagesStyle = styled.section`
 		height: 55vh;
 	}
 
-	.message {
+	.message, .message-new {
 		position: relative;
 		border-radius: 6px;
 		border: 1px solid transparent;
@@ -100,6 +100,12 @@ export const MessagesStyle = styled.section`
 			border: 1px solid lightgray;
 			border-radius: 50%;
 			left: 5px;
+		}
+	}
+
+	.message-new {
+		&::before {
+			background-color: #007791;
 		}
 	}
 

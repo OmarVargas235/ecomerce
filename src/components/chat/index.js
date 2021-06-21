@@ -10,7 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Chat = () => {
 
-	const { receptor } = useSelector(state => state.messages);
+	const { selectedUserChat } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
 
 	const matchesContainerMessages = useMediaQuery('(max-width: 767px)');
@@ -26,6 +26,7 @@ const Chat = () => {
 	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);
 	const [messages, setMessages] = useState([]);
 	const [chats, setChats] = useState([]);
+	const [viewMessage, setViewMessage] = useState(true);
 	
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
@@ -33,23 +34,28 @@ const Chat = () => {
 		socket.on('message-personal', resp => {
 
 			// Guardar mensaje
-			setMessages([...messages, resp]);
+			(selectedUserChat.id === resp.of || selectedUserChat.id === resp.for)
+			&& setMessages([...messages, resp]);
 
-			// Mostrar y actualizar lista de chats
-			const arr = [...chats];
-			const indexChat = chats.findIndex(chat => chat['of'] === resp['for'] || chat['of'] === resp['of']);
-		
-			if (indexChat !== -1) {
+			if (resp.of === dataUser.uid || resp.for === dataUser.uid) {
 
-				arr[indexChat] = resp;
-				setChats(arr);
+				// Mostrar y actualizar lista de chats
+				let arr = [...chats];
+				const indexChat = chats.findIndex(chat => chat['of'] === resp['for'] || chat['of'] === resp['of']);
 			
-			} else setChats([...chats, resp]);
+				if (indexChat !== -1) {
+
+					arr[indexChat] = resp;
+					setChats(arr);
+				
+				} else setChats([...chats, resp]);
+			}
+
 		})
 		
 		return () => socket.off('message-personal');
 		
-	}, [socket, messages, chats]);
+	}, [socket, messages, chats, selectedUserChat, dataUser]);
 
 	const writeMessage = e => {
 
@@ -64,9 +70,9 @@ const Chat = () => {
 
 			const obj = {
 				of: dataUser.uid,
-				for: receptor.id,
+				for: selectedUserChat.id,
 				nameRemitter: dataUser.name + ' ' + dataUser.lastName,
-				nameReceptor: receptor.name + ' ' + receptor.lastName,
+				nameReceptor: selectedUserChat.name + ' ' + selectedUserChat.lastName,
 				message,
 			};
 
@@ -74,16 +80,24 @@ const Chat = () => {
 		}
 	}
 
+	const selectedOption = text => {
+		
+		if (text === 'Marcar como leido') setViewMessage(false);
+		if (text === 'Marcar como no leido') setViewMessage(true);
+	}
+
 	return (
 		<ChatPage
 			chats={chats}
-			handleChange={handleChange}
 			dataUser={dataUser}
+			handleChange={handleChange}
 			matchesContainerMessages={matchesContainerMessages}
 			messages={messages}
-			receptor={receptor}
+			selectedOption={selectedOption}
+			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
 			setSelectedMessage={setSelectedMessage}
+			viewMessage={viewMessage}
 			writeMessage={writeMessage}
 		/>
 	)

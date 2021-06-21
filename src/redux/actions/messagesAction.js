@@ -1,8 +1,8 @@
 import {
-	RECEPTOR,
+	SELECTED_USER,
 } from '../types/';
 
-export const receptorAction = payload => ({
-	type: RECEPTOR,
+export const selectedUserChatAction = payload => ({
+	type: SELECTED_USER,
 	payload,
 });

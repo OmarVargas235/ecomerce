@@ -1,20 +1,20 @@
 import {
-	RECEPTOR,
+	SELECTED_USER,
 } from '../types/';
 
 const initialState = {
-	receptor: {},
+	selectedUserChat: {},
 }
 
 export default function messagesReducer(state=initialState, { type, payload }) {
 
 	switch (type) {
 	
-		case RECEPTOR:
+		case SELECTED_USER:
 			
 			return {
 				...state,
-				receptor: payload,
+				selectedUserChat: payload,
 			}
 
 		default: return state;
