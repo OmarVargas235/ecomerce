@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, setSelectedMessage, viewMessage, writeMessage }) => (
+const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, changeChat, viewMessage, writeMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -44,8 +44,14 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 									key={index}
 									data={el}
 									idUser={dataUser.uid}
-									setSelectedMessage={setSelectedMessage}
+									changeChat={changeChat}
 									viewMessage={viewMessage}
+									// viewMessage={ viewMessage && 
+									// 	( (selectedUserChat.id || selectedUserChat['_id']) 
+									// 	=== el.of ||
+									// 	(selectedUserChat.id||selectedUserChat['_id'])
+									// 	=== el.for )
+									// }
 								/>
 							))
 						}
