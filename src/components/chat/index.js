@@ -33,6 +33,64 @@ const Chat = () => {
 	const [viewMessage, setViewMessage] = useState(true);
 	const [isBold, setIsBold] = useState(false);
 	const [isCursive, setIsCursive] = useState(false);
+	const [isMounted, setIsMounted] = useState(false);
+
+	// Obtener los mensajes al cambiar de chat
+	useEffect(() => {
+		
+		if ( Object.values(selectedUserChat).length === 0 ) return;
+
+		async function callAPI() {
+
+			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
+
+			const resp = await requestWithoutToken(`get-messages/${id}+${dataUser.uid}`);
+			const { ok, messages:getMessage } = await resp.json();
+
+			if (!ok) return alert('error', getMessage);
+
+			setMessages(getMessage);
+		}
+
+		callAPI();
+		
+	}, [selectedUserChat, dataUser]);
+
+	// Cargar el historial del chat cuando se recarga la pagina
+	useEffect(() => {
+
+		if (!dataUser.uid) return;
+
+		async function callAPI() {
+
+			const resp = await requestWithoutToken(`get-record-users/${dataUser.uid}`);
+			const { ok, messages } = await resp.json();
+			const recordChats = [];
+
+			if (!ok) return alert('error', messages);
+
+			messages.forEach(chat => {
+
+				const id = chat.for === dataUser.uid ? chat.of : chat.for;
+
+				const isRecordChats = recordChats.some(el => {
+
+					const compareId = dataUser.uid === el.for ? el.of : el.for;
+					return compareId === id;
+				});
+
+				!isRecordChats && recordChats.push(chat);
+			});
+
+			setChats(recordChats);
+		}
+
+		isMounted && callAPI();
+		setIsMounted(true);
+		
+		return () => setIsMounted(false);
+		
+	}, [dataUser, isMounted]);
 	
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
@@ -58,8 +116,7 @@ const Chat = () => {
 				
 				} else setChats([...chats, resp]);
 			}
-
-		})
+		});
 		
 		return () => socket.off('message-personal');
 		
@@ -72,7 +129,6 @@ const Chat = () => {
 		const { message } = formData;
 
 		if ( validate({ message }) ) return;
-
 
 		if (online) {
 
@@ -109,20 +165,7 @@ const Chat = () => {
 		const resp = await requestWithoutToken(`get-user/${id}`);
 		const { ok, messages } = await resp.json();
 
-		if (ok) {
-
-			// cambiar el chat
-			dispatch( selectedUserChatAction(messages) );
-
-			// Obtener mensajes
-			const resp = await requestWithoutToken(`get-messages/${messages['_id']}+${dataUser.uid}`);
-			const { ok, messages:getMessage } = await resp.json();
-			
-			// setViewMessage(false);
-
-			ok && setMessages(getMessage);
-		
-		} else alert('error', messages);
+		ok ? dispatch( selectedUserChatAction(messages) ) : alert('error', messages);
 	}
 
 	return (

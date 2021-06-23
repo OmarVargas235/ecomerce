@@ -28,8 +28,7 @@ const ChatPage = ({ chats, dataUser, handleChange, isBold, isCursive, matchesCon
 						title="Categorias"
 					/>
 				</Hidden>
-				
-				
+					
 				<SearchMessagePage />
 				
 				<Hidden mdDown={matchesContainerMessages}>

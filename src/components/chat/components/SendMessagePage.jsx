@@ -20,10 +20,10 @@ const SendMessagePage = ({ handleChange, isBold, isCursive, selectedOption, writ
 				onClick={() => selectedOption('cursive')}
 			/>
 
-			<AddPhotoAlternateIcon className="pointer" />
+			<AddPhotoAlternateIcon />
 		</div>
 		
-		<form onSubmit={writeMessage}>
+		<form onSubmit={writeMessage} className="form-send-message">
 			<input
 				placeholder="Escribir mensaje.."
 				className="search pl-1 w-100 p-0"

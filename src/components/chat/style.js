@@ -142,6 +142,8 @@ export const MessagesStyle = styled.section`
 
 	.container__write-message {
 
+		position: relative;
+
 		.isActive {
 			border-bottom: 2px solid #007791;
 		}
