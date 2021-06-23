@@ -7,11 +7,19 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import SendIcon from '@material-ui/icons/Send';
 
-const SendMessagePage = ({ handleChange, writeMessage }) => (
+const SendMessagePage = ({ handleChange, isBold, isCursive, selectedOption, writeMessage }) => (
 	<div className="container__write-message mx-3">
 		<div className="d-flex container-icon p-2">
-			<FormatBoldIcon className="pointer mr-3" />
-			<FormatItalicIcon className="pointer mr-3" />
+			<FormatBoldIcon
+				className={`pointer mr-3 ${isBold ? 'isActive' : ''}`}
+				onClick={() => selectedOption('bold')}
+			/>
+
+			<FormatItalicIcon
+				className={`pointer mr-3 ${isCursive ? 'isActive' : ''}`}
+				onClick={() => selectedOption('cursive')}
+			/>
+
 			<AddPhotoAlternateIcon className="pointer" />
 		</div>
 		

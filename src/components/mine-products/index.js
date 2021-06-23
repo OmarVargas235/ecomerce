@@ -6,7 +6,7 @@ import MineProductsPage from './components/MineProductsPage';
 import { getProductsActions } from '../../redux/actions/productActions';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
-import { logoutUserAction } from '../../redux/actions/userAction';
+import { logoutUser } from '../../redux/actions/userAction';
 
 const MineProducts = ({ history }) => {
 	
@@ -35,7 +35,7 @@ const MineProducts = ({ history }) => {
 
 		if (isExpiredToken) {
 			
-			dispatch( logoutUserAction( user.dataUser.uid ) );
+			dispatch( logoutUser() );
 			alert('error', messages);
 
 			return;

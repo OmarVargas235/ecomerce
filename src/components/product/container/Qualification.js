@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import QualificationPage from '../components/QualificationPage';
-import { logoutUserAction } from '../../../redux/actions/userAction';
+import { logoutUser } from '../../../redux/actions/userAction';
 import { alert } from '../../../utils/alert';
 import { SocketContext } from '../../../context/SocketContext';
 
@@ -85,7 +85,7 @@ const Qualification = ({ auth, classes, dataUser, id, }) => {
 			alert(ok ? 'success' : 'error', messages);
 			
 			// Si el token a expirado
-			if (!ok) dispatch( logoutUserAction(dataUser.uid) );
+			if (!ok) dispatch( logoutUser() );
 		});
 		
 		setUpdate(!update);

@@ -15,11 +15,11 @@ const MessagesChatPage = ({ idUser, message }) => (
 		>
 			{moment(new Date(message.date), "YYYYMMDD").fromNow()}
 		</Typography>
-
+		
 		<Typography
 			variant="subtitle2"
 			component="span"
-			className="font-weight-normal"
+			className={`${message.isBold ? 'font-weight-bold' : 'font-weight-normal'} ${message.isCursive ? 'cursive' : ''}`}
 		>
 			{message.message}
 		</Typography>

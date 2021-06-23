@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ControlPanel from '../../layaut/ControlPanel';
 import EditUserPage from './components/EditUserPage';
 
-import { getUserAction, logoutUserAction } from '../../redux/actions/userAction';
+import { getUserAction, logoutUser } from '../../redux/actions/userAction';
 import { useFormNotController } from '../../customHooks/useFormNotController';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
@@ -57,7 +57,7 @@ const EditUser = ({ history }) => {
 		
 		if (isExpiredToken) {
 			
-			dispatch( logoutUserAction(dataUser.uid) );
+			dispatch( logoutUser() );
 			alert('error', messages);
 
 			return;

@@ -5,6 +5,7 @@ import ControlPanel from '../../layaut/ControlPanel';
 import ListConnectedPage from './components/ListConnectedPage';
 import { SocketContext } from '../../context/SocketContext';
 import { selectedUserChatAction } from '../../redux/actions/messagesAction';
+import { logoutUser } from '../../redux/actions/userAction';
 
 const ListConnected = ({ history }) => {
 
@@ -33,6 +34,8 @@ const ListConnected = ({ history }) => {
 	}, [socket, online, dataUser]);
 
 	const handleClick = user => {
+
+		if ( Object.keys(dataUser).length === 0 ) dispatch( logoutUser() );
 
 		history.push('/mensajes');
 		dispatch( selectedUserChatAction(user) );

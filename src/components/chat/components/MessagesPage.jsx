@@ -34,9 +34,13 @@ const MessagesPage = ({ data, idUser, changeChat, viewMessage }) => (
 				{ moment(new Date(data.date), "YYYYMMDD").fromNow() }
 			</Typography>
 		</div>
-
+		
 		<div className="text mt-3 d-flex justify-content-between">
-			<span className="text-message">{ data.message }</span>
+			<span 
+				className={`
+					text-message ${data.isBold ? 'font-weight-bold' : 'font-weight-normal'}
+					${data.isCursive ? 'cursive' : ''}`}
+				>{ data.message }</span>
 			<DeleteForeverIcon className="icon pointer" />
 		</div>
 	</div>

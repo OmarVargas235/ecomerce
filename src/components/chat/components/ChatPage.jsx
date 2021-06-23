@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, changeChat, viewMessage, writeMessage }) => (
+const ChatPage = ({ chats, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, changeChat, viewMessage, writeMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -110,6 +110,9 @@ const ChatPage = ({ chats, dataUser, handleChange, matchesContainerMessages, mes
 
 								<SendMessagePage
 									handleChange={handleChange}
+									isBold={isBold}
+									isCursive={isCursive}
+									selectedOption={selectedOption}
 									writeMessage={writeMessage}
 								/>
 							</React.Fragment>

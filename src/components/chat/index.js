@@ -31,6 +31,8 @@ const Chat = () => {
 	const [messages, setMessages] = useState([]);
 	const [chats, setChats] = useState([]);
 	const [viewMessage, setViewMessage] = useState(true);
+	const [isBold, setIsBold] = useState(false);
+	const [isCursive, setIsCursive] = useState(false);
 	
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
@@ -80,6 +82,8 @@ const Chat = () => {
 				nameRemitter: dataUser.name + ' ' + dataUser.lastName,
 				nameReceptor: selectedUserChat.name + ' ' + selectedUserChat.lastName,
 				message,
+				isBold,
+				isCursive,
 			};
 
 			socket.emit('message-personal', obj);
@@ -89,7 +93,13 @@ const Chat = () => {
 	const selectedOption = text => {
 		
 		if (text === 'Marcar como leido') setViewMessage(false);
-		if (text === 'Marcar como no leido') setViewMessage(true);
+		else if (text === 'Marcar como no leido') setViewMessage(true);
+
+		if (text === 'bold' && !isBold) setIsBold(true);
+		else if (text === 'bold' && isBold) setIsBold(false);
+		
+		if (text === 'cursive' && !isCursive) setIsCursive(true);
+		else if (text === 'cursive' && isCursive) setIsCursive(false);
 	}
 
 	const changeChat = async id => {
@@ -120,6 +130,8 @@ const Chat = () => {
 			chats={chats}
 			dataUser={dataUser}
 			handleChange={handleChange}
+			isBold={isBold}
+			isCursive={isCursive}
 			matchesContainerMessages={matchesContainerMessages}
 			messages={messages}
 			selectedOption={selectedOption}

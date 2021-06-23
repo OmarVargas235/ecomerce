@@ -49,6 +49,11 @@ export const MessagesStyle = styled.section`
 		height: 55vh;
 	}
 
+	.cursive {
+		font-style: italic !important;
+		font-family: cursive !important;
+	}
+
 	.message, .message-new {
 		position: relative;
 		border-radius: 6px;
@@ -136,6 +141,11 @@ export const MessagesStyle = styled.section`
 	}
 
 	.container__write-message {
+
+		.isActive {
+			border-bottom: 2px solid #007791;
+		}
+
 		.container-icon {
 			border: 1px solid black;
 			border-bottom: none;

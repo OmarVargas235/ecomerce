@@ -39,12 +39,7 @@ const getUserFail = () => ({
 	type: GET_USER_FAIL,
 });
 
-export const logoutUserAction = id => async dispatch => {
-
-	dispatch( logoutUser() );
-}
-
-const logoutUser = () => ({
+export const logoutUser = () => ({
 	type: LOGOUT_USER,
 });
 

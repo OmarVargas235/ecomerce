@@ -8,7 +8,7 @@ import ControlPanel from '../../layaut/ControlPanel';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 import { getProductsActions } from '../../redux/actions/productActions';
-import { logoutUserAction } from '../../redux/actions/userAction';
+import { logoutUser } from '../../redux/actions/userAction';
 
 const key = '213438341b3e7032370ce3ccbe621efd';
 const urlCountries = `https://geo-battuta.net/api/country/all/?key=${key}&callback=?`;
@@ -141,7 +141,7 @@ const ProductLocation = ({ history }) => {
 
 		if (isExpiredToken) {
 			
-			dispatch( logoutUserAction(dataUser.uid) );
+			dispatch( logoutUser() );
 			alert('error', messages);
 
 			return;

@@ -8,7 +8,7 @@ import { useValidateForm } from '../../customHooks/useValidateForm';
 import { alert } from '../../utils/alert';
 import { requestWithToken } from '../../utils/fetch';
 import { getProductActions } from '../../redux/actions/productActions';
-import { logoutUserAction } from '../../redux/actions/userAction';
+import { logoutUser } from '../../redux/actions/userAction';
 import { useMapbox } from '../../customHooks/useMapbox';
 import { SocketContext } from '../../context/SocketContext';
 
@@ -81,7 +81,7 @@ const EditProduct = ({ history, match }) => {
 		// Si el token ya a expirado se deslogea
 		if (isExpiredToken) {
 			
-			dispatch( logoutUserAction(user.dataUser.uid) );
+			dispatch( logoutUser() );
 			alert('error', messages);
 
 			return;
