@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ chats, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, changeChat, viewMessage, writeMessage }) => (
+const ChatPage = ({ chats, containerMesssageRef, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, changeChat, writeMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -44,13 +44,6 @@ const ChatPage = ({ chats, dataUser, handleChange, isBold, isCursive, matchesCon
 									data={el}
 									idUser={dataUser.uid}
 									changeChat={changeChat}
-									viewMessage={viewMessage}
-									// viewMessage={ viewMessage && 
-									// 	( (selectedUserChat.id || selectedUserChat['_id']) 
-									// 	=== el.of ||
-									// 	(selectedUserChat.id||selectedUserChat['_id'])
-									// 	=== el.for )
-									// }
 								/>
 							))
 						}
@@ -93,7 +86,10 @@ const ChatPage = ({ chats, dataUser, handleChange, isBold, isCursive, matchesCon
 
 								<Divider className="divider mb-4" />
 
-								<div className="container__messsage-send px-3">
+								<div
+									className="container__messsage-send px-3"
+									ref={containerMesssageRef}
+								>
 									{
 										messages.map(el => (
 											<MessagesChatPage
