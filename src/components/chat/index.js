@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ChatPage from './components/ChatPage';
@@ -27,13 +27,15 @@ const Chat = () => {
 
 	const { socket, online } = useContext( SocketContext );
 
+	const containerMesssageRef = useRef();
+
 	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);
 	const [messages, setMessages] = useState([]);
 	const [chats, setChats] = useState([]);
-	const [viewMessage, setViewMessage] = useState(true);
 	const [isBold, setIsBold] = useState(false);
 	const [isCursive, setIsCursive] = useState(false);
 	const [isMounted, setIsMounted] = useState(false);
+	const [isChangeRecordChat, setIsChangeRecordChat] = useState(false);
 
 	// Obtener los mensajes al cambiar de chat
 	useEffect(() => {
@@ -73,14 +75,23 @@ const Chat = () => {
 
 				const id = chat.for === dataUser.uid ? chat.of : chat.for;
 
-				const isRecordChats = recordChats.some(el => {
+				const index = recordChats.findIndex(el => {
 
 					const compareId = dataUser.uid === el.for ? el.of : el.for;
 					return compareId === id;
 				});
-
-				!isRecordChats && recordChats.push(chat);
+				
+				index === -1 ? recordChats.push(chat) : recordChats[ index ] = chat;
 			});
+
+			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
+			const indexChat = recordChats.findIndex(chat => chat['of'] === id || chat['for'] === id);
+			
+			if (indexChat !== -1 && isChangeRecordChat) {
+				
+				socket.emit('view-message', recordChats[indexChat]);
+				recordChats[indexChat].viewMessage = false;
+			}
 
 			setChats(recordChats);
 		}
@@ -90,7 +101,7 @@ const Chat = () => {
 		
 		return () => setIsMounted(false);
 		
-	}, [dataUser, isMounted]);
+	}, [dataUser, isMounted, selectedUserChat, isChangeRecordChat, socket]);
 	
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
@@ -99,7 +110,7 @@ const Chat = () => {
 
 			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
 
-			// Guardar mensaje
+			// Guardar mensaje en chat en el que se encuentra activo
 			(id === resp.of || id === resp.for)
 			&& setMessages([...messages, resp]);
 
@@ -107,7 +118,11 @@ const Chat = () => {
 
 				// Mostrar y actualizar lista de chats
 				const arr = [...chats];
-				const indexChat = chats.findIndex(chat => chat['of'] === resp['for'] || chat['of'] === resp['of']);
+				const indexChat = chats.findIndex(chat => {
+
+					return  (chat['of'] === resp['of'] && chat['for'] === resp['for'])
+					|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
+				});
 			
 				if (indexChat !== -1) {
 
@@ -116,11 +131,18 @@ const Chat = () => {
 				
 				} else setChats([...chats, resp]);
 			}
+			
+			// Efecto del scroll
+			const { current:element } = containerMesssageRef;
+			
+			if (element.scrollTop + 309 === element.scrollHeight)
+				element.scrollTo(0, element.scrollHeight);
+
 		});
 		
 		return () => socket.off('message-personal');
 		
-	}, [socket, messages, chats, selectedUserChat, dataUser]);
+	}, [socket, messages, chats, selectedUserChat, dataUser, containerMesssageRef]);
 
 	const writeMessage = e => {
 
@@ -148,8 +170,21 @@ const Chat = () => {
 
 	const selectedOption = text => {
 		
-		if (text === 'Marcar como leido') setViewMessage(false);
-		else if (text === 'Marcar como no leido') setViewMessage(true);
+
+		if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
+
+			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
+			const uid = dataUser.uid;
+			const copyChats = [...chats];
+			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid) && (chat.for === id || chat.for === uid));
+			
+			copyChats[index].text = 'Marcar como leido o no leido';
+			copyChats[index].viewMessage = text === 'Marcar como leido' ? false : true;
+			
+			socket.emit('view-message', copyChats[index]);
+
+			setChats(copyChats);
+		}
 
 		if (text === 'bold' && !isBold) setIsBold(true);
 		else if (text === 'bold' && isBold) setIsBold(false);
@@ -161,6 +196,7 @@ const Chat = () => {
 	const changeChat = async id => {
 
 		setSelectedMessage(true);
+		setIsChangeRecordChat(true);
 
 		const resp = await requestWithoutToken(`get-user/${id}`);
 		const { ok, messages } = await resp.json();
@@ -171,6 +207,7 @@ const Chat = () => {
 	return (
 		<ChatPage
 			chats={chats}
+			containerMesssageRef={containerMesssageRef}
 			dataUser={dataUser}
 			handleChange={handleChange}
 			isBold={isBold}
@@ -181,7 +218,6 @@ const Chat = () => {
 			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
 			changeChat={changeChat}
-			viewMessage={viewMessage}
 			writeMessage={writeMessage}
 		/>
 	)

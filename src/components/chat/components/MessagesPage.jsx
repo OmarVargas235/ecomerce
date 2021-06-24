@@ -4,9 +4,9 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import moment from 'moment';
 import 'moment/locale/es';
 
-const MessagesPage = ({ data, idUser, changeChat, viewMessage }) => (
+const MessagesPage = ({ data, idUser, changeChat }) => (
 	<div
-		className={`${viewMessage ? 'message-new' : 'message'} pl-3 p-2 mb-1 pointer`}
+		className={`${data.viewMessage ? 'message-new' : 'message'} pl-3 p-2 mb-1 pointer`}
 		onClick={() => idUser === data.of ? changeChat(data.for) : changeChat(data.of) }
 	>
 		<div className="profile d-flex justify-content-between">
