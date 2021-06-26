@@ -32,10 +32,27 @@ const Chat = () => {
 	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);
 	const [messages, setMessages] = useState([]);
 	const [chats, setChats] = useState([]);
+	const [chatsMemory, setChatsMemory] = useState([]);
 	const [isBold, setIsBold] = useState(false);
 	const [isCursive, setIsCursive] = useState(false);
 	const [isMounted, setIsMounted] = useState(false);
 	const [isChangeRecordChat, setIsChangeRecordChat] = useState(false);
+	const [search, setSearch] = useState('');
+	
+	// Realizar busqueda en el historial del chat
+	useEffect(() => {
+		
+		if (search.trim() === '') return;
+		
+		const namesChats = chatsMemory.filter(chat => {
+						
+			const { nameReceptor } = chat;
+			return nameReceptor.toLowerCase().indexOf(search.toLowerCase()) === 0 && chat;
+		});
+
+		setChats(namesChats);
+		
+	}, [search, dataUser, chatsMemory]);
 
 	// Obtener los mensajes al cambiar de chat
 	useEffect(() => {
@@ -94,6 +111,7 @@ const Chat = () => {
 			}
 
 			setChats(recordChats);
+			setChatsMemory(recordChats);
 		}
 
 		isMounted && callAPI();
@@ -128,8 +146,12 @@ const Chat = () => {
 
 					arr[indexChat] = resp;
 					setChats(arr);
-				
-				} else setChats([...chats, resp]);
+
+				} else {
+
+					setChats([...chats, resp]);
+					setChatsMemory([...chats, resp]);
+				}
 			}
 			
 			// Efecto del scroll
@@ -208,6 +230,7 @@ const Chat = () => {
 		<ChatPage
 			chats={chats}
 			containerMesssageRef={containerMesssageRef}
+			changeChat={changeChat}
 			dataUser={dataUser}
 			handleChange={handleChange}
 			isBold={isBold}
@@ -217,7 +240,7 @@ const Chat = () => {
 			selectedOption={selectedOption}
 			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
-			changeChat={changeChat}
+			setSearch={setSearch}
 			writeMessage={writeMessage}
 		/>
 	)

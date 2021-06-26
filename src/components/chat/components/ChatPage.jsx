@@ -11,7 +11,7 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ chats, containerMesssageRef, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, changeChat, writeMessage }) => (
+const ChatPage = ({ chats, containerMesssageRef, changeChat, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, setSearch, writeMessage }) => (
 	<MessagesStyle>
 		
 		<HeaderPage />
@@ -29,7 +29,9 @@ const ChatPage = ({ chats, containerMesssageRef, dataUser, handleChange, isBold,
 					/>
 				</Hidden>
 					
-				<SearchMessagePage />
+				<SearchMessagePage
+					setSearch={setSearch}
+				/>
 				
 				<Hidden mdDown={matchesContainerMessages}>
 					<Divider className="divider my-4" />
