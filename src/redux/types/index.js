@@ -29,5 +29,6 @@ export const LOADING_PRODUCT = 'LOADING_PRODUCT';
 // =====================================
 // Mensajes del usuario
 // =====================================
-// export const REMITTER = 'REMITTER';
 export const SELECTED_USER = 'SELECTED_USER';
+export const NEW_MESSAGE = 'NEW_MESSAGE';
+export const GET_NEW_MESSAGE = 'GET_NEW_MESSAGE';

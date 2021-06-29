@@ -8,7 +8,7 @@ import PopoverPage from './PopoverPage';
 
 import { Paper, Tabs, Tab, Grid, Typography } from '@material-ui/core';
 
-const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveSearch }) => (
+const MenuMdPage = ({ auth, contNewMessage, classes, dataUser, history, isActiveLink, setActiveSearch }) => (
 	
 		<Grid container>
 			<Grid item sm={2} className="text-center">
@@ -49,6 +49,7 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 
 					<div className="pl-3">
 						<PopoverPage
+							contNewMessage={contNewMessage}
 							dataUser={dataUser}
 							history={history}
 						/>

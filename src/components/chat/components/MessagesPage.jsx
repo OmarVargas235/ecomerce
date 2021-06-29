@@ -4,7 +4,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import moment from 'moment';
 import 'moment/locale/es';
 
-const MessagesPage = ({ data, idUser, changeChat }) => (
+const MessagesPage = ({ changeChat, data, idUser }) => (
 	<div
 		className={`${data.viewMessage ? 'message-new' : 'message'} pl-3 p-2 mb-1 pointer`}
 		onClick={() => idUser === data.of ? changeChat(data.for) : changeChat(data.of) }
@@ -41,7 +41,10 @@ const MessagesPage = ({ data, idUser, changeChat }) => (
 					text-message ${data.isBold ? 'font-weight-bold' : 'font-weight-normal'}
 					${data.isCursive ? 'cursive' : ''}`}
 				>{ data.message }</span>
-			<DeleteForeverIcon className="icon pointer" />
+
+			<DeleteForeverIcon
+				className="icon pointer"
+			/>
 		</div>
 	</div>
 )

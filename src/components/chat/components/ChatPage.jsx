@@ -43,9 +43,9 @@ const ChatPage = ({ chats, containerMesssageRef, changeChat, dataUser, handleCha
 							chats.map((el, index) => (
 								<MessagesPage
 									key={index}
+									changeChat={changeChat}
 									data={el}
 									idUser={dataUser.uid}
-									changeChat={changeChat}
 								/>
 							))
 						}

@@ -5,7 +5,10 @@ import ChatPage from './components/ChatPage';
 import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { SocketContext } from '../../context/SocketContext';
-import { selectedUserChatAction } from '../../redux/actions/messagesAction';
+import {
+	selectedUserChatAction,
+	contNewMessageAction,
+} from '../../redux/actions/messagesAction';
 import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 
@@ -13,8 +16,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Chat = () => {
 
-	const { selectedUserChat } = useSelector(state => state.messages);
+	const { selectedUserChat, contNewMessage } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
+
 	const dispatch = useDispatch();
 
 	const matchesContainerMessages = useMediaQuery('(max-width: 767px)');
@@ -39,20 +43,23 @@ const Chat = () => {
 	const [isChangeRecordChat, setIsChangeRecordChat] = useState(false);
 	const [search, setSearch] = useState('');
 	
-	// Realizar busqueda en el historial del chat
+	// Realizar busqueda en el historial del chat y agregar el efecto scroll
 	useEffect(() => {
 		
+		const { current:element } = containerMesssageRef;
+		element && element.scrollTo(0, element.scrollHeight);
+
 		if (search.trim() === '') return;
-		
+
 		const namesChats = chatsMemory.filter(chat => {
 						
 			const { nameReceptor } = chat;
 			return nameReceptor.toLowerCase().indexOf(search.toLowerCase()) === 0 && chat;
 		});
-
+		
 		setChats(namesChats);
 		
-	}, [search, dataUser, chatsMemory]);
+	}, [search, dataUser, chatsMemory, containerMesssageRef]);
 
 	// Obtener los mensajes al cambiar de chat
 	useEffect(() => {
@@ -105,6 +112,16 @@ const Chat = () => {
 			const indexChat = recordChats.findIndex(chat => chat['of'] === id || chat['for'] === id);
 			
 			if (indexChat !== -1 && isChangeRecordChat) {
+
+				const id = selectedUserChat.id
+				? selectedUserChat.id
+				: selectedUserChat['_id'];
+		
+				const resp = await requestWithoutToken(`get-messages/${id}+${dataUser.uid}`);
+				const { messages:getMessage } = await resp.json();
+
+				recordChats[indexChat].viewMessage
+				&& dispatch( contNewMessageAction( dataUser, contNewMessage, getMessage.length ) );
 				
 				socket.emit('view-message', recordChats[indexChat]);
 				recordChats[indexChat].viewMessage = false;
@@ -119,7 +136,7 @@ const Chat = () => {
 		
 		return () => setIsMounted(false);
 		
-	}, [dataUser, isMounted, selectedUserChat, isChangeRecordChat, socket]);
+	}, [dataUser, isMounted, selectedUserChat, isChangeRecordChat, socket, dispatch]);
 	
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
@@ -138,7 +155,7 @@ const Chat = () => {
 				const arr = [...chats];
 				const indexChat = chats.findIndex(chat => {
 
-					return  (chat['of'] === resp['of'] && chat['for'] === resp['for'])
+					return (chat['of'] === resp['of'] && chat['for'] === resp['for'])
 					|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
 				});
 			
@@ -154,9 +171,13 @@ const Chat = () => {
 				}
 			}
 			
+			dispatch( contNewMessageAction(dataUser, contNewMessage, 'plus') );
+
 			// Efecto del scroll
 			const { current:element } = containerMesssageRef;
 			
+			if (!element) return;
+
 			if (element.scrollTop + 309 === element.scrollHeight)
 				element.scrollTo(0, element.scrollHeight);
 
@@ -164,7 +185,7 @@ const Chat = () => {
 		
 		return () => socket.off('message-personal');
 		
-	}, [socket, messages, chats, selectedUserChat, dataUser, containerMesssageRef]);
+	}, [dispatch, socket, messages, chats, selectedUserChat, dataUser, containerMesssageRef, contNewMessage]);
 
 	const writeMessage = e => {
 
@@ -200,7 +221,14 @@ const Chat = () => {
 			const copyChats = [...chats];
 			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid) && (chat.for === id || chat.for === uid));
 			
-			copyChats[index].text = 'Marcar como leido o no leido';
+			(text === 'Marcar como no leido' && !chats[index].viewMessage)
+			&& dispatch( contNewMessageAction(dataUser, contNewMessage, {type: true, cont: messages.length}) );
+
+			(text === 'Marcar como leido' && chats[index].viewMessage)
+			&& dispatch( contNewMessageAction(dataUser, contNewMessage, messages.length) );
+			
+			// copyChats[index].text = Sirve para un condicional en el backend
+			copyChats[index].text = 'Marcar como no leido';
 			copyChats[index].viewMessage = text === 'Marcar como leido' ? false : true;
 			
 			socket.emit('view-message', copyChats[index]);
@@ -225,6 +253,14 @@ const Chat = () => {
 
 		ok ? dispatch( selectedUserChatAction(messages) ) : alert('error', messages);
 	}
+
+	// const deleteRecordMessage = (idUser, data) => {
+		
+	// 	const id = idUser === data.of ? data.for : data.of;
+	// 	const deleteChat = chats.filter(chat => chat.for !== id && chat.of !== id);
+
+	// 	setChats(deleteChat);
+	// }
 
 	return (
 		<ChatPage

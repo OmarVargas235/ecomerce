@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
 
 import { getUserAction, loginAction } from '../../redux/actions/userAction';
+import { getNewMessage } from '../../redux/actions/messagesAction';
 import NavbarPage from './components/NavbarPage';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,6 +22,7 @@ const Navbar = ({ history }) => {
 	// Redux
 	const dispatch = useDispatch();
 	const { dataUser, auth } = useSelector(state => state.user);
+	const { contNewMessage } = useSelector(state => state.messages);
 
 	// Variables y metodos de material ui
 	const matches = useMediaQuery('(min-width:768px)');
@@ -49,10 +51,19 @@ const Navbar = ({ history }) => {
 
   	}, [dispatch]);
 	
+	// Obetner el contador de mensajes del usuario
+  	useEffect(() => {
+		
+		if ( Object.keys(dataUser).length === 0 || !dataUser.contChat ) return;
+  		dispatch( getNewMessage(dataUser.contChat) );
+  		
+  	}, [dispatch, dataUser]);
+	
 	return (
 		<NavbarPage
 			auth={auth}
 			activeSearch={activeSearch}
+			contNewMessage={contNewMessage}
 			classes={classes}
 			dataUser={dataUser}
 			history={history}

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const PopoverPage = ({ dataUser, history }) => {
+const PopoverPage = ({ contNewMessage, dataUser, history }) => {
 
 	const classes = useStyles();
 
@@ -99,13 +99,17 @@ const PopoverPage = ({ dataUser, history }) => {
 								<ListItemText primary="Notificaciones" />
 								<Badge color="primary" badgeContent={0} showZero></Badge>
 							</ListItem>
-
+							
 							<ListItem
 								button
 								onClick={() => history.push('/mensajes')}
 							>
 								<ListItemText primary="Mensajes" />
-								<Badge color="primary" badgeContent={0} showZero></Badge>
+								<Badge
+									color="primary"
+									badgeContent={contNewMessage}
+									showZero
+								></Badge>
 							</ListItem>
 						</List>
 
