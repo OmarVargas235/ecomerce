@@ -4,7 +4,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import moment from 'moment';
 import 'moment/locale/es';
 
-const MessagesPage = ({ changeChat, data, idUser }) => (
+const RecordChatPage = ({ changeChat, data, idUser }) => (
 	<div
 		className={`${data.viewMessage ? 'message-new' : 'message'} pl-3 p-2 mb-1 pointer`}
 		onClick={() => idUser === data.of ? changeChat(data.for) : changeChat(data.of) }
@@ -49,4 +49,4 @@ const MessagesPage = ({ changeChat, data, idUser }) => (
 	</div>
 )
 
-export default MessagesPage;
+export default RecordChatPage;

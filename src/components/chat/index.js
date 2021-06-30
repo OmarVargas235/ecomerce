@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ChatPage from './components/ChatPage';
+import { initialState, reducer } from './reducer';
 import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { SocketContext } from '../../context/SocketContext';
@@ -33,167 +34,15 @@ const Chat = () => {
 
 	const containerMesssageRef = useRef();
 
+	const [state, dispatchState] = useReducer(reducer, initialState);
+
 	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);
-	const [messages, setMessages] = useState([]);
-	const [chats, setChats] = useState([]);
-	const [chatsMemory, setChatsMemory] = useState([]);
-	const [isBold, setIsBold] = useState(false);
-	const [isCursive, setIsCursive] = useState(false);
-	const [isMounted, setIsMounted] = useState(false);
-	const [isChangeRecordChat, setIsChangeRecordChat] = useState(false);
-	const [search, setSearch] = useState('');
 	
-	// Realizar busqueda en el historial del chat y agregar el efecto scroll
-	useEffect(() => {
-		
-		const nameWhole = dataUser.name + ' ' + dataUser.lastName;
-		const { current:element } = containerMesssageRef;
-		element && element.scrollTo(0, element.scrollHeight);
-
-		if (search.trim() === '') return;
-
-		const namesChats = chatsMemory.filter(chat => {
-						
-			const { nameReceptor, nameRemitter } = chat;
-			const nameFind = nameWhole === nameRemitter ? nameReceptor : nameRemitter;
-
-			return nameFind.toLowerCase().indexOf(search.toLowerCase()) === 0 && chat;
-		});
-		
-		setChats(namesChats);
-		
-	}, [search, dataUser, chatsMemory, containerMesssageRef]);
-
-	// Obtener los mensajes al cambiar de chat
-	useEffect(() => {
-		
-		if ( Object.values(selectedUserChat).length === 0 ) return;
-
-		async function callAPI() {
-
-			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-
-			const resp = await requestWithoutToken(`get-messages/${id}+${dataUser.uid}`);
-			const { ok, messages:getMessage } = await resp.json();
-
-			if (!ok) return alert('error', getMessage);
-
-			setMessages(getMessage);
-		}
-
-		callAPI();
-		
-	}, [selectedUserChat, dataUser]);
-
-	// Cargar el historial del chat cuando se recarga la pagina
-	useEffect(() => {
-
-		if (!dataUser.uid) return;
-
-		async function callAPI() {
-
-			const resp = await requestWithoutToken(`get-record-users/${dataUser.uid}`);
-			const { ok, messages } = await resp.json();
-			const recordChats = [];
-
-			if (!ok) return alert('error', messages);
-
-			messages.forEach(chat => {
-
-				const id = chat.for === dataUser.uid ? chat.of : chat.for;
-
-				const index = recordChats.findIndex(el => {
-
-					const compareId = dataUser.uid === el.for ? el.of : el.for;
-					return compareId === id;
-				});
-				
-				index === -1 ? recordChats.push(chat) : recordChats[ index ] = chat;
-			});
-
-			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-			const indexChat = recordChats.findIndex(chat => chat['of'] === id || chat['for'] === id);
-			
-			if (indexChat !== -1 && isChangeRecordChat) {
-
-				const id = selectedUserChat.id
-				? selectedUserChat.id
-				: selectedUserChat['_id'];
-		
-				const resp = await requestWithoutToken(`get-messages/${id}+${dataUser.uid}`);
-				const { messages:getMessage } = await resp.json();
-
-				recordChats[indexChat].viewMessage
-				&& dispatch( contNewMessageAction( dataUser, contNewMessage, getMessage.length ) );
-				
-				socket.emit('view-message', recordChats[indexChat]);
-				recordChats[indexChat].viewMessage = false;
-			}
-
-			setChats(recordChats);
-			setChatsMemory(recordChats);
-		}
-
-		isMounted && callAPI();
-		setIsMounted(true);
-		
-		return () => setIsMounted(false);
-		
-	}, [dataUser, isMounted, selectedUserChat, isChangeRecordChat, socket, dispatch]);
-	
-	// Actualizar el chat cada vez que se envia un mensaje
-	useEffect(() => {
-		
-		socket.on('message-personal', resp => {
-
-			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-
-			// Guardar mensaje en chat en el que se encuentra activo
-			(id === resp.of || id === resp.for)
-			&& setMessages([...messages, resp]);
-
-			if (resp.of === dataUser.uid || resp.for === dataUser.uid) {
-
-				// Mostrar y actualizar lista de chats
-				const arr = [...chats];
-				const indexChat = chats.findIndex(chat => {
-
-					return (chat['of'] === resp['of'] && chat['for'] === resp['for'])
-					|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
-				});
-			
-				if (indexChat !== -1) {
-
-					arr[indexChat] = resp;
-					setChats(arr);
-
-				} else {
-
-					setChats([...chats, resp]);
-					setChatsMemory([...chats, resp]);
-				}
-			}
-			
-			dispatch( contNewMessageAction(dataUser, contNewMessage, 'plus') );
-
-			// Efecto del scroll
-			const { current:element } = containerMesssageRef;
-			
-			if (!element) return;
-
-			if (element.scrollTop + 309 === element.scrollHeight)
-				element.scrollTo(0, element.scrollHeight);
-
-		});
-		
-		return () => socket.off('message-personal');
-		
-	}, [dispatch, socket, messages, chats, selectedUserChat, dataUser, containerMesssageRef, contNewMessage]);
-
 	const writeMessage = e => {
 
 		e.preventDefault();
-
+		
+		const { isCursive, isBold } = state;
 		const { message } = formData;
 
 		if ( validate({ message }) ) return;
@@ -215,7 +64,8 @@ const Chat = () => {
 	}
 
 	const selectedOption = text => {
-		
+
+		const { chats, messages, isBold, isCursive } = state;
 
 		if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
 
@@ -236,20 +86,21 @@ const Chat = () => {
 			
 			socket.emit('view-message', copyChats[index]);
 
-			setChats(copyChats);
+			dispatchState({ type: 'CHATS', payload: copyChats });
 		}
 
-		if (text === 'bold' && !isBold) setIsBold(true);
-		else if (text === 'bold' && isBold) setIsBold(false);
+		if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
+		else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });
 		
-		if (text === 'cursive' && !isCursive) setIsCursive(true);
-		else if (text === 'cursive' && isCursive) setIsCursive(false);
+		if (text ==='cursive' && !isCursive) dispatchState({type: 'IS_CURSIVE',payload:true});
+		else if (text === 'cursive' && isCursive)
+			dispatchState({type: 'IS_CURSIVE', payload: false});
 	}
 
 	const changeChat = async id => {
 
 		setSelectedMessage(true);
-		setIsChangeRecordChat(true);
+		dispatchState({type: 'CHANGE_RECORD_CHAT', payload: true});
 
 		const resp = await requestWithoutToken(`get-user/${id}`);
 		const { ok, messages } = await resp.json();
@@ -269,18 +120,15 @@ const Chat = () => {
 		<ChatPage
 			containerMesssageRef={containerMesssageRef}
 			contNewMessage={contNewMessage}
-			chats={chats}
 			changeChat={changeChat}
 			dataUser={dataUser}
+			dispatch={dispatchState}
 			handleChange={handleChange}
-			isBold={isBold}
-			isCursive={isCursive}
 			matchesContainerMessages={matchesContainerMessages}
-			messages={messages}
+			state={state}
 			selectedOption={selectedOption}
 			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
-			setSearch={setSearch}
 			writeMessage={writeMessage}
 		/>
 	)

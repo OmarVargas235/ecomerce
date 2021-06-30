@@ -3,15 +3,19 @@ import React from 'react';
 import { MessagesStyle } from '../style';
 import SelectionMenu from '../../../layaut/SelectionMenu';
 import HeaderPage from './HeaderPage';
-import SearchMessagePage from './SearchMessagePage';
-import MessagesPage from './MessagesPage';
+// import SearchMessagePage from './SearchMessagePage';
+import SearchMessage from '../container/SearchMessage';
+import MessagesChat from '../container/MessagesChat';
+// import MessagesChatPage from './MessagesChatPage';
+import RecordChat from '../container/RecordChat';
+// import MessagesPage from './MessagesPage';
 import MenuThreePoints from '../../../layaut/MenuThreePoints';
 import SendMessagePage from './SendMessagePage';
-import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ containerMesssageRef, contNewMessage, chats, changeChat, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, setSearch, writeMessage }) => (
+const ChatPage = ({ containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage,writeMessage }) => (
+
 	<MessagesStyle>
 		
 		<HeaderPage
@@ -24,15 +28,19 @@ const ChatPage = ({ containerMesssageRef, contNewMessage, chats, changeChat, dat
 				xs={matchesContainerMessages ? 12 : 5}
 				className={`py-4 divider-vertical pl-md-4 ${matchesContainerMessages ? 'px-5' : ''}`}
 			>
-				<Hidden mdDown={!matchesContainerMessages}>
-					<SelectionMenu
+				{
+					matchesContainerMessages
+					? <SelectionMenu
 						categorys={['Todos los mensajes', 'Sin leer']}
 						title="Categorias"
-					/>
-				</Hidden>
-					
-				<SearchMessagePage
-					setSearch={setSearch}
+					/> : null
+				}
+				
+				<SearchMessage
+					containerMesssageRef={containerMesssageRef}
+					dataUser={dataUser}
+					dispatch={dispatch}
+					state={state}
 				/>
 				
 				<Hidden mdDown={matchesContainerMessages}>
@@ -41,16 +49,12 @@ const ChatPage = ({ containerMesssageRef, contNewMessage, chats, changeChat, dat
 				
 				<Hidden mdDown={matchesContainerMessages}>
 					<div className="container__messages pr-2">
-						{
-							chats.map((el, index) => (
-								<MessagesPage
-									key={index}
-									changeChat={changeChat}
-									data={el}
-									idUser={dataUser.uid}
-								/>
-							))
-						}
+						<RecordChat
+							state={state}
+							changeChat={changeChat}
+							dataUser={dataUser}
+							dispatch={dispatch}
+						/>
 					</div>
 				</Hidden>
 			</Grid>
@@ -94,23 +98,20 @@ const ChatPage = ({ containerMesssageRef, contNewMessage, chats, changeChat, dat
 									className="container__messsage-send px-3"
 									ref={containerMesssageRef}
 								>
-									{
-										messages.map(el => (
-											<MessagesChatPage
-												key={el['_id']}
-												idUser={dataUser.uid}
-												message={el}
-											/>	
-										))
-									}
+									<MessagesChat
+										containerMesssageRef={containerMesssageRef}
+										dispatch={dispatch}
+										dataUser={dataUser}
+										state={state}
+									/>
 								</div>
 
 								<Divider className="divider my-2" />
 
 								<SendMessagePage
 									handleChange={handleChange}
-									isBold={isBold}
-									isCursive={isCursive}
+									isBold={state.isBold}
+									isCursive={state.isCursive}
 									selectedOption={selectedOption}
 									writeMessage={writeMessage}
 								/>

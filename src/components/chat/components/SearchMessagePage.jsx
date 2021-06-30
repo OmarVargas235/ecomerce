@@ -1,13 +1,13 @@
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
-const SearchMessagePage = ({ setSearch }) => (
+const SearchMessagePage = ({ dispatch }) => (
 	<div className="d-flex mr-3 mr-md-4">
 		<input
 			placeholder="Buscar"
 			className="search pl-3 w-100"
 			type="text"
-			onChange={e => setSearch(e.target.value)}
+			onChange={e => dispatch({type: 'SEARCH', payload: e.target.value})}
 		/>
 
 		<div

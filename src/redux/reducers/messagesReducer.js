@@ -31,7 +31,7 @@ export default function messagesReducer(state=initialState, { type, payload }) {
 			
 			return {
 				...state,
-				contNewMessage: payload,
+				contNewMessage: payload < 0 ? 0 : payload,
 			}
 
 		default: return state;
