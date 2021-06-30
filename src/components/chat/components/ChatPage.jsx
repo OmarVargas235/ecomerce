@@ -11,10 +11,12 @@ import MessagesChatPage from './MessagesChatPage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ chats, containerMesssageRef, changeChat, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, setSearch, writeMessage }) => (
+const ChatPage = ({ containerMesssageRef, contNewMessage, chats, changeChat, dataUser, handleChange, isBold, isCursive, matchesContainerMessages, messages, selectedOption, selectedUserChat, selectedMessage, setSearch, writeMessage }) => (
 	<MessagesStyle>
 		
-		<HeaderPage />
+		<HeaderPage
+			contNewMessage={contNewMessage}
+		/>
 
 		<Grid container>
 			<Grid 

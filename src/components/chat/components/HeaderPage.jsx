@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-const HeaderPage = () => (
+const HeaderPage = ({ contNewMessage }) => (
 	<header className="header pl-5 py-4">
 		<Typography
 			variant="h4"
@@ -15,7 +15,7 @@ const HeaderPage = () => (
 			variant="body1"
 			component="p"
 		>
-			Tienes 4 mensajes sin leer.
+			Tienes {contNewMessage} mensajes sin leer.
 		</Typography>
 	</header>
 )

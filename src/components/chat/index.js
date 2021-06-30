@@ -46,6 +46,7 @@ const Chat = () => {
 	// Realizar busqueda en el historial del chat y agregar el efecto scroll
 	useEffect(() => {
 		
+		const nameWhole = dataUser.name + ' ' + dataUser.lastName;
 		const { current:element } = containerMesssageRef;
 		element && element.scrollTo(0, element.scrollHeight);
 
@@ -53,8 +54,10 @@ const Chat = () => {
 
 		const namesChats = chatsMemory.filter(chat => {
 						
-			const { nameReceptor } = chat;
-			return nameReceptor.toLowerCase().indexOf(search.toLowerCase()) === 0 && chat;
+			const { nameReceptor, nameRemitter } = chat;
+			const nameFind = nameWhole === nameRemitter ? nameReceptor : nameRemitter;
+
+			return nameFind.toLowerCase().indexOf(search.toLowerCase()) === 0 && chat;
 		});
 		
 		setChats(namesChats);
@@ -264,8 +267,9 @@ const Chat = () => {
 
 	return (
 		<ChatPage
-			chats={chats}
 			containerMesssageRef={containerMesssageRef}
+			contNewMessage={contNewMessage}
+			chats={chats}
 			changeChat={changeChat}
 			dataUser={dataUser}
 			handleChange={handleChange}
