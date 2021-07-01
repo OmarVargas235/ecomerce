@@ -11,8 +11,9 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 	const { selectedUserChat, contNewMessage } = useSelector(state => state.messages);
 	const dispatchRedux = useDispatch();
 
-	const { socket } = useContext( SocketContext );
 	const { isChangeRecordChat, isMounted } = state;
+	
+	const { socket } = useContext( SocketContext );
 
 	// Cargar el historial del chat cuando se recarga la pagina
 	useEffect(() => {
@@ -26,23 +27,29 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 			const recordChats = [];
 
 			if (!ok) return alert('error', messages);
-
+			
+			// Filtrar los usuarios que mantienen un chat con la cuenta
 			messages.forEach(chat => {
-
+				
+				// Obtener id, del usuario al que se le envio el mensaje
 				const id = chat.for === dataUser.uid ? chat.of : chat.for;
-
+				
+				// Obtener index para saber si el chat ya a sido incluido en el array	
 				const index = recordChats.findIndex(el => {
 
 					const compareId = dataUser.uid === el.for ? el.of : el.for;
 					return compareId === id;
 				});
 				
+				/*Si index es -1, no esta incluido en el array, de lo contrario remplaza
+				el ultimo elemento agregado*/
 				index === -1 ? recordChats.push(chat) : recordChats[ index ] = chat;
 			});
 			
 			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
 			const indexChat = recordChats.findIndex(chat => chat['of'] === id || chat['for'] === id);
 			
+			// Cambia el estado del mensaje que no a sido visto a visto, y disminuye el contador de mensajes no vistos.
 			if (indexChat !== -1 && isChangeRecordChat) {
 
 				const id = selectedUserChat.id
@@ -61,6 +68,7 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 			
 			dispatch({ type: 'CHATS', payload: recordChats });
 			dispatch({ type: 'CHATS_MEMORY', payload: recordChats });
+			dispatch({ type: 'CHANGE_CHAT', payload: false });
 		}
 
 		isMounted && callAPI();
@@ -68,7 +76,7 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 		
 		return () => dispatch({ type: 'MOUNTED', payload: false });
 		
-	}, [dataUser, selectedUserChat, socket, dispatchRedux, dispatch, isChangeRecordChat, isMounted]);
+	}, [dataUser, selectedUserChat, socket, dispatchRedux, dispatch, isChangeRecordChat, isMounted, contNewMessage]);
 	
 	return (
 		<React.Fragment>

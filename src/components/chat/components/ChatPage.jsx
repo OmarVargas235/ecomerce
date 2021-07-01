@@ -3,18 +3,15 @@ import React from 'react';
 import { MessagesStyle } from '../style';
 import SelectionMenu from '../../../layaut/SelectionMenu';
 import HeaderPage from './HeaderPage';
-// import SearchMessagePage from './SearchMessagePage';
 import SearchMessage from '../container/SearchMessage';
 import MessagesChat from '../container/MessagesChat';
-// import MessagesChatPage from './MessagesChatPage';
 import RecordChat from '../container/RecordChat';
-// import MessagesPage from './MessagesPage';
 import MenuThreePoints from '../../../layaut/MenuThreePoints';
 import SendMessagePage from './SendMessagePage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage,writeMessage }) => (
+const ChatPage = ({ containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, writeMessage }) => (
 
 	<MessagesStyle>
 		

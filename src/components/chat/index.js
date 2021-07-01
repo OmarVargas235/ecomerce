@@ -19,7 +19,6 @@ const Chat = () => {
 
 	const { selectedUserChat, contNewMessage } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
-
 	const dispatch = useDispatch();
 
 	const matchesContainerMessages = useMediaQuery('(max-width: 767px)');
@@ -62,7 +61,9 @@ const Chat = () => {
 			socket.emit('message-personal', obj);
 		}
 	}
-
+	
+	/* Seleccionar opciones del chat: Marcar como leido, Marcar como no leido, bloquear
+	hacer negrita la letra o cursiva*/
 	const selectedOption = text => {
 
 		const { chats, messages, isBold, isCursive } = state;
@@ -70,9 +71,12 @@ const Chat = () => {
 		if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
 
 			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-			const uid = dataUser.uid;
+			const idUser = dataUser.uid;
 			const copyChats = [...chats];
-			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid) && (chat.for === id || chat.for === uid));
+
+			// Obtener el index del chat del historial de chats
+			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === idUser)
+			&& (chat.for === id || chat.for === idUser));
 			
 			(text === 'Marcar como no leido' && !chats[index].viewMessage)
 			&& dispatch( contNewMessageAction(dataUser, contNewMessage, {type: true, cont: messages.length}) );
@@ -100,7 +104,7 @@ const Chat = () => {
 	const changeChat = async id => {
 
 		setSelectedMessage(true);
-		dispatchState({type: 'CHANGE_RECORD_CHAT', payload: true});
+		dispatchState({type: 'CHANGE_CHAT', payload: true});
 
 		const resp = await requestWithoutToken(`get-user/${id}`);
 		const { ok, messages } = await resp.json();

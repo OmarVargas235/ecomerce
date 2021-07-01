@@ -43,7 +43,7 @@ export function reducer(state=initialState, {type, payload}) {
 				isCursive: payload,
 			}
 
-		case 'CHANGE_RECORD_CHAT':
+		case 'CHANGE_CHAT':
 			return {
 				...state,
 				isChangeRecordChat: payload,

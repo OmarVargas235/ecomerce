@@ -49,25 +49,25 @@ const MessagesChat = ({ containerMesssageRef, dataUser, dispatch, state }) => {
 
 			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
 
-			// Guardar mensaje en chat en el que se encuentra activo
+			// Guarda los mensajes solamente en el chat en el que se encuentra activo
 			(id === resp.of || id === resp.for)
 			&& dispatch({ type: 'MESSAGES', payload: [...messages, resp] });
 
+			// Mostrar y actualizar lista de chats
 			if (resp.of === dataUser.uid || resp.for === dataUser.uid) {
-
-				// Mostrar y actualizar lista de chats
+				
 				const arr = [...chats];
 				const indexChat = chats.findIndex(chat => {
 
 					return (chat['of'] === resp['of'] && chat['for'] === resp['for'])
 					|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
 				});
-			
+				
+				// Si es diferente de -1, actualiza el ultimo chat, de lo contrario lo agrega
 				if (indexChat !== -1) {
 
 					arr[indexChat] = resp;
 					dispatch({ type: 'CHATS', payload: arr });
-					// setChats(arr);
 
 				} else {
 					
@@ -85,7 +85,6 @@ const MessagesChat = ({ containerMesssageRef, dataUser, dispatch, state }) => {
 
 			if (element.scrollTop + 309 === element.scrollHeight)
 				element.scrollTo(0, element.scrollHeight);
-
 		});
 		
 		return () => socket.off('message-personal');
