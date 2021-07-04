@@ -12,8 +12,6 @@ const SearchMessage = ({ containerMesssageRef, dataUser, dispatch, state }) => {
 		const { current:element } = containerMesssageRef;
 		element && element.scrollTo(0, element.scrollHeight);
 
-		if (search.trim() === '') return;
-
 		const namesChats = chatsMemory.filter(chat => {
 						
 			const { nameReceptor, nameRemitter } = chat;
