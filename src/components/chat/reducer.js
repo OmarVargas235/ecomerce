@@ -7,6 +7,7 @@ export const initialState = {
 	isChangeRecordChat: false,
 	search: '',
 	isMounted: false,
+	isShowMessages: false,
 }
 
 export function reducer(state=initialState, {type, payload}) {
@@ -14,6 +15,7 @@ export function reducer(state=initialState, {type, payload}) {
 	switch(type) {
 
 		case 'CHATS':
+
 			return {
 				...state,
 				chats: payload,
@@ -26,39 +28,52 @@ export function reducer(state=initialState, {type, payload}) {
 			}
 
 		case 'MESSAGES':
+
 			return {
 				...state,
 				messages: payload,
 			}
 
 		case 'IS_BOLD':
+
 			return {
 				...state,
 				isBold: payload,
 			}
 
 		case 'IS_CURSIVE':
+
 			return {
 				...state,
 				isCursive: payload,
 			}
 
 		case 'CHANGE_CHAT':
+
 			return {
 				...state,
 				isChangeRecordChat: payload,
 			}
 
 		case 'SEARCH':
+
 			return {
 				...state,
 				search: payload,
 			}
 
 		case 'MOUNTED':
+
 			return {
 				...state,
 				isMounted: payload,
+			}
+
+		case 'SHOW_MESSAGE_RESPONSIVE':
+		
+			return {
+				...state,
+				isShowMessages: payload,
 			}
 
 		default: return state;

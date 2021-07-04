@@ -11,7 +11,7 @@ import SendMessagePage from './SendMessagePage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, setBloqued, writeMessage }) => (
+const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, setBloqued, selectedOptionResponsive, writeMessage }) => (
 
 	<MessagesStyle>
 		
@@ -30,6 +30,7 @@ const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, d
 					? <SelectionMenu
 						categorys={['Todos los mensajes', 'Sin leer']}
 						title="Categorias"
+						setChange={selectedOptionResponsive}
 					/> : null
 				}
 				
@@ -52,6 +53,21 @@ const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, d
 							dataUser={dataUser}
 							dispatch={dispatch}
 						/>
+					</div>
+				</Hidden>
+				
+				<Hidden smUp={!matchesContainerMessages}>
+					<div className="container__messages pr-2 mt-4">
+						{
+							!state.isShowMessages
+							? <div className="text-center">Sin chats</div>
+							: <RecordChat
+								state={state}
+								changeChat={changeChat}
+								dataUser={dataUser}
+								dispatch={dispatch}
+							/>
+						}
 					</div>
 				</Hidden>
 			</Grid>

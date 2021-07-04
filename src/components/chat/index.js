@@ -132,6 +132,30 @@ const Chat = () => {
 			dispatchState({type: 'IS_CURSIVE', payload: false});
 	}
 
+	// Seleccionar todos los mensajes o solo los no leidos, cuando la resolucion de la pantalla es menor a 768px
+	const selectedOptionResponsive = (text) => {
+
+		const { chatsMemory } = state;
+
+		if (text === 'Todos los mensajes') {
+			
+			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+
+			return dispatchState({ type: 'CHATS', payload: chatsMemory });
+		}
+
+		if (text === 'Sin leer') {
+
+			const chatsWithoutView = chatsMemory.filter(chat => chat.viewMessage);
+			
+			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+
+			return dispatchState({ type: 'CHATS', payload: chatsWithoutView });
+		}
+
+		dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: false });
+	}
+
 	const changeChat = async id => {
 
 		setSelectedMessage(true);
@@ -166,6 +190,7 @@ const Chat = () => {
 			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
 			setBloqued={setBloqued}
+			selectedOptionResponsive={selectedOptionResponsive}
 			writeMessage={writeMessage}
 		/>
 	)
