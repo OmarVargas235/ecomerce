@@ -49,6 +49,10 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
 			const indexChat = recordChats.findIndex(chat => chat['of'] === id || chat['for'] === id);
 			
+			// Comprobar si el historial esta ya leido y si lo esta resetear el contador
+			const isView = recordChats.every(chat => !chat.viewMessage);
+			isView && dispatchRedux( contNewMessageAction( dataUser, 1, 1 ) );
+			
 			// Cambia el estado del mensaje que no a sido visto a visto, y disminuye el contador de mensajes no vistos.
 			if (indexChat !== -1 && isChangeRecordChat) {
 
@@ -58,7 +62,7 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 		
 				const resp = await requestWithoutToken(`get-messages/${id}+${dataUser.uid}`);
 				const { messages:getMessage } = await resp.json();
-
+				
 				recordChats[indexChat].viewMessage
 				&& dispatchRedux( contNewMessageAction( dataUser, contNewMessage, getMessage.length ) );
 				
@@ -75,8 +79,8 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 		dispatch({ type: 'MOUNTED', payload: true });
 		
 		return () => dispatch({ type: 'MOUNTED', payload: false });
-		
-	}, [dataUser, selectedUserChat, socket, dispatchRedux, dispatch, isChangeRecordChat, isMounted, contNewMessage]);
+	
+	}, [dataUser,selectedUserChat,isMounted,socket,dispatchRedux, dispatch, contNewMessage]);
 	
 	return (
 		<React.Fragment>

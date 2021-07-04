@@ -12,6 +12,7 @@ import {
 } from '../../redux/actions/messagesAction';
 import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
+import { callAPI } from './helper'
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -36,21 +37,39 @@ const Chat = () => {
 	const [state, dispatchState] = useReducer(reducer, initialState);
 
 	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);
+	const [bloqued, setBloqued] = useState('Bloquear');
 	
-	const writeMessage = e => {
+	const writeMessage = async e => {
 
 		e.preventDefault();
 		
 		const { isCursive, isBold } = state;
 		const { message } = formData;
+		const id = selectedUserChat.id || selectedUserChat['_id'];
+		
+		const { uid } = dataUser;
+
+		// Obtener usuarios bloqueados
+		const messagesRemitter = await callAPI(dispatch, `get-idBlockeds/${uid}`);
+		const messagesReceptor = await callAPI(dispatch, `get-idBlockeds/${id}`);
+		const isIncludesReceptor = messagesReceptor.includes(uid);
+		const isIncludesRemitter = messagesRemitter.includes(id);
+		
+		// Si el usuario esta bloqueado, mostrar alerta y no enviar el mensaje.
+		if (isIncludesReceptor || isIncludesRemitter) {
+			
+			return isIncludesRemitter
+			? alert('warning', ['Haz bloqueado a este usuario'])
+			: alert('warning', ['Este usuario te a bloqueado']);
+		}
 
 		if ( validate({ message }) ) return;
 
 		if (online) {
 
 			const obj = {
-				of: dataUser.uid,
-				for: selectedUserChat.id || selectedUserChat['_id'],
+				of: uid,
+				for: id,
 				nameRemitter: dataUser.name + ' ' + dataUser.lastName,
 				nameReceptor: selectedUserChat.name + ' ' + selectedUserChat.lastName,
 				message,
@@ -64,19 +83,19 @@ const Chat = () => {
 	
 	/* Seleccionar opciones del chat: Marcar como leido, Marcar como no leido, bloquear
 	hacer negrita la letra o cursiva*/
-	const selectedOption = text => {
+	const selectedOption = async text => {
 
 		const { chats, messages, isBold, isCursive } = state;
+		const { uid } = dataUser;
 
 		if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
 
 			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-			const idUser = dataUser.uid;
 			const copyChats = [...chats];
 
 			// Obtener el index del chat del historial de chats
-			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === idUser)
-			&& (chat.for === id || chat.for === idUser));
+			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid)
+			&& (chat.for === id || chat.for === uid));
 			
 			(text === 'Marcar como no leido' && !chats[index].viewMessage)
 			&& dispatch( contNewMessageAction(dataUser, contNewMessage, {type: true, cont: messages.length}) );
@@ -91,6 +110,18 @@ const Chat = () => {
 			socket.emit('view-message', copyChats[index]);
 
 			dispatchState({ type: 'CHATS', payload: copyChats });
+		}
+
+		if (text === 'Bloquear' || text === 'Quitar bloqueo') {
+					
+			const formData = new FormData();
+			formData.append('idUserBlocked', selectedUserChat['_id']);
+
+			const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
+			const id = selectedUserChat['_id'];
+			const isIncludes = messages.includes(id);
+
+			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
 		}
 
 		if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
@@ -122,6 +153,7 @@ const Chat = () => {
 
 	return (
 		<ChatPage
+			bloqued={bloqued}
 			containerMesssageRef={containerMesssageRef}
 			contNewMessage={contNewMessage}
 			changeChat={changeChat}
@@ -133,6 +165,7 @@ const Chat = () => {
 			selectedOption={selectedOption}
 			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
+			setBloqued={setBloqued}
 			writeMessage={writeMessage}
 		/>
 	)

@@ -20,7 +20,7 @@ export const requestWithoutToken = async (url = "", formData={}, method="GET") =
 }
 
 export const requestWithToken = async (url = "", token="", formData={}, method="GET") => {
-
+	
 	if (method === 'GET') {
 
 		return await fetch(`http://localhost:5000/${url}`, { headers: {'x-token': token} });

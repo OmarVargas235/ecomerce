@@ -6,12 +6,12 @@ import HeaderPage from './HeaderPage';
 import SearchMessage from '../container/SearchMessage';
 import MessagesChat from '../container/MessagesChat';
 import RecordChat from '../container/RecordChat';
-import MenuThreePoints from '../../../layaut/MenuThreePoints';
+import BloquedChat from '../container/BloquedChat';
 import SendMessagePage from './SendMessagePage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, writeMessage }) => (
+const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, setBloqued, writeMessage }) => (
 
 	<MessagesStyle>
 		
@@ -83,9 +83,13 @@ const ChatPage = ({ containerMesssageRef, contNewMessage, changeChat, dataUser, 
 										</Typography>
 									</div>
 									
-									<MenuThreePoints
-										handleChange={selectedOption}
-										options={['Marcar como leido', 'Marcar como no leido', 'Bloquear']}
+									<BloquedChat
+										bloqued={bloqued}
+										dataUser={dataUser}
+										dispatch={dispatch}
+										selectedUserChat={selectedUserChat}
+										selectedOption={selectedOption}
+										setBloqued={setBloqued}
 									/>
 								</div>
 
