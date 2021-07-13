@@ -1,7 +1,7 @@
 import {
 	SELECTED_USER,
 	NEW_MESSAGE,
-	GET_NEW_MESSAGE,
+	RECORD_CHATS,
 } from '../types/';
 import { alert } from '../../utils/alert';
 import { requestWithToken } from '../../utils/fetch';
@@ -12,30 +12,15 @@ export const selectedUserChatAction = payload => ({
 	payload,
 });
 
-export const contNewMessageAction = (dataUser, contMessage, payload) => async dispatch => {
+export const contNewMessageAction = (dataUser) => async dispatch => {
 	
 	const { uid } = dataUser;
 	const token = window.localStorage.getItem('token');
 
-	let cont = payload === 'plus'
-		? contMessage + 1
-		: contMessage - payload;
-		
-	if (payload.type) {
-		
-		cont = payload.cont;
-		cont += contMessage;
-	}
-	
-	dispatch( contNewMessage(cont) );
-
 	try {
-		
-		const formData = new FormData();
-		formData.append('cont', cont);
 
-		const resp = await requestWithToken(`cont-message/${uid}`, token, formData, 'POST');
-		const { ok, messages, isExpiredToken } = await resp;
+		const resp = await requestWithToken(`get-record-users/${uid}`, token);
+		const { ok, messages, isExpiredToken } = await resp.json();
 
 		if (isExpiredToken) {
 			
@@ -43,7 +28,10 @@ export const contNewMessageAction = (dataUser, contMessage, payload) => async di
 			return;
 		}
 
-		if (!ok) alert('error', messages);
+		if (!ok) return alert('error', messages);
+
+		const messagesView = messages.filter(chat => chat.viewMessage);
+		dispatch( contNewMessage(messagesView.length) );
 	
 	} catch(err) {
 		
@@ -52,12 +40,12 @@ export const contNewMessageAction = (dataUser, contMessage, payload) => async di
 	}
 }
 
-export const contNewMessage = payload => ({
+const contNewMessage = payload => ({
 	type: NEW_MESSAGE,
 	payload,
 });
 
-export const getNewMessage = payload => ({
-	type: GET_NEW_MESSAGE,
+export const recordChatsAction = payload => ({
+	type: RECORD_CHATS,
 	payload,
 });

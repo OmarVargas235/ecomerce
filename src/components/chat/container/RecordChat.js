@@ -1,18 +1,20 @@
 import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { requestWithoutToken } from '../../../utils/fetch';
+import { requestWithToken } from '../../../utils/fetch';
 import RecordChatPage from '../components/RecordChatPage';
 import { SocketContext } from '../../../context/SocketContext';
-import { contNewMessageAction } from '../../../redux/actions/messagesAction';
+import { alert } from '../../../utils/alert';
+import { recordChatsAction, contNewMessageAction } from '../../../redux/actions/messagesAction';
 
 const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 	
-	const { selectedUserChat, contNewMessage } = useSelector(state => state.messages);
+	const { selectedUserChat, chats } = useSelector(state => state.messages);
 	const dispatchRedux = useDispatch();
 
-	const { isChangeRecordChat, isMounted } = state;
+	const { isMounted, isChangeChat } = state;
 	
+	// Actualizar o agregar el(al) historial del chat cada vez que se envia un mensaje
 	const { socket } = useContext( SocketContext );
 
 	// Cargar el historial del chat cuando se recarga la pagina
@@ -20,59 +22,32 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 
 		if (!dataUser.uid) return;
 
+		const { uid } = dataUser;
+
 		async function callAPI() {
 
-			const resp = await requestWithoutToken(`get-record-users/${dataUser.uid}`);
+			const token = window.localStorage.getItem('token');
+			const resp = await requestWithToken(`get-record-users/${uid}`, token);
 			const { ok, messages } = await resp.json();
-			const recordChats = [];
 
 			if (!ok) return alert('error', messages);
 			
-			// Filtrar los usuarios que mantienen un chat con la cuenta
-			messages.forEach(chat => {
-				
-				// Obtener id, del usuario al que se le envio el mensaje
-				const id = chat.for === dataUser.uid ? chat.of : chat.for;
-				
-				// Obtener index para saber si el chat ya a sido incluido en el array	
-				const index = recordChats.findIndex(el => {
+			const id = selectedUserChat.id || selectedUserChat['_id'];
+			const indexChat = messages.findIndex(chat => chat['of'] === id || chat['for'] === id);
 
-					const compareId = dataUser.uid === el.for ? el.of : el.for;
-					return compareId === id;
-				});
-				
-				/*Si index es -1, no esta incluido en el array, de lo contrario remplaza
-				el ultimo elemento agregado*/
-				index === -1 ? recordChats.push(chat) : recordChats[ index ] = chat;
-			});
-			
-			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-			const indexChat = recordChats.findIndex(chat => chat['of'] === id || chat['for'] === id);
-			
-			// Comprobar si el historial esta ya leido y si lo esta resetear el contador
-			const isView = recordChats.every(chat => !chat.viewMessage);
-			isView && dispatchRedux( contNewMessageAction( dataUser, 1, 1 ) );
-			
 			// Cambia el estado del mensaje que no a sido visto a visto, y disminuye el contador de mensajes no vistos.
-			if (indexChat !== -1 && isChangeRecordChat) {
+			if (indexChat !== -1 && isChangeChat) {
 
-				const id = selectedUserChat.id
-				? selectedUserChat.id
-				: selectedUserChat['_id'];
-		
-				const resp = await requestWithoutToken(`get-messages/${id}+${dataUser.uid}`);
-				const { messages:getMessage } = await resp.json();
-				
-				recordChats[indexChat].viewMessage
-				&& dispatchRedux( contNewMessageAction( dataUser, contNewMessage, getMessage.length ) );
-				
-				socket.emit('view-message', recordChats[indexChat]);
-				recordChats[indexChat].viewMessage = false;
+				dispatchRedux( contNewMessageAction(dataUser) );
+
+				socket.emit('view-message', {id: uid, indexChat}, resp => {
+					
+					dispatchRedux( recordChatsAction(resp) );
+				});
 			}
 			
-			dispatch({ type: 'CHATS', payload: recordChats });
-			dispatch({ type: 'CHATS_MEMORY', payload: recordChats });
-			dispatch({ type: 'CHANGE_CHAT', payload: false });
+			dispatchRedux( recordChatsAction(messages) );
+			dispatch({ type: 'CHATS_MEMORY', payload: messages });
 		}
 
 		isMounted && callAPI();
@@ -80,12 +55,12 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 		
 		return () => dispatch({ type: 'MOUNTED', payload: false });
 	
-	}, [dataUser,selectedUserChat,isMounted,socket,dispatchRedux, dispatch, contNewMessage]);
+	},[dataUser, selectedUserChat, isMounted, socket,dispatch,dispatchRedux,isChangeChat]);
 	
 	return (
 		<React.Fragment>
 			{
-				state.chats.map((chat, index) => (
+				chats.map((chat, index) => (
 					<RecordChatPage
 						key={index}
 						changeChat={changeChat}
@@ -98,4 +73,4 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 	)
 }
 
-export default RecordChat;
+export default React.memo(RecordChat);

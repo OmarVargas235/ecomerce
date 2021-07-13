@@ -1,12 +1,13 @@
 import {
 	SELECTED_USER,
 	NEW_MESSAGE,
-	GET_NEW_MESSAGE,
+	RECORD_CHATS,
 } from '../types/';
 
 const initialState = {
 	selectedUserChat: {},
 	contNewMessage: 0,
+	chats: [],
 }
 
 export default function messagesReducer(state=initialState, { type, payload }) {
@@ -24,14 +25,14 @@ export default function messagesReducer(state=initialState, { type, payload }) {
 			
 			return {
 				...state,
-				contNewMessage: payload < 0 ? 0 : payload,
+				contNewMessage: payload,
 			}
 
-		case GET_NEW_MESSAGE:
+		case RECORD_CHATS:
 			
 			return {
 				...state,
-				contNewMessage: payload < 0 ? 0 : payload,
+				chats: payload,
 			}
 
 		default: return state;

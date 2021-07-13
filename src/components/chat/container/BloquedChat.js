@@ -7,17 +7,18 @@ const BloquedChat = ({ bloqued, dataUser, dispatch, selectedUserChat, selectedOp
 	
 	// Obtener usuarios bloqueados cada vez que se recarga la pagina o se cambia de chat
 	useEffect(() => {
-
+		
 		const lngDataUser = Object.keys(dataUser).length === 0;
 		const lngSelectedUserChat = Object.keys(selectedUserChat).length === 0;
-
+		
 		if (lngDataUser || lngSelectedUserChat) return;
 		
 		async function helperAPI() {
 			
 			const messages = await callAPI(dispatch, `get-idBlockeds/${dataUser.uid}`);
+
 			const id = selectedUserChat['_id'];
-			const isIncludes = messages.includes(id);
+			const isIncludes = messages?.includes(id);
 
 			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
 		}

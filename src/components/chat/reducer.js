@@ -1,25 +1,17 @@
 export const initialState = {
 	messages: [],
-	chats: [],
 	chatsMemory: [],
 	isBold: false,
 	isCursive: false,
-	isChangeRecordChat: false,
 	search: '',
 	isMounted: false,
 	isShowMessages: false,
+	isChangeChat: false,
 }
 
 export function reducer(state=initialState, {type, payload}) {
 
 	switch(type) {
-
-		case 'CHATS':
-
-			return {
-				...state,
-				chats: payload,
-			}
 
 		case 'CHATS_MEMORY':
 			return {
@@ -48,13 +40,6 @@ export function reducer(state=initialState, {type, payload}) {
 				isCursive: payload,
 			}
 
-		case 'CHANGE_CHAT':
-
-			return {
-				...state,
-				isChangeRecordChat: payload,
-			}
-
 		case 'SEARCH':
 
 			return {
@@ -74,6 +59,13 @@ export function reducer(state=initialState, {type, payload}) {
 			return {
 				...state,
 				isShowMessages: payload,
+			}
+
+		case 'IS_CHANGE_CHAT':
+		
+			return {
+				...state,
+				isChangeChat: payload,
 			}
 
 		default: return state;

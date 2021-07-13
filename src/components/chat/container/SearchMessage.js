@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import SearchMessagePage from '../components/SearchMessagePage';
+import { recordChatsAction } from '../../../redux/actions/messagesAction';
 
 const SearchMessage = ({ containerMesssageRef, dataUser, dispatch, state }) => {
+
+	const dispatchRedux = useDispatch();
 
 	const { search, chatsMemory } = state;
 
@@ -20,12 +25,9 @@ const SearchMessage = ({ containerMesssageRef, dataUser, dispatch, state }) => {
 			return nameFind.toLowerCase().indexOf(search.toLowerCase()) === 0 && chat;
 		});
 
-		dispatch({
-			type: 'CHATS',
-			payload: namesChats,
-		});
+		dispatchRedux( recordChatsAction(namesChats) );
 		
-	}, [dataUser, containerMesssageRef, search, chatsMemory, dispatch]);
+	}, [dataUser, containerMesssageRef, search, chatsMemory, dispatchRedux]);
 	
 	return (
 		<SearchMessagePage

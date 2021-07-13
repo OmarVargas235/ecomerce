@@ -8,11 +8,11 @@ import { useValidateForm } from '../../customHooks/useValidateForm';
 import { SocketContext } from '../../context/SocketContext';
 import {
 	selectedUserChatAction,
-	contNewMessageAction,
+	// contNewMessageAction,
 } from '../../redux/actions/messagesAction';
 import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
-import { callAPI } from './helper'
+import { callAPI } from './helper';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -52,8 +52,8 @@ const Chat = () => {
 		// Obtener usuarios bloqueados
 		const messagesRemitter = await callAPI(dispatch, `get-idBlockeds/${uid}`);
 		const messagesReceptor = await callAPI(dispatch, `get-idBlockeds/${id}`);
-		const isIncludesReceptor = messagesReceptor.includes(uid);
-		const isIncludesRemitter = messagesRemitter.includes(id);
+		const isIncludesReceptor = messagesReceptor?.includes(uid);
+		const isIncludesRemitter = messagesRemitter?.includes(id);
 		
 		// Si el usuario esta bloqueado, mostrar alerta y no enviar el mensaje.
 		if (isIncludesReceptor || isIncludesRemitter) {
@@ -66,7 +66,7 @@ const Chat = () => {
 		if ( validate({ message }) ) return;
 
 		if (online) {
-
+			
 			const obj = {
 				of: uid,
 				for: id,
@@ -75,6 +75,8 @@ const Chat = () => {
 				message,
 				isBold,
 				isCursive,
+				viewMessageOf: true,
+				viewMessageFor: true,
 			};
 
 			socket.emit('message-personal', obj);
@@ -85,86 +87,84 @@ const Chat = () => {
 	hacer negrita la letra o cursiva*/
 	const selectedOption = async text => {
 
-		const { chats, messages, isBold, isCursive } = state;
-		const { uid } = dataUser;
+		// const { chats, messages, isBold, isCursive } = state;
+		// const { uid } = dataUser;
 
-		if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
+		// if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
 
-			const id = selectedUserChat.id ? selectedUserChat.id : selectedUserChat['_id'];
-			const copyChats = [...chats];
+		// 	const id = selectedUserChat.id ? selectedUserChat.id :selectedUserChat['_id'];
+		// 	const copyChats = [...chats];
 
-			// Obtener el index del chat del historial de chats
-			const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid)
-			&& (chat.for === id || chat.for === uid));
+		// 	// Obtener el index del chat del historial de chats
+		// 	const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid)
+		// 	&& (chat.for === id || chat.for === uid));
+
+		// 	console.log(messages);
 			
-			(text === 'Marcar como no leido' && !chats[index].viewMessage)
-			&& dispatch( contNewMessageAction(dataUser, contNewMessage, {type: true, cont: messages.length}) );
+		// 	(text === 'Marcar como no leido' && !chats[index].viewMessage)
+		// 	&& dispatch( contNewMessageAction(dataUser, contNewMessage, {type: true, cont: messages.length}) );
 
-			(text === 'Marcar como leido' && chats[index].viewMessage)
-			&& dispatch( contNewMessageAction(dataUser, contNewMessage, messages.length) );
-			
-			// copyChats[index].text = Sirve para un condicional en el backend
-			copyChats[index].text = 'Marcar como no leido';
-			copyChats[index].viewMessage = text === 'Marcar como leido' ? false : true;
-			
-			socket.emit('view-message', copyChats[index]);
+		// 	(text === 'Marcar como leido' && chats[index].viewMessage)
+		// 	&& dispatch( contNewMessageAction(dataUser, contNewMessage,messages.length) );
+						
+		// 	socket.emit('view-message', {userId: uid, id, text});
+		// 	dispatchState({ type: 'CHATS', payload: copyChats });
+		// }
 
-			dispatchState({ type: 'CHATS', payload: copyChats });
-		}
-
-		if (text === 'Bloquear' || text === 'Quitar bloqueo') {
+		// if (text === 'Bloquear' || text === 'Quitar bloqueo') {
 					
-			const formData = new FormData();
-			formData.append('idUserBlocked', selectedUserChat['_id']);
+		// 	const formData = new FormData();
+		// 	formData.append('idUserBlocked', selectedUserChat['_id']);
 
-			const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
-			const id = selectedUserChat['_id'];
-			const isIncludes = messages.includes(id);
+		// 	const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
+		// 	const id = selectedUserChat['_id'];
+		// 	const isIncludes = messages.includes(id);
 
-			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
-		}
+		// 	setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
+		// }
 
-		if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
-		else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });
+		// if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
+		// else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });
 		
-		if (text ==='cursive' && !isCursive) dispatchState({type: 'IS_CURSIVE',payload:true});
-		else if (text === 'cursive' && isCursive)
-			dispatchState({type: 'IS_CURSIVE', payload: false});
+		// if (text ==='cursive' && !isCursive) dispatchState({type: 'IS_CURSIVE',payload:true});
+		// else if (text === 'cursive' && isCursive)
+		// 	dispatchState({type: 'IS_CURSIVE', payload: false});
 	}
 
 	// Seleccionar todos los mensajes o solo los no leidos, cuando la resolucion de la pantalla es menor a 768px
 	const selectedOptionResponsive = (text) => {
 
-		const { chatsMemory } = state;
+		// const { chatsMemory } = state;
 
-		if (text === 'Todos los mensajes') {
+		// if (text === 'Todos los mensajes') {
 			
-			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+		// 	dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
 
-			return dispatchState({ type: 'CHATS', payload: chatsMemory });
-		}
+		// 	return dispatchState({ type: 'CHATS', payload: chatsMemory });
+		// }
 
-		if (text === 'Sin leer') {
+		// if (text === 'Sin leer') {
 
-			const chatsWithoutView = chatsMemory.filter(chat => chat.viewMessage);
+		// 	const chatsWithoutView = chatsMemory.filter(chat => chat.viewMessage);
 			
-			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+		// 	dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
 
-			return dispatchState({ type: 'CHATS', payload: chatsWithoutView });
-		}
+		// 	return dispatchState({ type: 'CHATS', payload: chatsWithoutView });
+		// }
 
-		dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: false });
+		// dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: false });
 	}
 
 	const changeChat = async id => {
 
 		setSelectedMessage(true);
-		dispatchState({type: 'CHANGE_CHAT', payload: true});
 
 		const resp = await requestWithoutToken(`get-user/${id}`);
 		const { ok, messages } = await resp.json();
 
 		ok ? dispatch( selectedUserChatAction(messages) ) : alert('error', messages);
+
+		dispatchState({ type: 'IS_CHANGE_CHAT', payload: true });
 	}
 
 	// const deleteRecordMessage = (idUser, data) => {
