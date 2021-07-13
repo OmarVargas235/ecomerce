@@ -8,7 +8,8 @@ import { useValidateForm } from '../../customHooks/useValidateForm';
 import { SocketContext } from '../../context/SocketContext';
 import {
 	selectedUserChatAction,
-	// contNewMessageAction,
+	recordChatsAction,
+	contNewMessageAction,
 } from '../../redux/actions/messagesAction';
 import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
@@ -18,7 +19,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Chat = () => {
 
-	const { selectedUserChat, contNewMessage } = useSelector(state => state.messages);
+	const {selectedUserChat,contNewMessage,chats } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 
@@ -87,41 +88,32 @@ const Chat = () => {
 	hacer negrita la letra o cursiva*/
 	const selectedOption = async text => {
 
-		// const { chats, messages, isBold, isCursive } = state;
-		// const { uid } = dataUser;
+		// const { messages, isBold, isCursive } = state;
+		const { uid } = dataUser;
 
-		// if (text === 'Marcar como leido' || text === 'Marcar como no leido') {
+		if (text === 'Marcar como no leido' || text === 'Marcar como leido') {
 
-		// 	const id = selectedUserChat.id ? selectedUserChat.id :selectedUserChat['_id'];
-		// 	const copyChats = [...chats];
+			const id = selectedUserChat['_id'];
+			const indexChat = chats.findIndex(chat => chat['of']===id |chat['for']=== id);
 
-		// 	// Obtener el index del chat del historial de chats
-		// 	const index = copyChats.findIndex(chat => (chat.of === id || chat.of === uid)
-		// 	&& (chat.for === id || chat.for === uid));
+			socket.emit('view-message', {id: uid, indexChat, text}, resp => {
+				
+				dispatch( contNewMessageAction(dataUser) );
+				dispatch( recordChatsAction(resp) );
+			});
+		}
 
-		// 	console.log(messages);
+		if (text === 'Bloquear' || text === 'Quitar bloqueo') {
 			
-		// 	(text === 'Marcar como no leido' && !chats[index].viewMessage)
-		// 	&& dispatch( contNewMessageAction(dataUser, contNewMessage, {type: true, cont: messages.length}) );
+			const formData = new FormData();
+			formData.append('idUserBlocked', selectedUserChat['_id']);
 
-		// 	(text === 'Marcar como leido' && chats[index].viewMessage)
-		// 	&& dispatch( contNewMessageAction(dataUser, contNewMessage,messages.length) );
-						
-		// 	socket.emit('view-message', {userId: uid, id, text});
-		// 	dispatchState({ type: 'CHATS', payload: copyChats });
-		// }
+			const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
+			const id = selectedUserChat['_id'];
+			const isIncludes = messages.includes(id);
 
-		// if (text === 'Bloquear' || text === 'Quitar bloqueo') {
-					
-		// 	const formData = new FormData();
-		// 	formData.append('idUserBlocked', selectedUserChat['_id']);
-
-		// 	const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
-		// 	const id = selectedUserChat['_id'];
-		// 	const isIncludes = messages.includes(id);
-
-		// 	setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
-		// }
+			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
+		}
 
 		// if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
 		// else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });

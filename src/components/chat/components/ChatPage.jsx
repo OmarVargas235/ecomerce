@@ -48,10 +48,10 @@ const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, d
 				<Hidden mdDown={matchesContainerMessages}>
 					<div className="container__messages pr-2">
 						<RecordChat
-							state={state}
 							changeChat={changeChat}
 							dataUser={dataUser}
 							dispatch={dispatch}
+							state={state}
 						/>
 					</div>
 				</Hidden>

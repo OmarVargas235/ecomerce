@@ -10,10 +10,12 @@ const SearchMessage = ({ containerMesssageRef, dataUser, dispatch, state }) => {
 
 	const { search, chatsMemory } = state;
 
-	// Realizar busqueda en el historial del chat y agregar el efecto scroll
+	// Realizar busqueda en el historial del chat y agregar el efecto scroll cuando cambia de chat
 	useEffect(() => {
 		
 		const nameWhole = dataUser.name + ' ' + dataUser.lastName;
+
+		// agregar el efecto scroll cuando cambia de chat
 		const { current:element } = containerMesssageRef;
 		element && element.scrollTo(0, element.scrollHeight);
 

@@ -14,7 +14,6 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 
 	const { isMounted, isChangeChat } = state;
 	
-	// Actualizar o agregar el(al) historial del chat cada vez que se envia un mensaje
 	const { socket } = useContext( SocketContext );
 
 	// Cargar el historial del chat cuando se recarga la pagina
@@ -48,6 +47,7 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 			
 			dispatchRedux( recordChatsAction(messages) );
 			dispatch({ type: 'CHATS_MEMORY', payload: messages });
+			dispatch({ type: 'IS_CHANGE_CHAT', payload: false });
 		}
 
 		isMounted && callAPI();
