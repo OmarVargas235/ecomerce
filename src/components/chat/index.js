@@ -88,18 +88,19 @@ const Chat = () => {
 	hacer negrita la letra o cursiva*/
 	const selectedOption = async text => {
 
-		// const { messages, isBold, isCursive } = state;
+		const { isBold, isCursive } = state;
 		const { uid } = dataUser;
 
 		if (text === 'Marcar como no leido' || text === 'Marcar como leido') {
 
 			const id = selectedUserChat['_id'];
-			const indexChat = chats.findIndex(chat => chat['of']===id |chat['for']=== id);
+			const indexChat = chats.findIndex(chat => chat['of']===id||chat['for']=== id);
 
 			socket.emit('view-message', {id: uid, indexChat, text}, resp => {
 				
 				dispatch( contNewMessageAction(dataUser) );
 				dispatch( recordChatsAction(resp) );
+				dispatchState({ type: 'CHATS_MEMORY', payload: resp });
 			});
 		}
 
@@ -115,12 +116,12 @@ const Chat = () => {
 			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
 		}
 
-		// if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
-		// else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });
+		if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
+		else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });
 		
-		// if (text ==='cursive' && !isCursive) dispatchState({type: 'IS_CURSIVE',payload:true});
-		// else if (text === 'cursive' && isCursive)
-		// 	dispatchState({type: 'IS_CURSIVE', payload: false});
+		if (text ==='cursive' && !isCursive) dispatchState({type: 'IS_CURSIVE',payload:true});
+		else if (text === 'cursive' && isCursive)
+			dispatchState({type: 'IS_CURSIVE', payload: false});
 	}
 
 	// Seleccionar todos los mensajes o solo los no leidos, cuando la resolucion de la pantalla es menor a 768px
@@ -158,14 +159,6 @@ const Chat = () => {
 
 		dispatchState({ type: 'IS_CHANGE_CHAT', payload: true });
 	}
-
-	// const deleteRecordMessage = (idUser, data) => {
-		
-	// 	const id = idUser === data.of ? data.for : data.of;
-	// 	const deleteChat = chats.filter(chat => chat.for !== id && chat.of !== id);
-
-	// 	setChats(deleteChat);
-	// }
 
 	return (
 		<ChatPage

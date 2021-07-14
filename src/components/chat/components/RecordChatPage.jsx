@@ -4,12 +4,14 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import moment from 'moment';
 import 'moment/locale/es';
 
-const RecordChatPage = ({ changeChat, data, idUser }) => (
+const RecordChatPage = ({ changeChat, data, deleteRecordMessage, idUser }) => (
 	<div
 		className={`${data.viewMessage ? 'message-new' : 'message'} pl-3 p-2 mb-1 pointer`}
-		onClick={() => idUser === data.of ? changeChat(data.for) : changeChat(data.of) }
 	>
-		<div className="profile d-flex justify-content-between">
+		<div
+			className="profile d-flex justify-content-between"
+			onClick={() => idUser === data.of ? changeChat(data.for):changeChat(data.of) }
+		>
 			<div className="d-flex">
 				<Avatar className="avatar mr-3 text-uppercase">
 					{
@@ -40,10 +42,12 @@ const RecordChatPage = ({ changeChat, data, idUser }) => (
 				className={`
 					text-message ${data.isBold ? 'font-weight-bold' : 'font-weight-normal'}
 					${data.isCursive ? 'cursive' : ''}`}
+				onClick={() => idUser===data.of ?changeChat(data.for):changeChat(data.of) }
 				>{ data.message }</span>
 
 			<DeleteForeverIcon
 				className="icon pointer"
+				onClick={() => deleteRecordMessage(idUser, data)}
 			/>
 		</div>
 	</div>

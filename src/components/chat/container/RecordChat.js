@@ -5,7 +5,11 @@ import { requestWithToken } from '../../../utils/fetch';
 import RecordChatPage from '../components/RecordChatPage';
 import { SocketContext } from '../../../context/SocketContext';
 import { alert } from '../../../utils/alert';
-import { recordChatsAction, contNewMessageAction } from '../../../redux/actions/messagesAction';
+import {
+	recordChatsAction,
+	contNewMessageAction,
+	selectedUserChatAction,
+} from '../../../redux/actions/messagesAction';
 
 const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 	
@@ -38,16 +42,17 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 			if (indexChat !== -1 && isChangeChat) {
 
 				dispatchRedux( contNewMessageAction(dataUser) );
+				dispatch({ type: 'IS_CHANGE_CHAT', payload: false });
 
 				socket.emit('view-message', {id: uid, indexChat}, resp => {
 					
 					dispatchRedux( recordChatsAction(resp) );
+					dispatch({ type: 'CHATS_MEMORY', payload: resp });
 				});
 			}
 			
 			dispatchRedux( recordChatsAction(messages) );
-			dispatch({ type: 'CHATS_MEMORY', payload: messages });
-			dispatch({ type: 'IS_CHANGE_CHAT', payload: false });
+			!isChangeChat && dispatch({ type: 'CHATS_MEMORY', payload: messages });
 		}
 
 		isMounted && callAPI();
@@ -55,8 +60,26 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 		
 		return () => dispatch({ type: 'MOUNTED', payload: false });
 	
-	},[dataUser, selectedUserChat, isMounted, socket,dispatch,dispatchRedux,isChangeChat]);
+	},[dataUser, selectedUserChat, isMounted,socket,dispatch,dispatchRedux,isChangeChat]);
 	
+	const deleteRecordMessage = async (idUser, data) => {
+		
+		const id = idUser === data.of ? data.for : data.of;
+		const deleteChat = chats.filter(chat => chat.for !== id && chat.of !== id);
+		const formData = new FormData();
+		formData.append('deleteChat', JSON.stringify(deleteChat));
+
+		const token = window.localStorage.getItem('token');
+		const resp = await requestWithToken(`delete-chat/${dataUser.uid}`, token, formData, 'DELETE');
+		const { ok, messages } = resp;
+
+		if (!ok) return alert('error', messages);
+
+		dispatchRedux( recordChatsAction(messages) );
+		dispatchRedux( contNewMessageAction(dataUser) );
+		dispatchRedux( selectedUserChatAction({}) );
+	}
+
 	return (
 		<React.Fragment>
 			{
@@ -65,6 +88,7 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 						key={index}
 						changeChat={changeChat}
 						data={chat}
+						deleteRecordMessage={deleteRecordMessage}
 						idUser={dataUser.uid}
 					/>
 				))

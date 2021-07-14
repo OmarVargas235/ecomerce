@@ -41,10 +41,23 @@ const MessagesChat = ({ containerMesssageRef, dataUser, dispatch, state }) => {
 	// Actualizar el chat cada vez que se envia un mensaje
 	useEffect(() => {
 
-		const { messages } = state;
+		const { messages, chatsMemory } = state;
 		
 		socket.on('message-personal', resp => {
 			
+			// Cambiar viewMessage a true cuando se envia un mensaje, para que cuando se realize la busqueda de chat el viewMessage siga activo
+			const index = chatsMemory.findIndex(chat => {
+
+				return (chat['of'] === resp['of'] && chat['for'] === resp['for'])
+				|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
+			});
+
+			if (index !== -1) {
+
+				chatsMemory[index].viewMessage = true;
+				dispatch({ type: 'CHATS_MEMORY', payload: chatsMemory });
+			}
+
 			const id = selectedUserChat.id || selectedUserChat['_id'];
 
 			// Guarda los mensajes solamente en el chat en el que se encuentra activo

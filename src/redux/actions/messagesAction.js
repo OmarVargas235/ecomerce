@@ -12,32 +12,36 @@ export const selectedUserChatAction = payload => ({
 	payload,
 });
 
-export const contNewMessageAction = (dataUser) => async dispatch => {
+export const contNewMessageAction = (dataUser) => dispatch => {
 	
 	const { uid } = dataUser;
 	const token = window.localStorage.getItem('token');
 
-	try {
+	setTimeout(async () => {
 
-		const resp = await requestWithToken(`get-record-users/${uid}`, token);
-		const { ok, messages, isExpiredToken } = await resp.json();
+		try {
 
-		if (isExpiredToken) {
+			const resp = await requestWithToken(`get-record-users/${uid}`, token);
+			const { ok, messages, isExpiredToken } = await resp.json();
+
+			if (isExpiredToken) {
+				
+				dispatch( logoutUser() );
+				return;
+			}
+
+			if (!ok) return alert('error', messages);
+
+			const messagesView = messages.filter(chat => chat.viewMessage);
+			dispatch( contNewMessage(messagesView.length) );
+		
+		} catch(err) {
 			
-			dispatch( logoutUser() );
-			return;
+			console.log(err);
+			alert('error', ['A ocurrido un error']);
 		}
 
-		if (!ok) return alert('error', messages);
-
-		const messagesView = messages.filter(chat => chat.viewMessage);
-		dispatch( contNewMessage(messagesView.length) );
-	
-	} catch(err) {
-		
-		console.log(err);
-		alert('error', ['A ocurrido un error']);
-	}
+	}, 1);
 }
 
 const contNewMessage = payload => ({

@@ -87,15 +87,14 @@ const Navbar = ({ history }) => {
 
 				arr[indexChat] = resp;
 				recordChats = arr;
-				dispatch( recordChatsAction(arr) );
 
 			} else {
 				
 				recordChats = [...chats, resp];
-				dispatch( recordChatsAction(recordChats) );
 			}
 			
 			await requestWithoutToken(`records-chat/${dataUser.uid}`,recordChats, 'POST');
+			dispatch( recordChatsAction(recordChats) );
 			dispatch( contNewMessageAction(dataUser) );
 		});
 		
