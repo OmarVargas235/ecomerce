@@ -5,13 +5,14 @@ import { requestWithToken } from '../../../utils/fetch';
 import RecordChatPage from '../components/RecordChatPage';
 import { SocketContext } from '../../../context/SocketContext';
 import { alert } from '../../../utils/alert';
+import { requestWithoutToken } from '../../../utils/fetch';
 import {
 	recordChatsAction,
 	contNewMessageAction,
 	selectedUserChatAction,
 } from '../../../redux/actions/messagesAction';
 
-const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
+const RecordChat = ({ dataUser, dispatch, state, setSelectedMessage }) => {
 	
 	const { selectedUserChat, chats } = useSelector(state => state.messages);
 	const dispatchRedux = useDispatch();
@@ -78,6 +79,18 @@ const RecordChat = ({ changeChat, dataUser, dispatch, state }) => {
 		dispatchRedux( recordChatsAction(messages) );
 		dispatchRedux( contNewMessageAction(dataUser) );
 		dispatchRedux( selectedUserChatAction({}) );
+	}
+
+	const changeChat = async id => {
+
+		setSelectedMessage(true);
+
+		const resp = await requestWithoutToken(`get-user/${id}`);
+		const { ok, messages } = await resp.json();
+
+		ok ? dispatchRedux( selectedUserChatAction(messages) ) : alert('error', messages);
+
+		dispatch({ type: 'IS_CHANGE_CHAT', payload: true });
 	}
 
 	return (

@@ -7,11 +7,8 @@ import { useForm } from '../../customHooks/useForm';
 import { useValidateForm } from '../../customHooks/useValidateForm';
 import { SocketContext } from '../../context/SocketContext';
 import {
-	selectedUserChatAction,
 	recordChatsAction,
-	contNewMessageAction,
 } from '../../redux/actions/messagesAction';
-import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 import { callAPI } from './helper';
 
@@ -19,7 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Chat = () => {
 
-	const {selectedUserChat,contNewMessage,chats } = useSelector(state => state.messages);
+	const { selectedUserChat } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 
@@ -38,7 +35,6 @@ const Chat = () => {
 	const [state, dispatchState] = useReducer(reducer, initialState);
 
 	const [selectedMessage, setSelectedMessage] = useState(!matchesContainerMessages);
-	const [bloqued, setBloqued] = useState('Bloquear');
 	
 	const writeMessage = async e => {
 
@@ -66,6 +62,7 @@ const Chat = () => {
 
 		if ( validate({ message }) ) return;
 
+		// Enviar mensaje
 		if (online) {
 			
 			const obj = {
@@ -84,37 +81,10 @@ const Chat = () => {
 		}
 	}
 	
-	/* Seleccionar opciones del chat: Marcar como leido, Marcar como no leido, bloquear
-	hacer negrita la letra o cursiva*/
+	/* Seleccionar opciones del chat: negrita la letra o cursiva*/
 	const selectedOption = async text => {
 
 		const { isBold, isCursive } = state;
-		const { uid } = dataUser;
-
-		if (text === 'Marcar como no leido' || text === 'Marcar como leido') {
-
-			const id = selectedUserChat['_id'];
-			const indexChat = chats.findIndex(chat => chat['of']===id||chat['for']=== id);
-
-			socket.emit('view-message', {id: uid, indexChat, text}, resp => {
-				
-				dispatch( contNewMessageAction(dataUser) );
-				dispatch( recordChatsAction(resp) );
-				dispatchState({ type: 'CHATS_MEMORY', payload: resp });
-			});
-		}
-
-		if (text === 'Bloquear' || text === 'Quitar bloqueo') {
-			
-			const formData = new FormData();
-			formData.append('idUserBlocked', selectedUserChat['_id']);
-
-			const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
-			const id = selectedUserChat['_id'];
-			const isIncludes = messages.includes(id);
-
-			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
-		}
 
 		if (text === 'bold' && !isBold) dispatchState({ type: 'IS_BOLD', payload: true });
 		else if (text === 'bold' && isBold) dispatchState({ type:'IS_BOLD', payload: false });
@@ -124,48 +94,31 @@ const Chat = () => {
 			dispatchState({type: 'IS_CURSIVE', payload: false});
 	}
 
-	// Seleccionar todos los mensajes o solo los no leidos, cuando la resolucion de la pantalla es menor a 768px
+	// Seleccionar 'todos los mensajes' o solo los 'no leidos', cuando la resolucion de la pantalla es menor a 768px
 	const selectedOptionResponsive = (text) => {
 
-		// const { chatsMemory } = state;
+		const { chatsMemory } = state;
 
-		// if (text === 'Todos los mensajes') {
+		if (text === 'Todos los mensajes') {
 			
-		// 	dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
-
-		// 	return dispatchState({ type: 'CHATS', payload: chatsMemory });
-		// }
-
-		// if (text === 'Sin leer') {
-
-		// 	const chatsWithoutView = chatsMemory.filter(chat => chat.viewMessage);
+			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+			dispatch( recordChatsAction(chatsMemory) );
+		
+		} else if (text === 'Sin leer') {
 			
-		// 	dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+			const chatsWithoutView = chatsMemory.filter(chat => chat.viewMessage);
+			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: true });
+			dispatch( recordChatsAction(chatsWithoutView) );
+		
+		} else {
 
-		// 	return dispatchState({ type: 'CHATS', payload: chatsWithoutView });
-		// }
-
-		// dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: false });
-	}
-
-	const changeChat = async id => {
-
-		setSelectedMessage(true);
-
-		const resp = await requestWithoutToken(`get-user/${id}`);
-		const { ok, messages } = await resp.json();
-
-		ok ? dispatch( selectedUserChatAction(messages) ) : alert('error', messages);
-
-		dispatchState({ type: 'IS_CHANGE_CHAT', payload: true });
+			dispatchState({ type: 'SHOW_MESSAGE_RESPONSIVE', payload: false });
+		}
 	}
 
 	return (
 		<ChatPage
-			bloqued={bloqued}
 			containerMesssageRef={containerMesssageRef}
-			contNewMessage={contNewMessage}
-			changeChat={changeChat}
 			dataUser={dataUser}
 			dispatch={dispatchState}
 			handleChange={handleChange}
@@ -174,8 +127,8 @@ const Chat = () => {
 			selectedOption={selectedOption}
 			selectedUserChat={selectedUserChat}
 			selectedMessage={selectedMessage}
-			setBloqued={setBloqued}
 			selectedOptionResponsive={selectedOptionResponsive}
+			setSelectedMessage={setSelectedMessage}
 			writeMessage={writeMessage}
 		/>
 	)

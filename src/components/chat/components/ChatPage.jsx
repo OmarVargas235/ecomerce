@@ -11,13 +11,11 @@ import SendMessagePage from './SendMessagePage';
 
 import { Typography, Grid, Avatar, Divider, Hidden } from '@material-ui/core';
 
-const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, setBloqued, selectedOptionResponsive, writeMessage }) => (
+const ChatPage = ({ containerMesssageRef, dataUser, dispatch, handleChange, matchesContainerMessages, state, selectedOption, selectedUserChat, selectedMessage, selectedOptionResponsive, setSelectedMessage, writeMessage }) => (
 
 	<MessagesStyle>
 		
-		<HeaderPage
-			contNewMessage={contNewMessage}
-		/>
+		<HeaderPage />
 
 		<Grid container>
 			<Grid 
@@ -48,10 +46,10 @@ const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, d
 				<Hidden mdDown={matchesContainerMessages}>
 					<div className="container__messages pr-2">
 						<RecordChat
-							changeChat={changeChat}
 							dataUser={dataUser}
 							dispatch={dispatch}
 							state={state}
+							setSelectedMessage={setSelectedMessage}
 						/>
 					</div>
 				</Hidden>
@@ -62,10 +60,10 @@ const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, d
 							!state.isShowMessages
 							? <div className="text-center">Sin chats</div>
 							: <RecordChat
-								state={state}
-								changeChat={changeChat}
 								dataUser={dataUser}
 								dispatch={dispatch}
+								state={state}
+								setSelectedMessage={setSelectedMessage}
 							/>
 						}
 					</div>
@@ -100,12 +98,8 @@ const ChatPage = ({ bloqued, containerMesssageRef, contNewMessage, changeChat, d
 									</div>
 									
 									<BloquedChat
-										bloqued={bloqued}
 										dataUser={dataUser}
 										dispatch={dispatch}
-										selectedUserChat={selectedUserChat}
-										selectedOption={selectedOption}
-										setBloqued={setBloqued}
 									/>
 								</div>
 
