@@ -126,8 +126,8 @@ export const MessagesStyle = styled.section`
 		}
 
 		.message-send, .message-received {
-			overflow: hidden;
 			width: 350px;
+			word-wrap: break-word;
 		}
 
 		.message-send {
@@ -172,10 +172,11 @@ export const MessagesStyle = styled.section`
 	}
 
 	.container-upload-img {
+
 		position: relative;
 		top: -2px;
 
-		.upload-img, input {
+		input {
 			position: absolute;
 			width: 24px;
 			max-height: 24px;
@@ -205,6 +206,57 @@ export const MessagesStyle = styled.section`
 		.px-5 {
 			padding-left: 1rem !important;
 			padding-right: 1rem !important;
+		}
+	}
+`;
+
+export const TextareaStyle = styled.div`
+	
+	border: 1px solid #8A92A3;
+	border: 1px solid ${({ isFocus }) => isFocus ? '#76C5D6' : '#8A92A3'};
+
+	textarea {
+		border: none;
+		outline: none;
+		font-size: 1.1rem;
+	}
+
+	.send-img-chat {
+		width: 100%;
+	}
+
+	.container-images {	
+		width: 60px;
+		height: 60px;
+		position: relative;
+
+		img {
+			width: 100%;
+			border-radius: 20px;
+		}
+
+		.icon {
+			position: absolute;
+			right: -5px;
+			top: -5px;
+			background-color: white;
+			border-radius: 50%;
+		}
+	}
+
+	.addToImage {
+		border-radius: 20px;
+		background-color: #4E5053;
+		transition: .2s background-color ease-in-out;
+
+		svg {
+			font-size: 2rem;
+			background-color: transparent;
+			color: #E7E9EC;
+		}
+
+		&:hover {
+			background-color: #606265;
 		}
 	}
 `;

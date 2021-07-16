@@ -55,5 +55,3 @@ const Chat = () => {
 }
 
 export default Chat;
-
-// ¡Hola! Muchas gracias por inscribirte a este curso que estoy seguro que será de tu agrado. Cualquier duda que tengas estoy disponible mediante el panel de preguntas y respuestas para ayudarte.

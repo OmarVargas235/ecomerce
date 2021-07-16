@@ -42,8 +42,7 @@ const OptionsChat = ({ dispatch }) => {
 		
 	}, [dataUser, selectedUserChat, dispatch]);
 
-	/* Seleccionar opciones del chat: Marcar como leido, Marcar como no leido, bloquear
-	hacer negrita la letra o cursiva*/
+	/* Seleccionar opciones del chat: Marcar como leido, Marcar como no leido, bloquear*/
 	const selectedOption = async text => {
 
 		const { uid } = dataUser;

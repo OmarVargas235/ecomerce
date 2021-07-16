@@ -64,7 +64,7 @@ const RecordChat = ({ dispatch, state }) => {
 	
 	},[dataUser, selectedUserChat, isMounted,socket,dispatch,dispatchRedux,isChangeChat]);
 	
-	const deleteRecordMessage = async (idUser, data) => {
+	const deleteRecordChat = async (idUser, data) => {
 		
 		const id = idUser === data.of ? data.for : data.of;
 		const deleteChat = chats.filter(chat => chat.for !== id && chat.of !== id);
@@ -100,7 +100,7 @@ const RecordChat = ({ dispatch, state }) => {
 						key={index}
 						changeChat={changeChat}
 						data={chat}
-						deleteRecordMessage={deleteRecordMessage}
+						deleteRecordChat={deleteRecordChat}
 						idUser={dataUser.uid}
 					/>
 				))

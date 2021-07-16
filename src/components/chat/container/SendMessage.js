@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
 import SendMessagePage from '../components/SendMessagePage';
@@ -20,6 +20,25 @@ const SendMessage = ({ dispatch, state }) => {
 	const [, validate] = useValidateForm({ message: false });
 
 	const { socket, online } = useContext( SocketContext );
+
+	const [isFocus, setIsFocus] = useState(false);
+	const [previewImages, setPreviewImages] = useState('');
+	// const [image, setImage] = useState(null);
+
+	const handleChangeImg = e => {
+		
+		// Creamos el objeto de la clase FileReader
+		const reader = new FileReader();
+
+		// Leemos el archivo subido y se lo pasamos a nuestro fileReader
+		console.log(Array.from(e.target.files));
+		console.log(e.target.files[0]);
+		reader.readAsDataURL(e.target.files[0]);
+		// setImage(e.target.files[0]);
+		
+		// Le decimos que cuando este listo ejecute el código interno
+		reader.onload = () => setPreviewImages(reader.result);
+	}
 
 	/* Seleccionar opciones del chat: negrita la letra o cursiva*/
 	const selectedOption = async text => {
@@ -78,16 +97,22 @@ const SendMessage = ({ dispatch, state }) => {
 			socket.emit('message-personal', obj);
 		}
 	}
-	
+
 	return (
 		<SendMessagePage
 			handleChange={handleChange}
-			isBold={state.isBold}
-			isCursive={state.isCursive}
+			handleChangeImg={handleChangeImg}
+			isFocus={isFocus}
+			previewImages={previewImages}
+			state={state}
 			selectedOption={selectedOption}
+			setIsFocus={setIsFocus}
+			text={formData.message}
 			writeMessage={writeMessage}
 		/>
 	)
 }
 
 export default SendMessage;
+
+// ¡Hola! Muchas gracias por inscribirte a este curso que estoy seguro que será de tu agrado. Cualquier duda que tengas estoy disponible mediante el panel de preguntas y respuestas para ayudarte.
