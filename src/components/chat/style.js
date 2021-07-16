@@ -18,7 +18,7 @@ export const MessagesStyle = styled.section`
 		font-size: 1rem;
 		outline: none;
 
-		&:focus {
+		> input {}:focus {
 			border: 1px solid #76C5D6;
 		}
 	}
@@ -93,6 +93,10 @@ export const MessagesStyle = styled.section`
 		&:hover {
 			background-color: white;
 			border: 1px solid #dedfe0;
+
+			.icon {
+				color: #C6C6CB;
+			}
 		}
 
 		&::before {
@@ -101,7 +105,6 @@ export const MessagesStyle = styled.section`
 			position: absolute;
 			width: 10px;
 			height: 10px;
-			// background-color: #007791;
 			border: 1px solid lightgray;
 			border-radius: 50%;
 			left: 5px;
@@ -165,6 +168,22 @@ export const MessagesStyle = styled.section`
 		button {
 			position: relative;
 			left: calc(100% - 90px);
+		}
+	}
+
+	.container-upload-img {
+		position: relative;
+		top: -2px;
+
+		.upload-img, input {
+			position: absolute;
+			width: 24px;
+			max-height: 24px;
+			padding: 0;
+			border: none;
+			left: 0;
+			bottom: 0;
+			opacity: 0;
 		}
 	}
 

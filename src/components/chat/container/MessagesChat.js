@@ -6,9 +6,10 @@ import { requestWithoutToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
 import { SocketContext } from '../../../context/SocketContext';
 
-const MessagesChat = ({ containerMesssageRef, dataUser, dispatch, state }) => {
+const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 	
 	const { selectedUserChat } = useSelector(state => state.messages);
+	const { dataUser } = useSelector(state => state.user);
 	
 	const { uid:idUser } = dataUser;
 

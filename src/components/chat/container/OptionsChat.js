@@ -9,9 +9,10 @@ import {
 	contNewMessageAction,
 } from '../../../redux/actions/messagesAction';
 
-const BloquedChat = ({dataUser, dispatch }) => {
+const OptionsChat = ({ dispatch }) => {
 
 	const { selectedUserChat, chats } = useSelector(state => state.messages);
+	const { dataUser } = useSelector(state => state.user);
 	const dispatchRedux = useDispatch();
 
 	const { socket } = useContext( SocketContext );
@@ -52,6 +53,8 @@ const BloquedChat = ({dataUser, dispatch }) => {
 			const id = selectedUserChat['_id'];
 			const indexChat = chats.findIndex(chat => chat['of']===id||chat['for']=== id);
 
+			if (indexChat < 0) return;
+
 			socket.emit('view-message', {id: uid, indexChat, text}, resp => {
 				
 				dispatchRedux( contNewMessageAction(dataUser) );
@@ -81,4 +84,4 @@ const BloquedChat = ({dataUser, dispatch }) => {
 	)
 }
 
-export default BloquedChat;
+export default OptionsChat;

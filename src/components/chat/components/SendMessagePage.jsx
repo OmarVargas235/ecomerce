@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TealButton } from '../../../utils/styleMaterialUi';
 
+import { Input } from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
@@ -20,7 +21,17 @@ const SendMessagePage = ({ handleChange, isBold, isCursive, selectedOption, writ
 				onClick={() => selectedOption('cursive')}
 			/>
 
-			<AddPhotoAlternateIcon />
+			<div className="container-upload-img">
+				<AddPhotoAlternateIcon />
+				
+				<Input
+					disableUnderline
+					name="upload-img"
+					type="file"
+					className="upload-img"
+					// onChange={handleChange}
+				/>
+			</div>
 		</div>
 		
 		<form onSubmit={writeMessage} className="form-send-message">

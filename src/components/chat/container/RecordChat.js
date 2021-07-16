@@ -12,9 +12,10 @@ import {
 	selectedUserChatAction,
 } from '../../../redux/actions/messagesAction';
 
-const RecordChat = ({ dataUser, dispatch, state, setSelectedMessage }) => {
+const RecordChat = ({ dispatch, state }) => {
 	
 	const { selectedUserChat, chats } = useSelector(state => state.messages);
+	const { dataUser } = useSelector(state => state.user);
 	const dispatchRedux = useDispatch();
 
 	const { isMounted, isChangeChat } = state;
@@ -82,8 +83,6 @@ const RecordChat = ({ dataUser, dispatch, state, setSelectedMessage }) => {
 	}
 
 	const changeChat = async id => {
-
-		setSelectedMessage(true);
 
 		const resp = await requestWithoutToken(`get-user/${id}`);
 		const { ok, messages } = await resp.json();

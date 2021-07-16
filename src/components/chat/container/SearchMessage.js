@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SearchMessagePage from '../components/SearchMessagePage';
 import { recordChatsAction } from '../../../redux/actions/messagesAction';
 
-const SearchMessage = ({ containerMesssageRef, dataUser, dispatch, state }) => {
-
+const SearchMessage = ({ containerMesssageRef, dispatch, state }) => {
+	
+	const { dataUser } = useSelector(state => state.user);
 	const dispatchRedux = useDispatch();
 
 	const { search, chatsMemory } = state;
