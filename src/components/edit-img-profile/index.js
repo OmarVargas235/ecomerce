@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import EditImgProfilePage from './EditImgProfilePage';
 import ControlPanel from '../../layaut/ControlPanel';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
+import { useUploadForm } from '../../customHooks/useUploadForm';
 import { getUserAction, logoutUser } from '../../redux/actions/userAction';
 
 const EditImgProfile = () => {
@@ -12,21 +13,7 @@ const EditImgProfile = () => {
 	const dispatch = useDispatch();
 	const { auth, dataUser } = useSelector(state => state.user);
 
-	const [previewImage, setPreviewImage] = useState('');
-	const [image, setImage] = useState(null);
-
-	const handleChange = e => {
-		
-		// Creamos el objeto de la clase FileReader
-		const reader = new FileReader();
-
-		// Leemos el archivo subido y se lo pasamos a nuestro fileReader
-		reader.readAsDataURL(e.target.files[0]);
-		setImage(e.target.files[0]);
-		
-		// Le decimos que cuando este listo ejecute el código interno
-		reader.onload = () => setPreviewImage(reader.result);
-	}
+	const [previewImages, handleChangeImg, image] = useUploadForm();
 
 	const uploadImage = async () => {
 		
@@ -58,8 +45,8 @@ const EditImgProfile = () => {
 	return (
 		<ControlPanel
 			component={() => <EditImgProfilePage
-				handleChange={handleChange}
-				previewImage={previewImage}
+				handleChange={handleChangeImg}
+				previewImage={previewImages}
 			/>}
 			title="Fotografía"
 			text="Añade una foto tuya al perfil."

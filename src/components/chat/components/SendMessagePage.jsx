@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TealButton } from '../../../utils/styleMaterialUi';
 import { TextareaStyle } from '../style';
-import ImagesTextarea from './ImagesTextarea';
+import ImagesTextarea from '../container/ImagesTextarea';
 
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -21,6 +21,7 @@ const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, previewImages
 				className={`pointer mr-3 ${state.isCursive ? 'isActive' : ''}`}
 				onClick={() => selectedOption('cursive')}
 			/>
+			
 			<div className="container-upload-img">
 				<AddPhotoAlternateIcon
 					className="pointer"

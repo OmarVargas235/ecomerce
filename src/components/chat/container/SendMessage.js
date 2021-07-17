@@ -7,6 +7,7 @@ import { callAPI } from '../helper';
 import { useValidateForm } from '../../../customHooks/useValidateForm';
 import { SocketContext } from '../../../context/SocketContext';
 import { alert } from '../../../utils/alert';
+import { useUploadForm } from '../../../customHooks/useUploadForm';
 
 const SendMessage = ({ dispatch, state }) => {
 
@@ -18,28 +19,11 @@ const SendMessage = ({ dispatch, state }) => {
 	});
 
 	const [, validate] = useValidateForm({ message: false });
+	const [previewImages, handleChangeImg, ,images] = useUploadForm([]);
 
 	const { socket, online } = useContext( SocketContext );
 
 	const [isFocus, setIsFocus] = useState(false);
-	const [previewImages, setPreviewImages] = useState([]);
-	// const [image, setImage] = useState(null);
-
-	const handleChangeImg = e => {
-		
-		// Creamos el objeto de la clase FileReader
-		const reader = new FileReader();
-
-		// Leemos el archivo subido y se lo pasamos a nuestro fileReader
-		reader.readAsDataURL(e.target.files[0]);
-		// setImage(e.target.files[0]);
-		
-		// Le decimos que cuando este listo ejecute el código interno
-		reader.onload = () => {
-
-			setPreviewImages(state => [...state, reader.result]);
-		}
-	}
 
 	/* Seleccionar opciones del chat: negrita la letra o cursiva*/
 	const selectedOption = async text => {
@@ -78,7 +62,7 @@ const SendMessage = ({ dispatch, state }) => {
 			: alert('warning', ['Este usuario te a bloqueado']);
 		}
 
-		if ( validate({ message }) ) return;
+		if ( validate({ message }) && previewImages.length === 0 ) return;
 
 		// Enviar mensaje
 		if (online) {
@@ -93,6 +77,7 @@ const SendMessage = ({ dispatch, state }) => {
 				isCursive,
 				viewMessageOf: true,
 				viewMessageFor: true,
+				images,
 			};
 
 			socket.emit('message-personal', obj);

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import 'moment/locale/es';
 
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 
 const MessagesChatPage = ({ idUser, message }) => (
 	<div
@@ -16,6 +16,20 @@ const MessagesChatPage = ({ idUser, message }) => (
 			{moment(new Date(message.date), "YYYYMMDD").fromNow()}
 		</Typography>
 		
+		{/*<Grid container spacing={1}>
+			{
+				message.images.map((img, index) => (
+						
+					<Grid item xs={4} key={index}>
+						<img
+							src={img}
+							alt={index} className="img-fluid"
+						/>
+        			</Grid>
+				))
+			}
+		</Grid>*/}
+
 		<Typography
 			variant="subtitle2"
 			component="span"

@@ -26,7 +26,7 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 			
 			const resp = await requestWithoutToken(`get-messages/${idUser}+${id}`);
 			const { ok, messages:getMessage } = await resp.json();
-
+			
 			if (!ok) return alert('error', getMessage);
 
 			dispatch({

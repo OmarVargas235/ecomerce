@@ -3,7 +3,7 @@ import React from 'react';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddToPhotosRoundedIcon from '@material-ui/icons/AddToPhotosRounded';
 
-const ImagesTextarea = ({ handleChangeImg, previewImages }) => (
+const ImagesTextareaPage = ({ deleteImagePreview, handleChangeImg, previewImages }) => (
 	<React.Fragment>	
 		{
 			previewImages.length === 0 ? null
@@ -14,7 +14,10 @@ const ImagesTextarea = ({ handleChangeImg, previewImages }) => (
 							className={`container-images__img ${index > 0 ? 'ml-2' : ''}`}
 							key={index}
 						>
-							<CancelIcon className="icon pointer" />
+							<CancelIcon
+								className="icon pointer"
+								onClick={() => deleteImagePreview(index)}
+							/>
 							<img src={img} alt={`previa-${index}`} /> 
 						</div>
 					))
@@ -37,4 +40,4 @@ const ImagesTextarea = ({ handleChangeImg, previewImages }) => (
 	</React.Fragment>
 )
 
-export default ImagesTextarea;
+export default ImagesTextareaPage;

@@ -16,7 +16,7 @@ const EditImgProfilePage = ({ handleChange, previewImage }) => (
 				<div className="container__icon-user text-center py-3">
 					{
 						previewImage === '' ? <AccountCircleOutlinedIcon />
-						: <img src={previewImage} alt="imagen previa" /> 
+						: <img src={previewImage} alt="imagen previa" />
 					}
 				</div>
 			</div>

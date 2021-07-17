@@ -128,6 +128,11 @@ export const MessagesStyle = styled.section`
 		.message-send, .message-received {
 			width: 350px;
 			word-wrap: break-word;
+
+			img {
+				height: 94px;
+				width: 94px;
+			}
 		}
 
 		.message-send {
