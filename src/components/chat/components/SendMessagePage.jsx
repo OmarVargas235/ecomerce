@@ -2,13 +2,12 @@ import React from 'react';
 
 import { TealButton } from '../../../utils/styleMaterialUi';
 import { TextareaStyle } from '../style';
+import ImagesTextarea from './ImagesTextarea';
 
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import SendIcon from '@material-ui/icons/Send';
-import CancelIcon from '@material-ui/icons/Cancel';
-import AddToPhotosRoundedIcon from '@material-ui/icons/AddToPhotosRounded';
 
 const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, previewImages, state, selectedOption, setIsFocus, text, writeMessage }) => (
 	<div className="container__write-message mx-3">
@@ -24,13 +23,14 @@ const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, previewImages
 			/>
 			<div className="container-upload-img">
 				<AddPhotoAlternateIcon
+					className="pointer"
 					style={{cursor: (text.length > 0 || previewImages.length > 0) && 'not-allowed'}}
 				/>
 				
 				<input
 					name="upload-img"
 					type="file"
-					className="upload-img"
+					className="upload-img pointer"
 					onChange={handleChangeImg}
 					disabled={text}
 					style={{display: (text.length || previewImages.length > 0) > 0 && 'none'}}
@@ -40,25 +40,15 @@ const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, previewImages
 		
 		<form onSubmit={writeMessage}>
 			<TextareaStyle isFocus={isFocus}>
-				<div className="send-img-chat px-3 py-2">
-					{
-						previewImages === '' ? null
-						: <div className="d-flex">
-							<div className="container-images">
-								<CancelIcon className="icon pointer" />
-								<img src={previewImages} alt="imagen previa" /> 
-							</div>
-							
-							<div className="container-images ml-2 addToImage d-flex justify-content-center align-items-center pointer">
-								<AddToPhotosRoundedIcon />
-							</div>
-						</div>
-					}
-				</div>
+
+				<ImagesTextarea
+					handleChangeImg={handleChangeImg}
+					previewImages={previewImages}
+				/>
 
 				<textarea
 					placeholder="Escribir mensaje..."
-					className="px-3 py-0 w-100"
+					className="px-3 py-0 mt-4 w-100"
 					type="text"
 					name="message"
 					onChange={handleChange}

@@ -22,7 +22,7 @@ const SendMessage = ({ dispatch, state }) => {
 	const { socket, online } = useContext( SocketContext );
 
 	const [isFocus, setIsFocus] = useState(false);
-	const [previewImages, setPreviewImages] = useState('');
+	const [previewImages, setPreviewImages] = useState([]);
 	// const [image, setImage] = useState(null);
 
 	const handleChangeImg = e => {
@@ -31,13 +31,14 @@ const SendMessage = ({ dispatch, state }) => {
 		const reader = new FileReader();
 
 		// Leemos el archivo subido y se lo pasamos a nuestro fileReader
-		console.log(Array.from(e.target.files));
-		console.log(e.target.files[0]);
 		reader.readAsDataURL(e.target.files[0]);
 		// setImage(e.target.files[0]);
 		
 		// Le decimos que cuando este listo ejecute el código interno
-		reader.onload = () => setPreviewImages(reader.result);
+		reader.onload = () => {
+
+			setPreviewImages(state => [...state, reader.result]);
+		}
 	}
 
 	/* Seleccionar opciones del chat: negrita la letra o cursiva*/

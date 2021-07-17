@@ -172,7 +172,6 @@ export const MessagesStyle = styled.section`
 	}
 
 	.container-upload-img {
-
 		position: relative;
 		top: -2px;
 
@@ -185,6 +184,7 @@ export const MessagesStyle = styled.section`
 			left: 0;
 			bottom: 0;
 			opacity: 0;
+			font-size: 0;
 		}
 	}
 
@@ -221,17 +221,19 @@ export const TextareaStyle = styled.div`
 		font-size: 1.1rem;
 	}
 
-	.send-img-chat {
+	.container-images {
 		width: 100%;
+		overflow-x: scroll;
 	}
 
-	.container-images {	
+	.container-images__img {	
 		width: 60px;
 		height: 60px;
 		position: relative;
 
 		img {
-			width: 100%;
+			width: 60px;
+			height: 60px;
 			border-radius: 20px;
 		}
 
@@ -244,6 +246,25 @@ export const TextareaStyle = styled.div`
 		}
 	}
 
+	.container-add-image {
+		position: relative;
+
+		.upload-img {
+			width: 60px;
+			height: 60px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			opacity: 0;
+			z-index: 0;
+			font-size: 0;
+		}
+		
+		&:hover .addToImage {
+			background-color: #606265;
+		}
+	}
+
 	.addToImage {
 		border-radius: 20px;
 		background-color: #4E5053;
@@ -253,10 +274,6 @@ export const TextareaStyle = styled.div`
 			font-size: 2rem;
 			background-color: transparent;
 			color: #E7E9EC;
-		}
-
-		&:hover {
-			background-color: #606265;
 		}
 	}
 `;
