@@ -6,9 +6,13 @@ export const useUploadForm = (initialState='') => {
 	const [image, setImage] = useState(null);
 	const [images, setImages] = useState([]);
 	
-	const handleChangeImg = (e, empty=false) => {
+	const handleChangeImg = (e, empty=false, imagesFiles=[]) => {
 		
-		if (empty) return setPreviewImages(e);
+		if (empty) {
+
+			setImages(imagesFiles);
+			return setPreviewImages(e);
+		}
 
 		// Creamos el objeto de la clase FileReader
 		const reader = new FileReader();
@@ -17,7 +21,7 @@ export const useUploadForm = (initialState='') => {
 		// Leemos el archivo subido y se lo pasamos a nuestro fileReader
 		reader.readAsDataURL(file);
 		setImage(file);
-		setImages(state => [...state, { name: file.name, file} ]);
+		setImages(state => [...state, file ]);
 		
 		// Le decimos que cuando este listo ejecute el código interno
 		reader.onload = () => initialState === ''

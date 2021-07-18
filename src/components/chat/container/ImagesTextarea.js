@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import ImagesTextareaPage from '../components/ImagesTextareaPage';
 
-const ImagesTextarea = ({ handleChangeImg, previewImages }) => {
+const ImagesTextarea = ({ handleChangeImg, files, previewImages }) => {
 
 	const [images, setImages] = useState([]);
 
@@ -11,13 +11,15 @@ const ImagesTextarea = ({ handleChangeImg, previewImages }) => {
 	const deleteImagePreview = (index = -1) => {
 		
 		const copyImages = [...images];
+		const imagesFiles = [...files];
 
 		if (index === -1) return;
 		
 		copyImages.splice(index, 1);
+		imagesFiles.splice(index, 1);
 		setImages(copyImages);
 
-		handleChangeImg(copyImages, true);
+		handleChangeImg(copyImages, true, imagesFiles);
 	}
 	
 	return (

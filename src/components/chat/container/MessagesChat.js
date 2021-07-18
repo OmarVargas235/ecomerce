@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import MessagesChatPage from '../components/MessagesChatPage';
@@ -12,6 +12,8 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 	const { dataUser } = useSelector(state => state.user);
 	
 	const { uid:idUser } = dataUser;
+
+	const refMessage = useRef();
 
 	const { socket } = useContext( SocketContext );
 
@@ -44,7 +46,7 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 
 		const { messages, chatsMemory } = state;
 		
-		socket.on('message-personal', resp => {
+		socket.on('message-personal', async resp => {
 			
 			// Cambiar viewMessage a true cuando se envia un mensaje, para que cuando se realize la busqueda de chat el viewMessage siga activo
 			const index = chatsMemory.findIndex(chat => {
@@ -52,6 +54,9 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 				return (chat['of'] === resp['of'] && chat['for'] === resp['for'])
 				|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
 			});
+
+			const message = await requestWithoutToken(`get-images/${resp['_id']}`);
+			const { ok, messages:getImages } = await message.json();
 
 			if (index !== -1) {
 
@@ -63,20 +68,25 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 
 			// Guarda los mensajes solamente en el chat en el que se encuentra activo
 			(id === resp.of || id === resp.for)
-			&& dispatch({ type: 'MESSAGES', payload: [...messages, resp] });
+			&& dispatch({ type: 'MESSAGES', payload: [...messages, ok ? getImages : resp] });
 
 			// Efecto del scroll
 			const { current:element } = containerMesssageRef;
-			
-			if (!element) return;
-			
-			if (element.scrollTop + 311 >= element.scrollHeight)
+			const { current:elementMessage } = refMessage;
+
+			if (!element || !elementMessage) return;
+
+			const height = elementMessage.clientHeight;
+			const top = element.scrollTop + element.offsetHeight + height + 9;
+
+			if (top > element.scrollHeight)
 				element.scrollTo(0, element.scrollHeight);
+
 		});
 		
 		return () => socket.off('message-personal');
 		
-	}, [socket, selectedUserChat, state, containerMesssageRef, dispatch]);
+	}, [socket, selectedUserChat, state, containerMesssageRef, dispatch, refMessage]);
 	
 	return (
 		<React.Fragment>
@@ -86,6 +96,7 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 						key={el['_id']}
 						idUser={idUser}
 						message={el}
+						refMessage={refMessage}
 					/>	
 				))
 			}

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SendMessagePage from '../components/SendMessagePage';
 import { useForm } from '../../../customHooks/useForm';
@@ -7,19 +7,22 @@ import { callAPI } from '../helper';
 import { useValidateForm } from '../../../customHooks/useValidateForm';
 import { SocketContext } from '../../../context/SocketContext';
 import { alert } from '../../../utils/alert';
+import { requestWithToken } from '../../../utils/fetch';
 import { useUploadForm } from '../../../customHooks/useUploadForm';
+import { logoutUser } from '../../../redux/actions/userAction';
 
 const SendMessage = ({ dispatch, state }) => {
 
 	const { selectedUserChat } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
+	const dispatchRedux = useDispatch();
 
 	const [ formData, handleChange ] = useForm({
 		message: '',
 	});
 
 	const [, validate] = useValidateForm({ message: false });
-	const [previewImages, handleChangeImg, ,images] = useUploadForm([]);
+	const [previewImages, handleChangeImg, , images] = useUploadForm([]);
 
 	const { socket, online } = useContext( SocketContext );
 
@@ -77,10 +80,26 @@ const SendMessage = ({ dispatch, state }) => {
 				isCursive,
 				viewMessageOf: true,
 				viewMessageFor: true,
-				images,
 			};
 
-			socket.emit('message-personal', obj);
+			socket.emit('message-personal', obj, async resp => {
+
+				const token = window.localStorage.getItem('token');
+				const formData = new FormData();
+				images.forEach(img => formData.append('images', img) );
+				formData.append('id', resp['_id']);
+
+				const { ok, messages, isExpiredToken } = await requestWithToken('upload-images', token, formData, 'POST');
+
+				// Si el token ya a expirado se deslogea
+				if (isExpiredToken) {
+					
+					dispatchRedux( logoutUser() );
+					alert('error', messages);
+				}
+
+				if (!ok) alert('error', messages);
+			});
 		}
 	}
 
@@ -89,6 +108,7 @@ const SendMessage = ({ dispatch, state }) => {
 			handleChange={handleChange}
 			handleChangeImg={handleChangeImg}
 			isFocus={isFocus}
+			images={images}
 			previewImages={previewImages}
 			state={state}
 			selectedOption={selectedOption}

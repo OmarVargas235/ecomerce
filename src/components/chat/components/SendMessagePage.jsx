@@ -9,7 +9,7 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import SendIcon from '@material-ui/icons/Send';
 
-const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, previewImages, state, selectedOption, setIsFocus, text, writeMessage }) => (
+const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, images, previewImages, state, selectedOption, setIsFocus, text, writeMessage }) => (
 	<div className="container__write-message mx-3">
 		<div className="d-flex container-icon p-2">
 			<FormatBoldIcon
@@ -44,6 +44,7 @@ const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, previewImages
 
 				<ImagesTextarea
 					handleChangeImg={handleChangeImg}
+					files={images}
 					previewImages={previewImages}
 				/>
 
