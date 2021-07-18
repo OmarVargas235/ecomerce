@@ -18,7 +18,7 @@ export const MessagesStyle = styled.section`
 		font-size: 1rem;
 		outline: none;
 
-		> input {}:focus {
+		> input:focus {
 			border: 1px solid #76C5D6;
 		}
 	}
@@ -132,6 +132,7 @@ export const MessagesStyle = styled.section`
 			img {
 				height: 94px;
 				width: 94px;
+				border-radius: 20px;
 			}
 		}
 

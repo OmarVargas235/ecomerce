@@ -30,13 +30,20 @@ const MessagesChatPage = ({ idUser, message, refMessage }) => (
 				))
 			}
 		</Grid>
-
+		
 		<Typography
 			variant="subtitle2"
 			component="span"
 			className={`${message.isBold ? 'font-weight-bold' : 'font-weight-normal'} ${message.isCursive ? 'cursive' : ''}`}
 		>
-			{message.message}
+			{
+				message.message.split('\n').map((message, index) => (
+					<React.Fragment key={index}>
+						{message}
+						<br/>
+					</React.Fragment>
+				))
+			}
 		</Typography>
 	</div>	
 )
