@@ -32,6 +32,7 @@ const ImagesTextareaPage = ({ deleteImagePreview, handleChangeImg, previewImages
 						name="upload-img"
 						type="file"
 						className="upload-img pointer"
+						multiple
 						onChange={handleChangeImg}
 					/>
 				</div>

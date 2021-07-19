@@ -65,7 +65,14 @@ const SendMessage = ({ dispatch, state }) => {
 			: alert('warning', ['Este usuario te a bloqueado']);
 		}
 
-		if ( validate({ message }) && previewImages.length === 0 ) return;
+		const extensiones = images.map(file => file.name.split('.')[1] );
+		const extensionsValid = {'png': true, 'jpg': true, 'jpeg': true, 'webp': true};
+		const isValidateExtension = extensiones.some(extension => extensionsValid[extension] === undefined);
+			
+		if (isValidateExtension)
+			return alert('error', [`Las extensiones permitidas son: png,jpg,jpeg,webp`]);
+		if (images.length > 9)return alert('error', ['Solo se pueden enviar 9 imagenes']);
+		if ( validate({ message }) && images.length === 0 ) return;
 
 		// Enviar mensaje
 		if (online) {
@@ -98,7 +105,7 @@ const SendMessage = ({ dispatch, state }) => {
 					alert('error', messages);
 				}
 
-				if (!ok) alert('error', messages);
+				if (!ok) return alert('error', messages);
 			});
 		}
 	}

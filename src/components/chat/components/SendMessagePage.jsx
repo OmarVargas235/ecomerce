@@ -34,6 +34,7 @@ const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, images, previ
 					className="upload-img pointer"
 					onChange={handleChangeImg}
 					disabled={text}
+					multiple
 					style={{display: (text.length || previewImages.length > 0) > 0 && 'none'}}
 				/>
 			</div>
