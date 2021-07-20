@@ -23,12 +23,14 @@ export const useUploadForm = (initialState='') => {
 	
 	const handleChangeImg = (e, empty=false, imagesFiles=[]) => {
 		
+		// Cuando se elimina una imagen del textarea del chat
 		if (empty) {
 
 			setImages(imagesFiles);
 			return setPreviewImages(e);
 		}
 
+		// Cuando se selecciona una sola imagen
 		if (initialState === '') {
 
 			const file = e.target.files[0];
@@ -38,6 +40,7 @@ export const useUploadForm = (initialState='') => {
 		
 		} else {
 
+			// Cuando se selecciona multiples imagenes
 			const files = Array.from(e.target.files);
 
 			setImages(state => [...state, ...files]);

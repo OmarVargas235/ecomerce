@@ -20,7 +20,6 @@ const SendMessage = ({ dispatch, state }) => {
 	const [ formData, handleChange ] = useForm({
 		message: '',
 	});
-
 	const [, validate] = useValidateForm({ message: false });
 	const [previewImages, handleChangeImg, , images] = useUploadForm([]);
 
@@ -55,11 +54,11 @@ const SendMessage = ({ dispatch, state }) => {
 		// Obtener usuarios bloqueados
 		const messagesRemitter = await callAPI(dispatch, `get-idBlockeds/${uid}`);
 		const messagesReceptor = await callAPI(dispatch, `get-idBlockeds/${id}`);
-		const isIncludesReceptor = messagesReceptor?.includes(uid);
 		const isIncludesRemitter = messagesRemitter?.includes(id);
+		const isIncludesReceptor = messagesReceptor?.includes(uid);
 		
 		// Si el usuario esta bloqueado, mostrar alerta y no enviar el mensaje.
-		if (isIncludesReceptor || isIncludesRemitter) {
+		if (isIncludesRemitter || isIncludesReceptor) {
 			
 			return isIncludesRemitter
 			? alert('warning', ['Haz bloqueado a este usuario'])
