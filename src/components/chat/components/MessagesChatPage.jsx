@@ -12,7 +12,7 @@ const MessagesChatPage = ({ idUser, message, refMessage }) => (
 		<Typography
 			variant="subtitle2"
 			component="p"
-			className="font-weight-normal"
+			className="font-weight-normal mb-2"
 		>
 			{moment(new Date(message.date), "YYYYMMDD").fromNow()}
 		</Typography>

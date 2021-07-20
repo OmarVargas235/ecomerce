@@ -45,8 +45,9 @@ const SendMessage = ({ dispatch, state }) => {
 
 		e.preventDefault();
 		
+		let { message } = formData;
+		const token = window.localStorage.getItem('token');
 		const { isCursive, isBold } = state;
-		const { message } = formData;
 		const id = selectedUserChat.id || selectedUserChat['_id'];
 		
 		const { uid } = dataUser;
@@ -74,6 +75,9 @@ const SendMessage = ({ dispatch, state }) => {
 		if (images.length > 9)return alert('error', ['Solo se pueden enviar 9 imagenes']);
 		if ( validate({ message }) && images.length === 0 ) return;
 
+		(message === '' && images.length === 1) && (message = 'Se ha enviado una imagen');
+		(message === '' && images.length > 1) && (message = 'Se han enviado imagenes');
+
 		// Enviar mensaje
 		if (online) {
 			
@@ -87,11 +91,11 @@ const SendMessage = ({ dispatch, state }) => {
 				isCursive,
 				viewMessageOf: true,
 				viewMessageFor: true,
+				token,
 			};
 
 			socket.emit('message-personal', obj, async resp => {
 
-				const token = window.localStorage.getItem('token');
 				const formData = new FormData();
 				images.forEach(img => formData.append('images', img) );
 				formData.append('id', resp['_id']);

@@ -6,6 +6,7 @@ import { recordChatsAction } from '../../../redux/actions/messagesAction';
 
 const SearchMessage = ({ containerMesssageRef, dispatch, state }) => {
 	
+	const { chats } = useSelector(state => state.messages);
 	const { dataUser } = useSelector(state => state.user);
 	const dispatchRedux = useDispatch();
 
@@ -31,6 +32,14 @@ const SearchMessage = ({ containerMesssageRef, dispatch, state }) => {
 		dispatchRedux( recordChatsAction(namesChats) );
 		
 	}, [dataUser, containerMesssageRef, search, chatsMemory, dispatchRedux]);
+
+	// Cuando un usuario envia un mensaje actuliza el chatsMemory
+	useEffect(() => {
+		
+		(chats.length > chatsMemory.length) &&
+			dispatch({ type: 'CHATS_MEMORY', payload: chats });
+		
+	}, [chats, chatsMemory, dispatch]);
 	
 	return (
 		<SearchMessagePage

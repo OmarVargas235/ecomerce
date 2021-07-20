@@ -20,7 +20,7 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 	// Obtener los mensajes al cambiar de chat
 	useEffect(() => {
 
-		const id = selectedUserChat['_id'];
+		const id = selectedUserChat['_id'] || selectedUserChat.id;
 
 		if (!id) return;
 
@@ -55,18 +55,17 @@ const MessagesChat = ({ containerMesssageRef, dispatch, state }) => {
 				|| (chat['of'] === resp['for'] && chat['for'] === resp['of']);
 			});
 
-			const message = await requestWithoutToken(`get-images/${resp['_id']}`);
-			const { ok, messages:getImages } = await message.json();
-
 			if (index !== -1) {
 
 				chatsMemory[index].viewMessage = true;
 				dispatch({ type: 'CHATS_MEMORY', payload: chatsMemory });
 			}
 
-			const id = selectedUserChat.id || selectedUserChat['_id'];
-
 			// Guarda los mensajes solamente en el chat en el que se encuentra activo
+			const id = selectedUserChat.id || selectedUserChat['_id'];
+			const message = await requestWithoutToken(`get-images/${resp['_id']}`);
+			const { ok, messages:getImages } = await message.json();
+
 			(id === resp.of || id === resp.for)
 			&& dispatch({ type: 'MESSAGES', payload: [...messages, ok ? getImages : resp] });
 

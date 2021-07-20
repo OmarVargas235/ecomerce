@@ -31,13 +31,14 @@ const RouterApp = () => {
 
   		if (auth.isAuthenticated) {
 
-  			window.localStorage.setItem('id-user', dataUser.uid);
+  			window.localStorage.setItem('id-user', JSON.stringify(dataUser.uid));
 	  		socket.emit('connect-user', dataUser.uid);
 
   		} else {
 
-  			const getLS = window.localStorage.getItem('id-user');
-  			socket.emit('disconnect-user', getLS);
+  			const getLS = JSON.parse(window.localStorage.getItem('id-user')) || null;
+  			
+  			getLS && socket.emit('disconnect-user', getLS);
   		}
 
 

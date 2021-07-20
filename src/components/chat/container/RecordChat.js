@@ -11,6 +11,7 @@ import {
 	contNewMessageAction,
 	selectedUserChatAction,
 } from '../../../redux/actions/messagesAction';
+import { logoutUser } from '../../../redux/actions/userAction';
 
 const RecordChat = ({ dispatch, state }) => {
 	
@@ -18,7 +19,7 @@ const RecordChat = ({ dispatch, state }) => {
 	const { dataUser } = useSelector(state => state.user);
 	const dispatchRedux = useDispatch();
 
-	const { isMounted, isChangeChat } = state;
+	const { isMounted, isChangeChat, chatsMemory } = state;
 	
 	const { socket } = useContext( SocketContext );
 
@@ -67,16 +68,22 @@ const RecordChat = ({ dispatch, state }) => {
 	const deleteRecordChat = async (idUser, data) => {
 		
 		const id = idUser === data.of ? data.for : data.of;
-		const deleteChat = chats.filter(chat => chat.for !== id && chat.of !== id);
+		const deleteChat = chatsMemory.filter(chat => chat.for !== id && chat.of !== id);
 		const formData = new FormData();
 		formData.append('deleteChat', JSON.stringify(deleteChat));
 
 		const token = window.localStorage.getItem('token');
 		const resp = await requestWithToken(`delete-chat/${dataUser.uid}`, token, formData, 'DELETE');
-		const { ok, messages } = resp;
+		const { ok, messages, isExpiredToken } = resp;
 
+		if (isExpiredToken) {
+			
+			dispatchRedux( logoutUser() );
+			return alert('error', messages);
+		}
+		
 		if (!ok) return alert('error', messages);
-
+		
 		dispatchRedux( recordChatsAction(messages) );
 		dispatchRedux( contNewMessageAction(dataUser) );
 		dispatchRedux( selectedUserChatAction({}) );

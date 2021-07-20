@@ -49,7 +49,7 @@ const OptionsChat = ({ dispatch }) => {
 
 		if (text === 'Marcar como no leido' || text === 'Marcar como leido') {
 
-			const id = selectedUserChat['_id'];
+			const id = selectedUserChat['_id'] || selectedUserChat.id;
 			const indexChat = chats.findIndex(chat => chat['of']===id||chat['for']=== id);
 
 			if (indexChat < 0) return;
@@ -68,8 +68,8 @@ const OptionsChat = ({ dispatch }) => {
 			const formData = new FormData();
 			formData.append('idUserBlocked', id);
 
-			const messages = await callAPI(dispatch,`users-blocked/${uid}`,formData,'POST');
-			const isIncludes = messages.includes(id);
+			const messages = await callAPI(dispatchRedux,`users-blocked/${uid}`,formData,'POST');
+			const isIncludes = messages?.includes(id);
 
 			setBloqued(isIncludes ? 'Quitar bloqueo' : 'Bloquear');
 		}

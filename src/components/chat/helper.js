@@ -12,8 +12,6 @@ export const callAPI = async (dispatch, url="", formData={}, method="GET") => {
 
 	const { ok, messages, isExpiredToken } = await data;
 
-	if (!ok) return alert('error', messages);
-
 	// Si el token ya a expirado se deslogea
 	if (isExpiredToken) {
 		
@@ -22,6 +20,8 @@ export const callAPI = async (dispatch, url="", formData={}, method="GET") => {
 		
 		return;
 	}
+
+	if (!ok) return alert('error', messages);
 	
 	return messages;
 }
