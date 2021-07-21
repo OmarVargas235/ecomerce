@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
+import { logoutUser } from '../../../redux/actions/userAction';
+import { requestWithoutToken } from '../../../utils/fetch';
+import { alert } from '../../../utils/alert';
 
 import { Typography, Popover, Badge } from '@material-ui/core';
 import { List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core';
@@ -28,11 +32,25 @@ const useStyles = makeStyles((theme) => ({
 
 const PopoverPage = ({ contNewMessage, dataUser, history }) => {
 
+	const dispatch = useDispatch();
+
 	const classes = useStyles();
 
 	const theme = styleMaterialUiTheme();
 
 	const [anchorEl, setAnchorEl] = useState(null);
+
+	const signOff = async () => {
+
+		const { uid } = dataUser;
+		const resp = await requestWithoutToken('logout-user', {id: uid}, 'POST');
+		const { ok, messages } = resp;
+
+		if (!ok) return alert('error', messages);
+		
+		dispatch( logoutUser() );
+		alert('success', messages);
+	}
 	
 	return (
 		<ThemeProvider theme={theme}>
@@ -155,7 +173,10 @@ const PopoverPage = ({ contNewMessage, dataUser, history }) => {
 				         		</ListItemIcon>
 							</ListItem>
 
-							<ListItem button>
+							<ListItem
+								button
+								onClick={signOff}
+							>
 								<ListItemText primary="Cerrar sesion" />
 
 								<ListItemIcon className={classes.alignItemsFlexStart}>

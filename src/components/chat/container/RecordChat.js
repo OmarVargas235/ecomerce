@@ -36,7 +36,11 @@ const RecordChat = ({ dispatch, state }) => {
 			const resp = await requestWithToken(`get-record-users/${uid}`, token);
 			const { ok, messages } = await resp.json();
 
-			if (!ok) return alert('error', messages);
+			if (!ok) {
+
+				dispatchRedux( logoutUser() );
+				return alert('error', messages);
+			}
 			
 			const id = selectedUserChat.id || selectedUserChat['_id'];
 			const indexChat = messages.findIndex(chat => chat['of'] === id || chat['for'] === id);

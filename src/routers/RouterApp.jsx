@@ -36,9 +36,9 @@ const RouterApp = () => {
 
   		} else {
 
-  			const getLS = JSON.parse(window.localStorage.getItem('id-user')) || null;
-  			
-  			getLS && socket.emit('disconnect-user', getLS);
+  			const getLS = window.localStorage.getItem('id-user');
+
+  			getLS !== 'undefined' && socket.emit('disconnect-user', JSON.parse(getLS));
   		}
 
 
