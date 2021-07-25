@@ -48,10 +48,10 @@ const Product = ({ match }) => {
 
 	}, [dispatch, id, idUser]);
 	
-	// Actualiza las coordenadas en tiempo real.
+	// Actualiza las coordenadas en tiempo real y conectar el usuario a una sala.
 	useEffect(() => {
 		
-		if (online) socket.on('get-coordinates', resp => dispatch(getProduct(resp) ) );
+		if (online) socket.on('get-coordinates', resp => dispatch( getProduct(resp) ));
 		if (online && product['_id']) socket.emit('join-chat-room', product['_id']);
 
 		return () => {

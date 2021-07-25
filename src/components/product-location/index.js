@@ -26,6 +26,8 @@ const ProductLocation = ({ history }) => {
 	// Obtener productos del usuario
 	useEffect(() => {
 		
+		if (!dataUser.uid) return;
+
 		const id = dataUser.uid;
 		dispatch( getProductsActions(id) );
 
@@ -33,6 +35,8 @@ const ProductLocation = ({ history }) => {
 	
 	// Hacer la peticion a la api
 	useEffect(() => {
+
+		if (!state.idProduct) return;
 		
 		// Guarda todos los paises de la api
 		$.getJSON(urlCountries, countries => {
@@ -47,11 +51,11 @@ const ProductLocation = ({ history }) => {
 
 		return () => dispatchUseReducer({ type: 'COUNTRIES', payload: [] });
 
-	}, []);
+	}, [state.idProduct]);
 
     const selectedProduct = index => dispatchUseReducer({
     	type: 'ID_PRODUCT',
-    	payload: products[index].id,
+    	payload: products[index].id || products[index]['_id'],
     });
 
 	const selected = code => {
