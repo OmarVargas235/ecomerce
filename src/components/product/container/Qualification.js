@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import QualificationPage from '../components/QualificationPage';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { alert } from '../../../utils/alert';
+import { createNotifications } from '../../../utils/helper';
 import { SocketContext } from '../../../context/SocketContext';
 
-const Qualification = ({ auth, classes, dataUser, id, }) => {
+const Qualification = ({ auth, classes, dataUser, id, product }) => {
 
 	const dispatch = useDispatch();
 
@@ -42,8 +43,7 @@ const Qualification = ({ auth, classes, dataUser, id, }) => {
 		setPoint(Math.round(totalQualification / resp.length));
 		setReviews(resp.length);
 		
-		// if (!qualification) return setQualificationUser(null);
-		if (!qualification) return;
+		if (!qualification) return setQualificationUser(null);
 		setQualificationUser(qualification.qualification);
 
 	}, [dataUser]);
@@ -64,7 +64,7 @@ const Qualification = ({ auth, classes, dataUser, id, }) => {
 
 		return () => socket.off('get-qualification-product');
 		
-	}, [socket, id, dataUser, qualificationProduct]);
+	}, [socket, id, qualificationProduct]);
 
 	const setQualification = async selected => {
 		
@@ -89,8 +89,15 @@ const Qualification = ({ auth, classes, dataUser, id, }) => {
 		});
 		
 		setUpdate(!update);
+
+		// Notificar al usuario dueño del producto, que el producto se a calificado
+		if (!qualificationUser && dataUser.uid !== product.user['_id']) {
+			
+			const message = `Calificado el producto de ${product.name}`;
+			createNotifications(dataUser, product, socket, message);		
+		}
 	}
-	
+
 	return (
 		<QualificationPage
 			classes={classes}

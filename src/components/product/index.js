@@ -52,8 +52,15 @@ const Product = ({ match }) => {
 	useEffect(() => {
 		
 		if (online) socket.on('get-coordinates', resp => dispatch(getProduct(resp) ) );
+		if (online && product['_id']) socket.emit('join-chat-room', product['_id']);
+
+		return () => {
+
+			socket.off('get-coordinates');
+			socket.off('join-chat-room');
+		}
 		
-	}, [socket, online, dispatch]);
+	}, [socket, online, dispatch, product]);
 	
 	return (
 		<ProductPage
