@@ -30,7 +30,7 @@ const Product = ({ match }) => {
 	const classes = useStyles();
 	const theme = styleMaterialUiTheme();
 
-	const { id } = match.params;
+	const { params:{id}, url } = match;
 
 	const { socket, online } = useContext( SocketContext );
 
@@ -70,6 +70,7 @@ const Product = ({ match }) => {
 			product={product}
 			products={products}
 			theme={theme}
+			url={url}
 		/>
 	)
 }

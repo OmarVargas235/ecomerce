@@ -12,7 +12,7 @@ import Map from '../container/Map';
 import { Container, Grid, Divider, Typography, Hidden  } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }) => (
+const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme, url }) => (
 	<React.Fragment>
 		{
 			Object.keys(product).length === 0 ? <Spinner />
@@ -69,6 +69,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme }
 									dataUser={dataUser}
 									id={product['_id']}
 									product={product}
+									url={url}
 								/>
 
 								<Chat

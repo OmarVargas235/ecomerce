@@ -49,3 +49,18 @@ export const categorys = [
 	'Componentes',
 	'Decoracion'
 ];
+
+export const createNotifications = (dataUser, product, socket, message, url="") => {
+
+	const { name, lastName, uid } = dataUser;
+	const obj = {
+		of: uid,
+		for: product.user['_id'],
+		nameRemitter: name + ' ' + lastName,
+		message,
+		img: dataUser.img,
+		url,
+	};
+
+	socket.emit('notifications-cont', obj);
+}

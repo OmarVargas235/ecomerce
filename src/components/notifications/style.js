@@ -19,8 +19,7 @@ export const NotificationsStyle = styled.section`
 			position: absolute;
 			width: 10px;
 			height: 10px;
-			background-color: #007791;
-			// border: 1px solid lightgray;
+			border: 1px solid lightgray;
 			border-radius: 50%;
 			right: 5px;
 			top: 5px;
@@ -42,6 +41,12 @@ export const NotificationsStyle = styled.section`
 		}
 	}
 
+	.notification-new {
+		&::before {
+			background-color: #007791;
+		}
+	}
+
 	.message-notification {
 		color: #505763;
 		font-size: 15px;
@@ -57,6 +62,7 @@ export const NotificationsStyle = styled.section`
 	.allRead {
 		color: #007791;
 		cursor: pointer;
+		width: 160px;
 
 		&:hover {
 			color: black;

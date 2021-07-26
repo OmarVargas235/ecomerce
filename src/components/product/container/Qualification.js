@@ -7,7 +7,7 @@ import { alert } from '../../../utils/alert';
 import { createNotifications } from '../../../utils/helper';
 import { SocketContext } from '../../../context/SocketContext';
 
-const Qualification = ({ auth, classes, dataUser, id, product }) => {
+const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 
 	const dispatch = useDispatch();
 
@@ -94,7 +94,7 @@ const Qualification = ({ auth, classes, dataUser, id, product }) => {
 		if (!qualificationUser && dataUser.uid !== product.user['_id']) {
 			
 			const message = `Calificado el producto de ${product.name}`;
-			createNotifications(dataUser, product, socket, message);		
+			createNotifications(dataUser, product, socket, message, url);		
 		}
 	}
 

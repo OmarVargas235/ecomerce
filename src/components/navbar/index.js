@@ -9,6 +9,7 @@ import {
 	contNewMessageAction,
 	recordChatsAction,
 } from '../../redux/actions/messagesAction';
+import { contNotificationsAction } from '../../redux/actions/notificationsActions';
 import NavbarPage from './components/NavbarPage';
 import { SocketContext } from '../../context/SocketContext';
 import { requestWithoutToken } from '../../utils/fetch';
@@ -27,7 +28,7 @@ const Navbar = ({ history }) => {
 	// Redux
 	const dispatch = useDispatch();
 	const { dataUser, auth } = useSelector(state => state.user);
-	const { contNewMessage, chats } = useSelector(state => state.messages);
+	const { chats } = useSelector(state => state.messages);
 
 	// Variables y metodos de material ui
 	const matches = useMediaQuery('(min-width:768px)');
@@ -58,11 +59,13 @@ const Navbar = ({ history }) => {
 
   	}, [dispatch]);
 	
-	// Obetner el contador de mensajes del usuario cuando recarga la pagina
+	// Obetner el contador de mensajes y notificaciones del usuario cuando recarga la pagina
   	useEffect(() => {
 		
 		if ( Object.keys(dataUser).length === 0 ) return;
+
   		dispatch( contNewMessageAction(dataUser) );
+  		dispatch( contNotificationsAction(dataUser.uid) );
   		
   	}, [dispatch, dataUser]);
 
@@ -98,12 +101,20 @@ const Navbar = ({ history }) => {
 		return () => socket.off('get-message-personal');
 	
 	}, [socket, chats, dispatch, dataUser]);
+
+	// Obtener el contador de notificaciones cada vez que ocurra una notificacion
+  	useEffect(() => {
+		
+		socket.on('notifications-cont', id => dispatch( contNotificationsAction(id) ));
+		
+		return () => socket.off('notifications-cont');
+	
+	}, [socket, dispatch]);
 	
 	return (
 		<NavbarPage
 			auth={auth}
 			activeSearch={activeSearch}
-			contNewMessage={contNewMessage}
 			classes={classes}
 			dataUser={dataUser}
 			history={history}

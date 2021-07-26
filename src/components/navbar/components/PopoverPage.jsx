@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 import { logoutUser } from '../../../redux/actions/userAction';
@@ -30,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const PopoverPage = ({ contNewMessage, dataUser, history }) => {
+const PopoverPage = ({ dataUser, history }) => {
 
 	const dispatch = useDispatch();
+	const { contNewMessage } = useSelector(state => state.messages);
+	const { contNotifications } = useSelector(state => state.notifications);
 
 	const classes = useStyles();
 
@@ -115,7 +117,11 @@ const PopoverPage = ({ contNewMessage, dataUser, history }) => {
 								onClick={() => history.push('/notificaciones')}
 							>
 								<ListItemText primary="Notificaciones" />
-								<Badge color="primary" badgeContent={0} showZero></Badge>
+								<Badge
+									color="primary"
+									badgeContent={contNotifications}
+									showZero
+								></Badge>
 							</ListItem>
 							
 							<ListItem

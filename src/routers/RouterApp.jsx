@@ -28,7 +28,7 @@ const RouterApp = () => {
 
 	// Cuando este autenticado el usuario se conecta al servidor
   	useEffect(() => {
-
+  		
   		if (auth.isAuthenticated) {
 
   			window.localStorage.setItem('id-user', JSON.stringify(dataUser.uid));

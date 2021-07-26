@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DrawerPage = ({ auth, contNewMessage, dataUser, history, isActiveLink, setActiveSearch }) => {
+const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) => {
 
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -143,7 +143,6 @@ const DrawerPage = ({ auth, contNewMessage, dataUser, history, isActiveLink, set
 								orientation="vertical"
 							>
 								<PopoverPage
-									contNewMessage={contNewMessage}
 									dataUser={dataUser}
 									history={history}
 								/>

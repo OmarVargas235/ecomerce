@@ -32,3 +32,9 @@ export const LOADING_PRODUCT = 'LOADING_PRODUCT';
 export const SELECTED_USER = 'SELECTED_USER';
 export const NEW_MESSAGE = 'NEW_MESSAGE';
 export const RECORD_CHATS = 'RECORD_CHATS';
+
+// =====================================
+// Notificaciones del usuario
+// =====================================
+export const CONT_NOTIFICATIONS = 'CONT_NOTIFICATIONS';
+export const NOTIFICATIONS = 'NOTIFICATIONS';
