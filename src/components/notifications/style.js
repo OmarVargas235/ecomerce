@@ -59,10 +59,9 @@ export const NotificationsStyle = styled.section`
 		}
 	}
 
-	.allRead {
+	.options {
 		color: #007791;
 		cursor: pointer;
-		width: 160px;
 
 		&:hover {
 			color: black;
@@ -72,5 +71,9 @@ export const NotificationsStyle = styled.section`
 			margin-left: 30px;
 			margin-right: 30px;
 		}
+	}
+
+	.allRead {
+		width: 160px;
 	}
 `;

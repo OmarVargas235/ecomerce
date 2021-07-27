@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { NotificationsStyle } from './style';
-import NotificationsPage from './NotificationsPage';
+import NotificationsPage from './components/NotificationsPage';
+import MarkReadAndDelete from './components/MarkReadAndDelete';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
-import { contNotificationsAction } from '../../redux/actions/notificationsActions';
-
-import { Typography } from '@material-ui/core';
+import {
+	contNotificationsAction,
+	deleteNotificationsActions
+} from '../../redux/actions/notificationsActions';
 
 const Notifications = ({ history }) => {
 
@@ -64,6 +66,20 @@ const Notifications = ({ history }) => {
 		setUpdate(!update);
 	}
 
+	const deleteAllNotifications = async () => {
+
+		const { uid:id } = dataUser;
+
+		const resp = await requestWithToken(`delete-notifications/${id}`, token, {}, 'DELETE');
+		const { ok, messages, isExpiredToken } = resp;
+
+		if (isExpiredToken) return alert('error', messages);
+		else if (!ok) return alert('error', messages);
+
+		dispatch( deleteNotificationsActions() );
+		dispatch( contNotificationsAction(id) );
+	}
+
 	return (
 		<NotificationsStyle className="container my-5">
 			{
@@ -81,15 +97,10 @@ const Notifications = ({ history }) => {
 			
 			{
 				notifications.length === 0 ? null
-				: <Typography
-					variant="body2"
-					component="p"
-					className="allRead mt-3"
-					paragraph
-					onClick={markAllRead}
-				>
-					Marcar todo como leido
-				</Typography>
+				: <MarkReadAndDelete
+					deleteAllNotifications={deleteAllNotifications}
+					markAllRead={markAllRead}
+				/>
 			}
 		</NotificationsStyle>
 	)

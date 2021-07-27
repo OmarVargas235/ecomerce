@@ -1,6 +1,7 @@
 import {
 	CONT_NOTIFICATIONS,
 	NOTIFICATIONS,
+	DELETE_NOTIFICATIONS,
 } from '../types/';
 
 const initialState = {
@@ -24,6 +25,13 @@ export default function notificationsReucer(state=initialState, { type, payload 
 			return {
 				...state,
 				notifications: payload,
+			}
+
+		case DELETE_NOTIFICATIONS:
+			
+			return {
+				...state,
+				notifications: [],
 			}
 
 		default: return state;

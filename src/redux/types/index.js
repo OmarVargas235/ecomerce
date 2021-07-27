@@ -38,3 +38,4 @@ export const RECORD_CHATS = 'RECORD_CHATS';
 // =====================================
 export const CONT_NOTIFICATIONS = 'CONT_NOTIFICATIONS';
 export const NOTIFICATIONS = 'NOTIFICATIONS';
+export const DELETE_NOTIFICATIONS = 'DELETE_NOTIFICATIONS';

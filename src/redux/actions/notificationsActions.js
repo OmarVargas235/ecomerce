@@ -1,6 +1,7 @@
 import {
 	CONT_NOTIFICATIONS,
 	NOTIFICATIONS,
+	DELETE_NOTIFICATIONS,
 } from '../types/';
 import { alert } from '../../utils/alert';
 import { requestWithToken } from '../../utils/fetch';
@@ -42,5 +43,10 @@ const contNotifications = payload => ({
 
 const notifications = payload => ({
 	type: NOTIFICATIONS,
+	payload,
+});
+
+export const deleteNotificationsActions = payload => ({
+	type: DELETE_NOTIFICATIONS,
 	payload,
 });

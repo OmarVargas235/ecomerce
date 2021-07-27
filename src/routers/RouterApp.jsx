@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { loadingAction } from '../redux/actions/userAction';
+import { loadingAction, logoutUser } from '../redux/actions/userAction';
 import Navbar from '../components/navbar/';
 import Home from '../components/home/';
 import Product from '../components/product/';
@@ -38,7 +38,9 @@ const RouterApp = () => {
 
   			const getLS = window.localStorage.getItem('id-user');
 
-  			getLS !== 'undefined' && socket.emit('disconnect-user', JSON.parse(getLS));
+  			if (getLS === 'undefined') return logoutUser();
+
+  			socket.emit('disconnect-user', JSON.parse(getLS));
   		}
 
 
