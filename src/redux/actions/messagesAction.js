@@ -24,12 +24,7 @@ export const contNewMessageAction = (dataUser) => dispatch => {
 			const resp = await requestWithToken(`get-record-users/${uid}`, token);
 			const { ok, messages, isExpiredToken } = await resp.json();
 
-			if (isExpiredToken) {
-				
-				dispatch( logoutUser() );
-				return;
-			}
-
+			if (isExpiredToken) return dispatch( logoutUser() );
 			if (!ok) return alert('error', messages);
 
 			const messagesView = messages.filter(chat => chat.viewMessage);

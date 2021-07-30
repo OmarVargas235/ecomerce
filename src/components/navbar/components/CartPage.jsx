@@ -56,7 +56,11 @@ const CartPage = ({ buyProduct, cartRef, classes, deleteProduct, handleDrawerOpe
 								<span
 									onClick={() => plusOrLess(product, 'less')}
 								>-</span>
-								<input type="text" value={product.cont} readOnly />
+								<input
+									type="text"
+									value={product.cont > product.stock?product.stock:product.cont}
+									readOnly
+								/>
 								<span
 									onClick={() => plusOrLess(product)}
 								>+</span>

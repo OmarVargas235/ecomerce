@@ -186,4 +186,8 @@ export const CartStyle = styled.div`
 		position: absolute;
 		bottom: 20px;
 	}
+
+	.MuiDrawer-paper {
+		z-index: 100;
+	}
 `;

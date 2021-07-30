@@ -35,20 +35,26 @@ const AddToCart = ({ product }) => {
 	const { auth, dataUser, productsFavorites } = useSelector(state => state.user);
 	const { products } = useSelector(state => state.cart);
 	
-	const getLS = useMemo(() => JSON.parse(window.localStorage.getItem(`cart-${dataUser.uid}`)) || [], [dataUser]);
-
-	const contProduct = products.length === 0 ? getLS.find(el => el['_id'] === product['_id'])
-	: products.find(el => el['_id'] === product['_id']);
-
+	const contProduct = products.find(el => el['_id'] === product['_id']);
+	
 	const history = useHistory();
 	const classes = useStyles();
-
+	
 	const [turn, setTurn] = useState(false);
 	const [changeIconFavorite, setChangeIconFavorite] = useState(false);
 	const [getFavorites, setGetFavorites] = useState(false);
-
+	const [isOwner, setIsOwner] = useState(false);
+	
 	// Comprueba si el producto esta agregado a favoritos
 	const isProductFavorite = useMemo(() => productsFavorites.some(el => el.idProduct === product['_id']), [productsFavorites, product]);
+	
+	// Verificar si el usuario es el dueño del producto
+	useEffect(() => {
+
+		if (!product.user) return;
+		setIsOwner(dataUser.uid === product.user['_id']);
+
+	}, [product, dataUser]);
 	
 	// Dispara el dispatch para obtener los productos agregados a favoritos
 	useEffect(() => {
@@ -96,7 +102,7 @@ const AddToCart = ({ product }) => {
 		? dispatch( addAction(product, dataUser.uid, auth.token) )
 		: history.push('/iniciar-sesion');
 	}
-	
+
 	return (
 		<AddToCartPage
 			addFavorite={addFavorite}
@@ -105,6 +111,7 @@ const AddToCart = ({ product }) => {
 			changeIconFavorite={changeIconFavorite}
 			contProduct={contProduct}
 			isAuthenticated={auth.isAuthenticated} 
+			isOwner={isOwner}
 			product={product}
 			turn={turn}
 		/>

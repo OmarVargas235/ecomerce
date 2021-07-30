@@ -5,7 +5,9 @@ import {
 } from '../types/';
 import { alert } from '../../utils/alert';
 
-export const addAction = (product, id, token, isLess=false) => async dispatch => {	
+export const addAction = (product, id, token, isLess=false) => async dispatch => {
+
+	if (product.stock < 1) return alert('error',['No hay stock']);
 
 	// Obtener el localStorage
 	const getLS = JSON.parse(window.localStorage.getItem(`cart-${id}`)) || [];
@@ -23,11 +25,13 @@ export const addAction = (product, id, token, isLess=false) => async dispatch =>
 	!product.cont && (product.cont = 1);
 	
 	// Si no existe en el arreglo del localStorage lo agrega, sino aumenta el contador del producto o si "isLess" es true le resta 1
-	index === -1 ? getLS.push(product) 
+	(index === -1) ? getLS.push(product) 
 	: (isLess ? getLS[index].cont-- : getLS[index].cont++);
+
+	product.cont = getLS[index] ? getLS[index].cont : product.cont;
 	
 	// Verifica que contador del producto no sea mayor que el del stock
-	if (getLS[index]?.cont > product.stock) return alert('error',['Llegaste al maximo stock']);
+	if (product.cont > product.stock) return alert('error',['Llegaste al maximo stock']);
 	
 	dispatch( add(getLS) );
 	
