@@ -30,6 +30,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme, 
 								<Hidden mdUp>
 									<AddToCart
 										product={product}
+										url={url}
 									/>
 								</Hidden>
 
@@ -82,7 +83,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme, 
 							<Grid item sm={12} md={4}>
 								
 								<Hidden smDown>
-									<AddToCart product={product} />
+									<AddToCart product={product} url={url} />
 									<Map
 										classes={classes}
 										pointStart={product.location}

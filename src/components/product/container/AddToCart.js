@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const AddToCart = ({ product }) => {
+const AddToCart = ({ product, url }) => {
 	
 	const dispatch = useDispatch();
 	const { auth, dataUser, productsFavorites } = useSelector(state => state.user);
@@ -97,6 +97,8 @@ const AddToCart = ({ product }) => {
 	}
 
 	const addCart = () => {
+
+		product.url = url;
 
 		auth.isAuthenticated 
 		? dispatch( addAction(product, dataUser.uid, auth.token) )

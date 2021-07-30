@@ -63,10 +63,14 @@ const Cart = ({ idUser }) => {
 			const resp1 = await requestWithoutToken(`get-product/${product['_id']}`);
 			const { ok, messages } = await resp1.json();
 
+			const message = `${messages.name} (producto) agotado, agrega mas o eliminalo`;
+			const diff = messages.stock - productsArr[i].cont;
+
 			if (!ok) return alert('error', messages);
 			
-			if (messages.stock === 0) alert('error', [`No hay stock de ${messages.name}`]);
-			else if (productsArr[i].cont > messages.stock)
+			diff === 0 && createNotifications(dataUser, messages, socket, message, product.url);
+
+			if (messages.stock === 0 || productsArr[i].cont > messages.stock)
 				alert('error', [`Stock insuficiente de ${messages.name}`]);
 
 			if (messages.stock === 0 || productsArr[i].cont > messages.stock) return false;
@@ -74,7 +78,7 @@ const Cart = ({ idUser }) => {
 
 		return true;
 
-	}, [products]);
+	}, [products, dataUser, socket]);
 
 	useEffect(() => {
 		
