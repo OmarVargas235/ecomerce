@@ -3,6 +3,7 @@ import { useRouteMatch  } from 'react-router-dom';
 
 import ChatPage from '../components/ChatPage';
 import { useForm } from '../../../customHooks/useForm';
+import { usePagination } from '../../../customHooks/usePagination';
 import { useValidateForm } from '../../../customHooks/useValidateForm';
 import { SocketContext } from '../../../context/SocketContext';
 import { alert } from '../../../utils/alert';
@@ -23,14 +24,13 @@ const Chat = ({ auth, ownerProduct, user }) => {
 	const [required, validate] = useValidateForm({
 		comment: false,
 	});
+	const [initial, end, handleChangePage] = usePagination();
 
 	const { socket, online } = useContext( SocketContext );
 
 	const [isRequired, setIsRequired] = useState({});
 	const [qualifications, setQualifications] = useState([]);
 	const [comments, setComments] = useState([]);
-	const [initial, setInitial] = useState(0);
-	const [end, setEnd] = useState(5);
 
 	// Obtener las calificaciones del producto
 	useEffect(() => {
@@ -115,16 +115,6 @@ const Chat = ({ auth, ownerProduct, user }) => {
 		// Desactivando el boton y luego activandolo cuando se quite la alerta
 		setDesactiveBtn(true);
 		setTimeout(() => setDesactiveBtn(false), 1000);
-	}
-	
-	// Avanzar o retroceder a la siguiente seccion de comentarios
-	const handleChangePage  = (e, newPage) => {
-		
-		const endPage = newPage * 5;
-		const initialPage = endPage - 5;
-
-		setInitial( initialPage );
-		setEnd(endPage);
 	}
 	
 	return (
