@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from "react-router-dom";
 
 import CartPage from '../components/CartPage';
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
@@ -9,6 +8,7 @@ import { createNotifications } from '../../../utils/helper';
 import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
 import { addAction, add, deleteAction, clearAction } from '../../../redux/actions/cartAction';
 import { getProduct } from '../../../redux/actions/productActions';
+import { logoutUser } from '../../../redux/actions/userAction';
 import { SocketContext } from '../../../context/SocketContext';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -26,12 +26,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = ({ idUser }) => {
 	
-	const dispatch = useDispatch();
 	const { dataUser } = useSelector(state => state.user);
 	const products = useSelector(state => state.cart.products);
 	const token = useSelector(state => state.user.auth.token);
-
-	const { pathname } = useLocation();
+	const dispatch = useDispatch();
 	
 	const classes = useStyles();
 	const theme = useTheme();
@@ -88,28 +86,34 @@ const Cart = ({ idUser }) => {
 
 		socket.on('get-stock-product', resp => {
 
+			const { pathname } = window.location;
 			const arrPath = pathname.split('/');
 			const id = arrPath[arrPath.length - 1];
 			const productFind = resp.find(product => product['_id'] === id);
+
 			productFind && dispatch( getProduct(productFind) );
 		});
 
-	}, [dispatch, idUser, socket, pathname]);
+		return () => socket.off('get-stock-product');
+
+	}, [dispatch, idUser, socket]);
 
 	const handleDrawerOpen = () => setOpen(true);
 	const handleDrawerClose = () => setOpen(false);
 
 	const plusOrLess = async (product, type="plus") => {
-		
+
+		const copyProduct = { ...product };
+
+		// Comprobar si hay stock del producto
 		const exists = await isStock(products);
 		if (!exists) return;
 
-		product.cont = type === 'less' ? product.cont - 1 : product.cont + 1;
-		const cont = product.cont;
+		copyProduct.cont = type === 'less' ? copyProduct.cont - 1 : copyProduct.cont + 1;
 
-		dispatch( addAction(product, idUser, token, type === 'less') );
+		dispatch( addAction(copyProduct, idUser, token, type === 'less') );
 		
-		if (cont < 1) dispatch( deleteAction(product, idUser) );
+		if (copyProduct.cont < 1) dispatch( deleteAction(copyProduct, idUser) );
 	}
 
 	const deleteProduct = product => dispatch( deleteAction(product, idUser, token) );
@@ -118,6 +122,7 @@ const Cart = ({ idUser }) => {
 
 		if (products.length === 0) return;
 
+		// Comprobar si hay stock del producto
 		const exists = await isStock(products);
 		if (!exists) return;
 
@@ -133,7 +138,11 @@ const Cart = ({ idUser }) => {
 		const resp = await requestWithToken('buy-product', token, formData, 'POST');
 		const { ok, messages, isExpiredToken } = resp;
 
-		if (isExpiredToken) return alert('error', messages);
+		if (isExpiredToken) {
+
+			dispatch( logoutUser() );
+			return alert('error', messages);
+		}
 		if (!ok) return alert('error', messages);
 
 		socket.emit('stock-product', messages);
