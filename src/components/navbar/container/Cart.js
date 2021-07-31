@@ -53,7 +53,7 @@ const Cart = ({ idUser }) => {
 	), [products]);
 
 	// Comprobar si hay stock del producto
-	const isStock = useCallback(async (productsArr) => {
+	const isStock = useCallback(async (productsArr, isPlusOrLesss=false) => {
 
 		for(let i = 0; i < products.length; i++) {
 
@@ -66,7 +66,8 @@ const Cart = ({ idUser }) => {
 
 			if (!ok) return alert('error', messages);
 			
-			diff === 0 && createNotifications(dataUser, messages, socket, message, product.url);
+			(diff === 0 && !isPlusOrLesss)
+			&& createNotifications(dataUser, messages, socket, message, product.url);
 
 			if (messages.stock === 0 || productsArr[i].cont > messages.stock)
 				alert('error', [`Stock insuficiente de ${messages.name}`]);
@@ -106,7 +107,7 @@ const Cart = ({ idUser }) => {
 		const copyProduct = { ...product };
 
 		// Comprobar si hay stock del producto
-		const exists = await isStock(products);
+		const exists = await isStock(products, true);
 		if (!exists) return;
 
 		copyProduct.cont = type === 'less' ? copyProduct.cont - 1 : copyProduct.cont + 1;

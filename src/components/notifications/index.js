@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { NotificationsStyle } from './style';
 import NotificationsPage from './components/NotificationsPage';
-import MarkReadAndDelete from './components/MarkReadAndDelete';
 import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 import { usePagination } from '../../customHooks/usePagination';
@@ -12,9 +10,6 @@ import {
 	deleteNotificationsActions
 } from '../../redux/actions/notificationsActions';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';
-
-import Pagination from '@material-ui/lab/Pagination';
-import { ThemeProvider } from '@material-ui/styles';
 
 const Notifications = ({ history }) => {
 
@@ -29,16 +24,18 @@ const Notifications = ({ history }) => {
 
 	const [update, setUpdate] = useState(false);
 
+	// Marcar como visto la notificacion, cuando se hace click sobre ella
 	const selectNotification = async (index) => {
 
 		const notificationsCurrent = notifications.slice(initial, end);
 		const { uid:id } = dataUser;
 		const { url, view } = notificationsCurrent[index];
 
+		// Redireccionar despues de que la notificacion ya este marcada como visto
 		(url !== '' && !view) && history.push(url);
-
-		if (!view) return;
 		
+		if (!view) return;
+
 		notificationsCurrent[index].view = false;
 
 		const formData = new FormData();
@@ -54,6 +51,7 @@ const Notifications = ({ history }) => {
 		dispatch( contNotificationsAction(id) );
 	}
 
+	// Marcar todas las notificaciones como leidas
 	const markAllRead = async () => {
 
 		const { uid:id } = dataUser;
@@ -76,6 +74,7 @@ const Notifications = ({ history }) => {
 		setUpdate(!update);
 	}
 
+	// Eliminar notificaciones
 	const deleteAllNotifications = async () => {
 
 		const { uid:id } = dataUser;
@@ -91,45 +90,16 @@ const Notifications = ({ history }) => {
 	}
 
 	return (
-		<NotificationsStyle className="container my-5">
-			{
-				notifications.length === 0
-				? <p className="text-center mt-5">No tienes notificaciones</p>
-				: notifications.slice(initial, end).map((notification, index) => (
-					<NotificationsPage
-						key={index}
-						index={index}
-						notification={notification}
-						selectNotification={selectNotification}
-					/>
-				))
-			}
-			
-			{
-				notifications.length === 0 ? null
-				: <MarkReadAndDelete
-					deleteAllNotifications={deleteAllNotifications}
-					markAllRead={markAllRead}
-				/>
-			}
-
-			
-			{
-				notifications.length === 0 ? null
-				: <ThemeProvider theme={theme}>
-					<div className="mt-4 d-flex justify-content-center">
-						<Pagination
-							defaultPage={1}
-							siblingCount={0}
-							boundaryCount={1}
-							count={Math.ceil(notifications.length / 10)}
-							color="secondary"
-							onChange={handleChangePage}
-						/>
-		    		</div>
-				</ThemeProvider>
-			}
-		</NotificationsStyle>
+		<NotificationsPage
+			deleteAllNotifications={deleteAllNotifications}
+			end={end}
+			handleChangePage={handleChangePage}
+			initial={initial}
+			markAllRead={markAllRead}
+			notifications={notifications}
+			selectNotification={selectNotification}
+			theme={theme}
+		/>
 	)
 }
 
