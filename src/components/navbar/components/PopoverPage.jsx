@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
-import { logoutUser } from '../../../redux/actions/userAction';
-import { requestWithoutToken } from '../../../utils/fetch';
-import { alert } from '../../../utils/alert';
+import { signOff } from '../helper';
 
 import { Typography, Popover, Badge } from '@material-ui/core';
 import { List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core';
@@ -41,18 +39,6 @@ const PopoverPage = ({ dataUser, history }) => {
 	const theme = styleMaterialUiTheme();
 
 	const [anchorEl, setAnchorEl] = useState(null);
-
-	const signOff = async () => {
-
-		const { uid } = dataUser;
-		const resp = await requestWithoutToken('logout-user', {id: uid}, 'POST');
-		const { ok, messages } = resp;
-
-		if (!ok) return alert('error', messages);
-		
-		dispatch( logoutUser() );
-		alert('success', messages);
-	}
 	
 	return (
 		<ThemeProvider theme={theme}>
@@ -181,7 +167,7 @@ const PopoverPage = ({ dataUser, history }) => {
 
 							<ListItem
 								button
-								onClick={signOff}
+								onClick={() => signOff(dataUser, dispatch)}
 							>
 								<ListItemText primary="Cerrar sesion" />
 

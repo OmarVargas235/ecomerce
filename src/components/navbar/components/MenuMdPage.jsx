@@ -53,7 +53,12 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 							history={history}
 						/>
 						
-						<Typography variant="body1" component="span" className="pointer ml-4">
+						<Typography
+							variant="body1"
+							component="span"
+							className="pointer ml-4"
+							onClick={() => history.push('/ordenes')}
+						>
 							ordenes
 						</Typography>
 					</div>

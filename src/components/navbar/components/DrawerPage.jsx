@@ -1,13 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { ReactComponent as BtnToggle } from '../../../assets/icons/btn_toggle.svg';
-import CloseIcon from '@material-ui/icons/Close';
 import Logo from '../../../assets/img/logo.jpg';
-import SearchIcon from '@material-ui/icons/Search';
 import SelectedCategory from '../container/SelectedCategory';
 import Cart from '../container/Cart';
 import PopoverPage from './PopoverPage';
+import { signOff } from '../helper';
 
+import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, IconButton, Divider } from '@material-ui/core';
 import { Paper, Tabs, Tab } from '@material-ui/core';
@@ -32,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) => {
+
+	const dispatch = useDispatch();
 
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -149,11 +153,11 @@ const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) 
 
 								<Tab 
 									label="Ordenes"
-									// onClick={() => history.push('/iniciar-sesion')}
+									onClick={() => history.push('/ordenes')}
 								/>
 								<Tab 
 									label="Cerrar sesion"
-									// onClick={() => history.push('/iniciar-sesion')}
+									onClick={() => signOff(dataUser, dispatch)}
 								/>
 							</Tabs>
 						}
