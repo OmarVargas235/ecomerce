@@ -30,12 +30,12 @@ const Table = ({ data }) => {
 		setRowsPerPage(+event.target.value);
 		setPage(0);
 	};
-
+	
 	useEffect(() => {
 		
 		setDay( moment(data[0].date, "YYYYMMDD").format('dddd') );
 		setDate( moment(data[0].date, "YYYYMMDD").format('LL') );
-
+		
 		data.forEach((order, index) => order.number = index+1);
 		
 	}, [data]);

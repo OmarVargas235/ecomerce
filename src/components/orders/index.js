@@ -12,9 +12,9 @@ const Orders = () => {
 	const { auth:{ token }, dataUser } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 
-	const [tables, setTables] = useState([]);
-	const [, setUpdate] = useState(false);
+	const [tablesData, setTablesData] = useState([]);
 
+	// Obtener la data del backend y ordenarla por fechas
 	useEffect(() => {
 		
 		if (Object.keys(dataUser).length === 0) return;
@@ -38,19 +38,18 @@ const Orders = () => {
 
 			const orders = isString(messages) ? messages : classifyOrders(messages);
 
-			setTables(orders);
-			setUpdate(true);
+			setTablesData(orders);
 		}
 
 		callAPI();
 
-		return () => setTables([]);
+		return () => setTablesData([]);
 		
 	}, [dataUser, token, dispatch]);
 	
 	return (
 		<OrdersPage
-			tables={tables}
+			tablesData={tablesData}
 		/>
 	)
 }
