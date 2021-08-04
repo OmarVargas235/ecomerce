@@ -136,7 +136,7 @@ const Cart = ({ idUser }) => {
 		const formData = new FormData();
 		formData.append('products', JSON.stringify(products));
 
-		const resp = await requestWithToken('buy-product', token, formData, 'POST');
+		const resp = await requestWithToken(`buy-product/${idUser}`, token, formData, 'POST');
 		const { ok, messages, isExpiredToken } = resp;
 
 		if (isExpiredToken) {
