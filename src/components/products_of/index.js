@@ -29,24 +29,33 @@ const MoreProducts = ({ history, match }) => {
 
 	const { id } = match.params;
 
-	const [order, setOrder] = useState('por cantidad');
+	const [orderMessage, setOrderMessage] = useState('por cantidad');
+	const [productsLocal, setProductsLocal] = useState([]);
 
-	// const sortArr = (type="") => products.sort((a,b) => a[type] - b[type]);
-	const sortArr = useCallback((type="") => products.sort((a,b) => a[type]-b[type]),[products]);
+	// Ordener array de productos por: 'cantidad', 'menor precio'
+	const sortArr = useCallback((type="") => {
+
+		const productsCopy = [...products];
+		productsCopy.sort((a,b) => a[type]-b[type]);
+
+		return productsCopy;
+
+	}, [products]);
 
 	useEffect(() => dispatch( getProductsActions(id) ), [dispatch, id]);
 	
-	useEffect(() => sortArr('stock'), [sortArr]);
+	// Ordenar array de productos 'por cantidad'
+	useEffect(() => setProductsLocal(sortArr('stock')), [sortArr]);
 
 	const handleChange = (selected) => {
 
 		const [, typeMessage,] = selected.split(' ');
 
-		setOrder(selected);
+		setOrderMessage(selected);
 
-		if (typeMessage === 'cantidad') sortArr('stock');
-		else if (typeMessage === 'menor') sortArr('price');
-		else if (typeMessage === 'mayor') products.sort((a,b) => b.price - a.price);
+		if (typeMessage === 'cantidad') setProductsLocal(sortArr('stock'));
+		else if (typeMessage === 'menor') setProductsLocal(sortArr('price'));
+		else if (typeMessage === 'mayor') setProductsLocal(sortArr('price').reverse());
 	}
 	
 	return (
@@ -54,8 +63,8 @@ const MoreProducts = ({ history, match }) => {
 			classes={classes}
 			handleChange={handleChange}
 			history={history}
-			order={order}
-			products={products}
+			orderMessage={orderMessage}
+			products={productsLocal}
 		/>
 	)
 }

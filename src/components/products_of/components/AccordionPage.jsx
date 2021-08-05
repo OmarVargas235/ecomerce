@@ -5,7 +5,7 @@ import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core
 import { ListItemText } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const AccordionPage = ({ classes, handleChange, order}) => (
+const AccordionPage = ({ classes, handleChange, orderMessage}) => (
 	<Container maxWidth="xs" className={`mb-4 ${classes.root}`}>
 		<Accordion>
 			<AccordionSummary
@@ -13,7 +13,7 @@ const AccordionPage = ({ classes, handleChange, order}) => (
 				aria-controls="panel1a-content"
 				id="panel1a-header"
 			>
-				<Typography className={classes.heading}>Ordenar {order}</Typography>
+				<Typography className={classes.heading}>Ordenar {orderMessage}</Typography>
 			</AccordionSummary>
 
 			<AccordionDetails className="accordion w-100 px-0 pb-0">

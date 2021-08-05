@@ -20,7 +20,7 @@ const links = {
 	'Youtube': <YouTubeIcon className="mr-2" />,
 }
 
-const ProfilePage = ({ dataUser, matches }) => (
+const ProfilePage = ({ assessment, dataUser, matches }) => (
 	<ProfileStyle className="my-4 container">
 		{
 			Object.keys(dataUser).length === 0 ? <Spinner />
@@ -37,7 +37,7 @@ const ProfilePage = ({ dataUser, matches }) => (
 							</Typography>
 
 							<Typography variant="h6" component="p">
-								344.531
+								{dataUser.sales}
 							</Typography>
 						</span>
 
@@ -47,7 +47,7 @@ const ProfilePage = ({ dataUser, matches }) => (
 							</Typography>
 
 							<Typography variant="h6" component="p">
-								3
+								{assessment}
 							</Typography>
 						</span>
 					</div>
@@ -106,11 +106,11 @@ const ProfilePage = ({ dataUser, matches }) => (
 						</Typography>
 						
 						<div className="d-flex">
-							<StarIcon />
-							<StarIcon />
-							<StarIcon />
-							<StarIcon />
-							<StarIcon />
+							<StarIcon color={`${assessment > 0 ? 'primary' : 'disabled'}`} />
+							<StarIcon color={`${assessment > 1 ? 'primary' : 'disabled'}`} />
+							<StarIcon color={`${assessment > 2 ? 'primary' : 'disabled'}`} />
+							<StarIcon color={`${assessment > 3 ? 'primary' : 'disabled'}`} />
+							<StarIcon color={`${assessment > 4 ? 'primary' : 'disabled'}`} />
 						</div>
 					</div>
 				</Grid>
