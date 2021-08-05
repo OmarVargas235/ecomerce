@@ -48,7 +48,7 @@ const Orders = () => {
 			const orders = isString(messages) ? messages : classifyOrders(messages);
 
 			setTablesData(orders);
-			setTableCategory(orders);
+			setTableCategory(isString(messages) ? [] : orders);
 		}
 
 		callAPI();

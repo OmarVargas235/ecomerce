@@ -16,7 +16,7 @@ const OrdersPage = ({ matches, setChange, tableCategory, tablesData }) => (
 		<Container maxWidth={`${matches ? 'lg' : 'md'}`}>
 			<h2 className="mb-3">Historial de ordenes</h2>
 		</Container>
-
+		
 		{
 			tablesData.length === 0 ? <Spinner />
 			: <Container maxWidth={`${matches ? 'lg' : 'md'}`}>

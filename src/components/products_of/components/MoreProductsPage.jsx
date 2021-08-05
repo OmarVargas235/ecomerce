@@ -6,7 +6,7 @@ import AccordionPage from './AccordionPage';
 
 import { Grid, Container } from '@material-ui/core';
 
-const MoreProductsPage = ({ classes, history, products }) => (
+const MoreProductsPage = ({ classes, handleChange, history, order, products }) => (
 	<MoreProductsStyle className="mt-5">
 		<Container className={classes.root}>
 			
@@ -15,6 +15,8 @@ const MoreProductsPage = ({ classes, history, products }) => (
 				: <React.Fragment>
 					<AccordionPage
 						classes={classes}
+						handleChange={handleChange}
+						order={order}
 					/>		
 					
 					<Grid container spacing={3} className="products_cards">
