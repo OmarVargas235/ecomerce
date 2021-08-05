@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import 'moment/locale/es';
 
 import OrdersPage from './components/OrdersPage';
 import { classifyOrders, isString } from './helper';
@@ -7,11 +9,18 @@ import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 import { logoutUser } from '../../redux/actions/userAction';
 
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 const Orders = () => {
 
 	const { auth:{ token }, dataUser } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 
+	const matches = useMediaQuery('(max-width:800px)');
+
+	moment.locale('es');
+
+	const [tableCategory, setTableCategory] = useState([]);
 	const [tablesData, setTablesData] = useState([]);
 
 	// Obtener la data del backend y ordenarla por fechas
@@ -39,6 +48,7 @@ const Orders = () => {
 			const orders = isString(messages) ? messages : classifyOrders(messages);
 
 			setTablesData(orders);
+			setTableCategory(orders);
 		}
 
 		callAPI();
@@ -46,9 +56,18 @@ const Orders = () => {
 		return () => setTablesData([]);
 		
 	}, [dataUser, token, dispatch]);
+
+	const setChange = select => {
+		
+		const filterTable = tableCategory.find(data => data[0].date === select);
+		setTablesData(select.length === 0 ? tableCategory : [filterTable]);
+	}
 	
 	return (
 		<OrdersPage
+			matches={matches}
+			setChange={setChange}
+			tableCategory={tableCategory}
 			tablesData={tablesData}
 		/>
 	)

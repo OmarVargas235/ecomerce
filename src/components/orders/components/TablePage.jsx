@@ -1,13 +1,7 @@
 import React from 'react';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import TableCell from '@material-ui/core/TableCell';
-import TablePagination from '@material-ui/core/TablePagination';
+import { Table, TableBody, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Paper, TableCell, TablePagination } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -46,7 +40,7 @@ const TablePage = ({ classes, day, date, data, handleChangePage, handleChangeRow
 						<StyledTableCell align="center">Cantidad</StyledTableCell>
 					</TableRow>
 				</TableHead>
-
+					
 				<TableBody>
 					{(rowsPerPage > 0
 					? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -80,7 +74,7 @@ const TablePage = ({ classes, day, date, data, handleChangePage, handleChangeRow
 				component="div"
 				count={data.length}
 				rowsPerPage={rowsPerPage}
-				page={page}
+				page={ (page * 5) > data.length ? 0 : page }
 				onChangePage={handleChangePage}
 				onChangeRowsPerPage={handleChangeRowsPerPage}
 				labelRowsPerPage="Filas por página"

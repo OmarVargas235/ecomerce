@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import 'moment/locale/es';
 
 import TablePage from '../components/TablePage';
 
@@ -15,8 +14,6 @@ const useStyles = makeStyles({
 const Table = ({ data }) => {
 
 	const classes = useStyles();
-
-	moment.locale('es');
 
 	const [page, setPage] = useState(0);
   	const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -33,6 +30,9 @@ const Table = ({ data }) => {
 	
 	useEffect(() => {
 		
+		setPage(0);
+  		setRowsPerPage(5);
+
 		setDay( moment(data[0].date, "YYYYMMDD").format('dddd') );
 		setDate( moment(data[0].date, "YYYYMMDD").format('LL') );
 		
