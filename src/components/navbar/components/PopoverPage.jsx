@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
-import { signOff } from '../helper';
+import { signOff } from '../../../utils/helper';
 
 import { Typography, Popover, Badge } from '@material-ui/core';
 import { List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core';

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ProfileStyle } from './style';
-import Spinner from '../../layaut/Spinner';
+import { ProfileStyle } from '../style';
+import Spinner from '../../../layaut/Spinner';
+import LinksPage from './LinksPage';
 
 import { Grid, Typography, Hidden } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -70,11 +71,11 @@ const ProfilePage = ({ assessment, dataUser, matches }) => (
 						{
 							dataUser.socialMedias.length === 0 ? null
 							: dataUser.socialMedias.map((social, index) => (
-								
-								<div className="link w-100 p-4 d-flex justify-content-center align-items-center mb-2" key={index}>
-									{ links[social.title] }
-									<span className="font-weight-bold">{social.title}</span>
-								</div>
+								<LinksPage
+									key={index}
+									links={links}
+									social={social}
+								/>
 							))
 						}
 					</Hidden>
@@ -91,11 +92,11 @@ const ProfilePage = ({ assessment, dataUser, matches }) => (
 						{
 							dataUser.socialMedias.length === 0 ? null
 							: dataUser.socialMedias.map((social, index) => (
-								
-								<div className="link w-100 p-4 d-flex justify-content-center align-items-center mb-2" key={index}>
-									{ links[social.title] }
-									<span className="font-weight-bold">{social.title}</span>
-								</div>
+								<LinksPage
+									key={index}
+									links={links}
+									social={social}
+								/>
 							))
 						}
 					</Hidden>

@@ -1,6 +1,11 @@
 import React from 'react';
+
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+
+import { requestWithoutToken } from './fetch';
+import { alert } from './alert';
+import { logoutUser } from '../redux/actions/userAction';
 
 export const categorysScoreValue = [5, 4, 3, 2, 1];
 export const categorysScore = [
@@ -63,4 +68,16 @@ export const createNotifications = (dataUser, product, socket, message, url="") 
 	};
 
 	socket.emit('notifications-cont', obj);
+}
+
+export const signOff = async (dataUser, dispatch) => {
+
+	const { uid } = dataUser;
+	const resp = await requestWithoutToken('logout-user', {id: uid}, 'POST');
+	const { ok, messages } = resp;
+
+	if (!ok) return alert('error', messages);
+	
+	dispatch( logoutUser() );
+	alert('success', messages);
 }

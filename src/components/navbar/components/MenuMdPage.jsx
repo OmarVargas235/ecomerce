@@ -56,11 +56,23 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 						<Typography
 							variant="body1"
 							component="span"
-							className="pointer ml-4"
+							className="pointer ml-3"
 							onClick={() => history.push('/ordenes')}
 						>
 							ordenes
 						</Typography>
+
+						{
+							dataUser.role !== 'ADMIN_ROLE' ? null
+							: <Typography
+								variant="body1"
+								component="span"
+								className="pointer ml-3"
+								onClick={() => history.push('/admin')}
+							>
+								admin
+							</Typography>
+						}
 					</div>
 
 				</Grid>

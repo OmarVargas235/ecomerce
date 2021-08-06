@@ -6,7 +6,7 @@ import Logo from '../../../assets/img/logo.jpg';
 import SelectedCategory from '../container/SelectedCategory';
 import Cart from '../container/Cart';
 import PopoverPage from './PopoverPage';
-import { signOff } from '../helper';
+import { signOff } from '../../../utils/helper';
 
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
@@ -155,6 +155,15 @@ const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) 
 									label="Ordenes"
 									onClick={() => history.push('/ordenes')}
 								/>
+
+								{
+									dataUser.role !== 'ADMIN_ROLE' ? null
+									: <Tab 
+										label="Admin"
+										onClick={() => history.push('/admin')}
+									/>
+								}
+
 								<Tab 
 									label="Cerrar sesion"
 									onClick={() => signOff(dataUser, dispatch)}

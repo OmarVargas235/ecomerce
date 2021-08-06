@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import ProfilePage from './ProfilePage';
+import ProfilePage from './components/ProfilePage';
 import { requestWithoutToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 import { styleMaterialUiTheme } from '../../utils/styleMaterialUi';

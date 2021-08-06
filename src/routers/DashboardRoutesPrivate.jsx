@@ -13,6 +13,7 @@ import Favorites from '../components/products-favorites/';
 import ProductLocation from '../components/product-location/';
 import ListConnected from '../components/connected/';
 import Orders from '../components/orders/';
+import Admin from '../components/admin/';
 
 const DashboardRoutesPrivate = () => (		
 	<Switch>
@@ -27,6 +28,7 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/ubicacion-producto" component={ProductLocation} />
 		<Route exact path="/conectados" component={ListConnected} />
 		<Route exact path="/ordenes" component={Orders} />
+		<Route exact path="/admin" component={Admin} />
 		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<Redirect to="/" />

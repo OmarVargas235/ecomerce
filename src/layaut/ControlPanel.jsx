@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { styleMaterialUiTheme } from '../utils/styleMaterialUi';
 import { ControlPanelStyle } from './style';
 import { TealButton } from '../utils/styleMaterialUi';
+import { signOff } from '../utils/helper';
 
 import { Grid, Divider } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -12,7 +13,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const ControlPanel = ({ component:Component, history, title, text, textButton, desactiveBtn=false, photograph=false, handleClick }) => {
 	
-	const { name, lastName, img } = useSelector(state => state.user.dataUser);
+	const { dataUser } = useSelector(state => state.user);
+	const dispatch = useDispatch();
+
+	const { name, lastName, img } = dataUser;
 
 	const theme = styleMaterialUiTheme();
 
@@ -38,7 +42,7 @@ const ControlPanel = ({ component:Component, history, title, text, textButton, d
 		        			<Link to="/mis-productos">Mis productos</Link>
 		        			<Link to="/ubicacion-producto">Agregar ubicacion</Link>
 		        			<Link to="/conectados">Conectados</Link>
-		        			<p>Cerrar sesion</p>
+		        			<p onClick={() => signOff(dataUser, dispatch)}>Cerrar sesion</p>
 		        		</div>
 					</Grid>
 

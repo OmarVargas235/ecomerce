@@ -20,6 +20,7 @@ export const ProfileStyle = styled.section`
 		cursor: pointer;
 		color: #2896A9;
 		transition: color .3s ease-in, border .3s ease-in;
+		text-decoration: none;
 
 		&:hover {
 			border: 1px solid #1C6A78;
