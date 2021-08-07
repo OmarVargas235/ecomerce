@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { AdminStyle } from './style';
-import Spinner from '../../layaut/Spinner';
+import { AdminStyle } from '../style';
+import Spinner from '../../../layaut/Spinner';
 
 import { Container, Paper } from '@material-ui/core';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
@@ -11,7 +11,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import AssignmentIndOutlinedIcon from '@material-ui/icons/AssignmentIndOutlined';
 import { Alert } from '@material-ui/lab';
 
-const AdminPage = ({ role }) => (
+const AdminPage = ({ history, role }) => (
 	<AdminStyle className="my-5">
 		<Container maxWidth="sm">
 			{
@@ -26,7 +26,11 @@ const AdminPage = ({ role }) => (
 							<Paper elevation={3} className="d-flex flex-wrap justify-content-center pt-4">
 								<div className="text-center mb-4 mr-4">
 									<p className="mb-1">Agregar producto en home</p>
-									<AddBoxOutlinedIcon fontSize="large" className="icon" />
+									<AddBoxOutlinedIcon
+										fontSize="large"
+										className="icon"
+										onClick={() => history.push('/admin/add-product-home')}
+									/>
 								</div>
 
 								<div className="text-center mb-4 mr-4">
@@ -45,7 +49,7 @@ const AdminPage = ({ role }) => (
 								</div>
 
 								<div className="text-center mb-4 mr-4">
-									<p className="mb-1">Eliminar producto</p>
+									<p className="mb-1">Administrar usuarios</p>
 									<AssignmentIndOutlinedIcon fontSize="large" className="icon" />
 								</div>
 							</Paper>

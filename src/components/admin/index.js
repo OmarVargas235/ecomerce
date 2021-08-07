@@ -1,14 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import AdminPage from './AdminPage';
+import AdminPage from './components/AdminPage';
 
-const Admin = () => {
+const Admin = ({ history }) => {
 
 	const { dataUser } = useSelector(state => state.user);
 	
 	return (
 		<AdminPage
+			history={history}
 			role={dataUser.role}
 		/>
 	)
