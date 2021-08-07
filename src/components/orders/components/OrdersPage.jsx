@@ -10,7 +10,7 @@ import SelectionMenu from '../../../layaut/SelectionMenu';
 import { Alert } from '@material-ui/lab';
 import Container from '@material-ui/core/Container';
 
-const OrdersPage = ({ matches, setChange, tableCategory, tablesData }) => (
+const OrdersPage = ({ loading, matches, setChange, tableCategory, tablesData }) => (
 
 	<OrdersStyle className="px-4 my-5">
 		<Container maxWidth={`${matches ? 'lg' : 'md'}`}>
@@ -18,7 +18,7 @@ const OrdersPage = ({ matches, setChange, tableCategory, tablesData }) => (
 		</Container>
 		
 		{
-			tablesData.length === 0 ? <Spinner />
+			loading ? <Spinner />
 			: <Container maxWidth={`${matches ? 'lg' : 'md'}`}>
 				<SelectionMenu
 					categorys={tableCategory.map(data => moment(data[0].date, "YYYYMMDD").format('LL'))}

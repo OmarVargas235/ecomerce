@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/es';
 
 import OrdersPage from './components/OrdersPage';
 import { classifyOrders, isString } from './helper';
-import { requestWithToken } from '../../utils/fetch';
-import { alert } from '../../utils/alert';
-import { logoutUser } from '../../redux/actions/userAction';
+import { useFetch } from '../../customHooks/useFetch';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Orders = () => {
 
-	const { auth:{ token }, dataUser } = useSelector(state => state.user);
-	const dispatch = useDispatch();
+	const { dataUser } = useSelector(state => state.user);
 
 	const matches = useMediaQuery('(max-width:800px)');
 
 	moment.locale('es');
+	
+	const { uid } = dataUser;
+	const respFetch = useFetch(`get-orders/${uid}`, true);
 
 	const [tableCategory, setTableCategory] = useState([]);
 	const [tablesData, setTablesData] = useState([]);
@@ -26,36 +26,16 @@ const Orders = () => {
 	// Obtener la data del backend y ordenarla por fechas
 	useEffect(() => {
 		
-		if (Object.keys(dataUser).length === 0) return;
+		const { data, loading } = respFetch;
+
+		if (loading) return;
+
+		const orders = isString(data) ? data : classifyOrders(data);
 		
-		async function callAPI() {
-			
-			const { uid } = dataUser;
-			const resp = await requestWithToken(`get-orders/${uid}`, token);
-			const { ok, messages, isExpiredToken } = await resp.json();
-
-			// Si el token ya a expirado se deslogea
-			if (isExpiredToken) {
-				
-				dispatch( logoutUser() );
-				alert('error', messages);
-				
-				return;
-			}
-
-			if (!ok) return alert('error', messages);
-
-			const orders = isString(messages) ? messages : classifyOrders(messages);
-
-			setTablesData(orders);
-			setTableCategory(isString(messages) ? [] : orders);
-		}
-
-		callAPI();
-
-		return () => setTablesData([]);
+		setTablesData(orders);
+		setTableCategory(isString(data) ? [] : orders);
 		
-	}, [dataUser, token, dispatch]);
+	}, [respFetch]);
 
 	const setChange = select => {
 		
@@ -65,6 +45,7 @@ const Orders = () => {
 	
 	return (
 		<OrdersPage
+			loading={respFetch.loading}
 			matches={matches}
 			setChange={setChange}
 			tableCategory={tableCategory}
