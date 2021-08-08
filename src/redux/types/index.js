@@ -39,3 +39,9 @@ export const RECORD_CHATS = 'RECORD_CHATS';
 export const CONT_NOTIFICATIONS = 'CONT_NOTIFICATIONS';
 export const NOTIFICATIONS = 'NOTIFICATIONS';
 export const DELETE_NOTIFICATIONS = 'DELETE_NOTIFICATIONS';
+
+// =====================================
+// Productos del home
+// =====================================
+export const ADD_PRODUCT_HOME = 'ADD_PRODUCT_HOME';
+export const DELETE_PRODUCT_HOME = 'DELETE_PRODUCT_HOME';
