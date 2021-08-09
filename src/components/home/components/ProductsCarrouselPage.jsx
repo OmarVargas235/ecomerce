@@ -1,22 +1,25 @@
 import React from 'react';
 
-import { items } from '../../../utils/dataProducts';
 import { RedButton } from '../../../utils/styleMaterialUi';
 
 import Carousel from 'react-material-ui-carousel';
 import { Paper, Grid } from '@material-ui/core';
 
-const ProductsCarrouselPage = ({ history, classes }) => (
+const ProductsCarrouselPage = ({ classes, history, products }) => (
 	<Carousel 
 		animation='slide'
 		className="my-4"
 	>
         {
-            items.map( (item, i) => (
+            products.map( (item, i) => (
 				<Paper key={i} square={true} className="py-4">
 					<Grid container spacing={3}>
 						<Grid item xs={5} className={`text-center ${classes.root}`}>
-	          				<img src={item.img} alt={item.name} className="img-fluid" />
+	          				<img
+	          					src={`http://localhost:5000/${item.images[0]}`}
+	          					alt={item.name}
+	          					className="img-fluid img-carrousel"
+	          				/>
 	        			</Grid>
 
 	        			<Grid item xs={7} className={classes.root}>
@@ -27,7 +30,7 @@ const ProductsCarrouselPage = ({ history, classes }) => (
 								className="CheckButton"
 								variant="contained"
 								color="primary"
-								onClick={() => history.push(`/producto/${item.id}`)}
+								onClick={() => history.push(`/producto/${item['_id']}`)}
 							>
 								Mas informacion
 							</RedButton>

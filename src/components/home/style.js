@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const ContainerHome = styled.main`
+	
+	background-color: white;
+
 	.banner {
 		position: relative;
 
@@ -24,6 +27,11 @@ export const ContainerHome = styled.main`
 		&:hover {
 			background-color: #212121 !important;
 		}
+	}
+
+	.img-carrousel {
+		width: 317px;
+		width: 199px;
 	}
 
 	.footer {

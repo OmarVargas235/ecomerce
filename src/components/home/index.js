@@ -5,6 +5,8 @@ import ProductsCarrouselPage from './components/ProductsCarrouselPage';
 import ProductsCardPage from './components/ProductsCardPage';
 import Footer from './components/Footer';
 import { ContainerHome } from './style';
+import { useFetch } from '../../customHooks/useFetch';
+import Spinner from '../../layaut/Spinner';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,23 +21,33 @@ const Home = ({ history }) => {
 
 	const matches = useMediaQuery('(max-width: 767px)');
 	const classes = useStyles();
+
+	const { data, loading } = useFetch('get-products-home', true);
 	
 	return (
 		<ContainerHome>
 			<HeaderPage
 				matches={matches}
 			/>
-			
-			<ProductsCarrouselPage
-				history={history}
-				classes={classes}
-			/>
-			
-			<ProductsCardPage
-				classes={classes}
-			/>
-			
-			<Footer />
+
+			{
+				loading ? <Spinner />
+				: <React.Fragment>
+					
+					<ProductsCarrouselPage
+						classes={classes}
+						history={history}
+						products={data.slice(0, 5)}
+					/>
+					
+					<ProductsCardPage
+						classes={classes}
+						products={data.slice(5, 9)}
+					/>
+					
+					<Footer />
+				</React.Fragment>
+			}
 			
 		</ContainerHome>
 
