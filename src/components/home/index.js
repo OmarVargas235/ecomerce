@@ -22,7 +22,7 @@ const Home = ({ history }) => {
 	const matches = useMediaQuery('(max-width: 767px)');
 	const classes = useStyles();
 
-	const { data, loading } = useFetch('get-products-home', true);
+	const { data, loading } = useFetch('get-products-home');
 	
 	return (
 		<ContainerHome>

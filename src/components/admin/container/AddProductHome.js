@@ -1,34 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import 'moment/locale/es';
 
-import AddProductHomePage from '../components/AddProductHomePage';
+import SelecterProduct from '../components/SelecterProduct';
 import { useFetch } from '../../../customHooks/useFetch';
-import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 import { addProductAction, deleteProductAction } from '../../../redux/actions/homeAction';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { requestWithToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
+import { useSelecterProduct } from '../useSelecterProduct';
 
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Container from '@material-ui/core/Container';
 
 const AddProductHome = () => {
 	
 	const { products } = useSelector(state => state.productsHome);
 	const { auth:{token} } = useSelector(state => state.user);
 	const dispatch = useDispatch();
-
-	moment.locale('es');
-
-	const { data, loading } = useFetch('get-all-products');
-	const { data:dataProductsHome } = useFetch('get-products-home', true);
-
-	const matches = useMediaQuery('(max-width: 415px)');
-	const theme = styleMaterialUiTheme();
-
-	const [product, setProduct] = useState({});
-	const [point, setPoint] = useState(0);
+	
+	const { data } = useFetch('get-all-products');
+	const { data:dataProductsHome } = useFetch('get-products-home');
+	const [ handleChange, product, point ] = useSelecterProduct(data);
 
 	// Actualizar el store de redux con los productos agregados al home cada vez que se recarga la pagina
 	useEffect(() => {
@@ -37,29 +28,7 @@ const AddProductHome = () => {
 		dispatch( addProductAction(dataProductsHome.map(product => product)) );
 		
 	}, [dataProductsHome, dispatch]);
-
-	// Seleccionar un producto en el 'selecter' y obtner su calificacion promedio
-	const handleChange = (select) => {
-		
-		if (select === '') return;
-
-		const findProduct = data.find(product => product['_id'] === select);
-
-		const { ratingsProduct } = findProduct;
-
-		// Obetner la suma de todas las calificaciones dadas por los diferentes usuarios
-		const totalQualification = ratingsProduct.reduce((acc, el) => {
-			
-			return (acc += Number(el.qualification), acc);
-
-		}, 0);
-		
-		const qualification = Math.round(totalQualification / ratingsProduct.length);
-
-		setProduct(findProduct);
-		setPoint(qualification);
-	}
-
+	
 	// Agregar o eliminar un producto del home
 	const addOrDeleteProduct = async text => {
 
@@ -98,16 +67,15 @@ const AddProductHome = () => {
 	}
 	
 	return (
-		<AddProductHomePage
-			addOrDeleteProduct={addOrDeleteProduct}
-			data={data}
-			handleChange={handleChange}
-			loading={loading}
-			matches={matches}
-			point={point}
-			product={product}
-			theme={theme}
-		/>
+		<Container maxWidth="sm" className="my-5">
+			<SelecterProduct
+				addOrDeleteProduct={addOrDeleteProduct}
+				handleChange={handleChange}
+				isAdd={true}
+				point={point}
+				product={product}
+			/>
+		</Container>
 	)
 }
 

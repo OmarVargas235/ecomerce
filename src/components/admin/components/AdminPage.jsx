@@ -29,18 +29,26 @@ const AdminPage = ({ history, role }) => (
 									<AddBoxOutlinedIcon
 										fontSize="large"
 										className="icon"
-										onClick={() => history.push('/admin/add-product-home')}
+										onClick={() => history.push('/admin/agregar-producto-home')}
 									/>
 								</div>
 
 								<div className="text-center mb-4 mr-4">
 									<p className="mb-1">Editar producto</p>
-									<EditIcon fontSize="large" className="icon" />
+									<EditIcon
+										fontSize="large"
+										className="icon"
+										onClick={() => history.push('/admin/editar-producto')}
+									/>
 								</div>
 
 								<div className="text-center mb-4 mr-4">
 									<p className="mb-1">Eliminar producto</p>
-									<BackspaceOutlinedIcon fontSize="large" className="icon" />
+									<BackspaceOutlinedIcon
+										fontSize="large"
+										className="icon"
+										onClick={() => history.push('/admin/eliminar-producto')}
+									/>
 								</div>
 
 								<div className="text-center mb-4 mr-4">

@@ -15,6 +15,8 @@ import ListConnected from '../components/connected/';
 import Orders from '../components/orders/';
 import Admin from '../components/admin/';
 import AddProductHome from '../components/admin/container/AddProductHome';
+import EditProductAdmin from '../components/admin/container/EditProductAdmin';
+import DeleteProductAdmin from '../components/admin/container/DeleteProductAdmin';
 
 const DashboardRoutesPrivate = () => (		
 	<Switch>
@@ -30,7 +32,9 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/conectados" component={ListConnected} />
 		<Route exact path="/ordenes" component={Orders} />
 		<Route exact path="/admin" component={Admin} />
-		<Route exact path="/admin/add-product-home" component={AddProductHome} />
+		<Route exact path="/admin/agregar-producto-home" component={AddProductHome} />
+		<Route exact path="/admin/editar-producto" component={EditProductAdmin} />
+		<Route exact path="/admin/eliminar-producto" component={DeleteProductAdmin} />
 		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<Redirect to="/" />
