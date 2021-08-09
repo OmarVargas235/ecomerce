@@ -30,14 +30,15 @@ const AddProductHome = () => {
 	const [product, setProduct] = useState({});
 	const [point, setPoint] = useState(0);
 
+	// Actualizar el store de redux con los productos agregados al home cada vez que se recarga la pagina
 	useEffect(() => {
 		
 		if (!dataProductsHome) return;
-		
-		dispatch( addProductAction(dataProductsHome.map(product => product.product)) );
+		dispatch( addProductAction(dataProductsHome.map(product => product)) );
 		
 	}, [dataProductsHome, dispatch]);
 
+	// Seleccionar un producto en el 'selecter' y obtner su calificacion promedio
 	const handleChange = (select) => {
 		
 		if (select === '') return;
@@ -59,14 +60,20 @@ const AddProductHome = () => {
 		setPoint(qualification);
 	}
 
-	const selectedOption = async text => {
+	// Agregar o eliminar un producto del home
+	const addOrDeleteProduct = async text => {
+
+		if (products.length + 1 > 9 && text === 'Agregar al home') 
+			return alert('warning', ['Solo puedes agregar un maximo de 9 productos al home']);
 		
 		const isExists = products.some(el => el['_id'] === product['_id']);
 		
+		// Agregar o eliminar del store de redux
 		text === 'Agregar al home'
 		? dispatch( addProductAction(isExists ? products : [...products, product]) )
 		: dispatch( deleteProductAction(product) );
 		
+		// Guardar el producto agregado o eliminado en el backend
 		const formData = new FormData();
 		formData.append('product', window.JSON.stringify(product));
 		formData.append('isExists', isExists);
@@ -92,13 +99,13 @@ const AddProductHome = () => {
 	
 	return (
 		<AddProductHomePage
+			addOrDeleteProduct={addOrDeleteProduct}
 			data={data}
 			handleChange={handleChange}
 			loading={loading}
 			matches={matches}
 			point={point}
 			product={product}
-			selectedOption={selectedOption}
 			theme={theme}
 		/>
 	)

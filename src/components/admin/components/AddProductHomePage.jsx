@@ -10,7 +10,7 @@ import { Card, CardHeader, CardContent, CardActions, CardMedia } from '@material
 import StarIcon from '@material-ui/icons/Star';
 import { ThemeProvider } from '@material-ui/styles';
 
-const AddProductHomePage = ({ data, handleChange, loading, matches, point, product, selectedOption, theme }) => (
+const AddProductHomePage = ({ addOrDeleteProduct, data, handleChange, loading, matches, point, product, theme }) => (
 
 	<Container maxWidth="sm" className="my-5">
 		{
@@ -36,7 +36,7 @@ const AddProductHomePage = ({ data, handleChange, loading, matches, point, produ
 							}
 							action={
 								<MenuThreePoints
-									handleChange={selectedOption}
+									handleChange={addOrDeleteProduct}
 									options={['Agregar al home', 'Quitar del home']}
 								/>
 							}
