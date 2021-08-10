@@ -53,7 +53,11 @@ const AdminPage = ({ history, role }) => (
 
 								<div className="text-center mb-4 mr-4">
 									<p className="mb-1">Ver historial de ordenes</p>
-									<HistoryIcon fontSize="large" className="icon" />
+									<HistoryIcon
+										fontSize="large"
+										className="icon"
+										onClick={() => history.push('/admin/historial-ordenes')}
+									/>
 								</div>
 
 								<div className="text-center mb-4 mr-4">
