@@ -1,23 +1,22 @@
 import React from 'react';
 
 import SelecterProduct from '../components/SelecterProduct';
-import { useSelecterProduct } from '../useSelecterProduct';
-import { useFetch } from '../../../customHooks/useFetch';
+import { useSelecter } from '../useSelecter';
 
 import Container from '@material-ui/core/Container';
 
 const EditProductAdmin = () => {
 
-	const { data } = useFetch('get-all-products');
-	const [ handleChange, product, point ] = useSelecterProduct(data);
+	const [ handleChange, dataSelected, point ] = useSelecter();
 
 	return (
 		<Container maxWidth="sm" className="my-5">
 			<SelecterProduct
+				dataSelected={dataSelected}
 				handleChange={handleChange}
 				message="editar producto"
-				product={product}
 				point={point}
+				title="Editar producto"
 			/>
 		</Container>
 	)

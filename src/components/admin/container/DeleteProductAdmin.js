@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 
 import SelecterProduct from '../components/SelecterProduct';
-import { useSelecterProduct } from '../useSelecterProduct';
+import { useSelecter } from '../useSelecter';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
@@ -18,7 +18,7 @@ const DeleteProductAdmin = () => {
 
 	const history = useHistory();
 	
-	const [ handleChange, product, point ] = useSelecterProduct();
+	const [ handleChange, dataSelected, point ] = useSelecter();
 
 	// Eliminar producto del home
 	const delateProduct = useCallback(id => {
@@ -65,11 +65,12 @@ const DeleteProductAdmin = () => {
 	return (
 		<Container maxWidth="sm" className="my-5">
 			<SelecterProduct
+				dataSelected={dataSelected}
 				delateProduct={delateProduct}
 				handleChange={handleChange}
 				message="eliminar producto"
-				product={product}
 				point={point}
+				title="Eliminar producto"
 			/>
 		</Container>
 	)

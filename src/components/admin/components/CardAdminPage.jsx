@@ -11,7 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const CardAdminPage = ({ addOrDeleteProduct=()=>{}, handleClick, isAdd=false, message="", product, point }) => {
+const CardAdminPage = ({ addOrDeleteProduct=()=>{}, dataSelected, handleClick, isAdd=false, message="", point=0 }) => {
 
 	const theme = styleMaterialUiTheme();
 	const matches = useMediaQuery('(max-width: 415px)');
@@ -20,11 +20,12 @@ const CardAdminPage = ({ addOrDeleteProduct=()=>{}, handleClick, isAdd=false, me
 		<ThemeProvider theme={theme}>
 			<Card className={`mt-5 ${matches ? '' : 'mx-5'}`} raised={true}>
 				<CardHeader
+					className="text-capitalize"
 					avatar={
-						product.idUser.img
-						? <img className="img-user mb-3" src={`http://localhost:5000/${product.idUser.img}`}alt="img" />
+						dataSelected.idUser.img
+						? <img className="img-user mb-3" src={`http://localhost:5000/${dataSelected.idUser.img}`}alt="img" />
 						: <Avatar aria-label="recipe">
-							{product.idUser.name.charAt(0).toUpperCase()}
+							{dataSelected.idUser.name.charAt(0).toUpperCase()}
 						</Avatar>
 					}
 					action={
@@ -34,19 +35,19 @@ const CardAdminPage = ({ addOrDeleteProduct=()=>{}, handleClick, isAdd=false, me
 							options={['Agregar al home', 'Quitar del home']}
 						/> : null
 					}
-					title={product.idUser.name + ' ' + product.idUser.lastName}
+					title={dataSelected.idUser.name + ' ' + dataSelected.idUser.lastName}
 					subheader={moment(new Date(), "YYYYMMDD").format('LL')}
 				/>
 				
 				<CardMedia
 					style={{height: 0, paddingTop: '46.25%'}}
-					image={`http://localhost:5000/${product.images[0]}`}
-					title={product.name}
+					image={`http://localhost:5000/${dataSelected.images[0]}`}
+					title={dataSelected.name}
 			    />
 
 				<CardContent>
 					<Typography variant="body2" color="textSecondary" component="p">
-						{product.description}
+						{dataSelected.description}
 					</Typography>
 
 					<Typography
@@ -55,11 +56,11 @@ const CardAdminPage = ({ addOrDeleteProduct=()=>{}, handleClick, isAdd=false, me
 						component="p"
 						className="mt-4 mb-3"
 					>
-						Precio: {product.price}
+						Precio: {dataSelected.price}
 					</Typography>
 
 					<Typography variant="body2" color="textSecondary" component="p">
-						Stock: {product.stock}
+						Stock: {dataSelected.stock}
 					</Typography>
 				</CardContent>
 				

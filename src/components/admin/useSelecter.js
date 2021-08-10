@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import { useFetch } from '../../customHooks/useFetch';
 
-export const useSelecterProduct = () => {
+export const useSelecter = () => {
 
 	const { data } = useFetch('get-all-products');
 
-	const [product, setProduct] = useState({});
+	const [dataSelected, setDataSelected] = useState({});
 	const [point, setPoint] = useState(0);
 	
 	// Seleccionar un producto en el 'selecter' y obtner su calificacion promedio
@@ -27,13 +27,13 @@ export const useSelecterProduct = () => {
 		
 		const qualification = Math.round(totalQualification / ratingsProduct.length);
 
-		setProduct(findProduct);
+		setDataSelected(findProduct);
 		setPoint(qualification);
 	}
 	
 	return [
 		handleChange,
-		product,
+		dataSelected,
 		point,
 	];
 }

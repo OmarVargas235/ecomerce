@@ -62,7 +62,11 @@ const AdminPage = ({ history, role }) => (
 
 								<div className="text-center mb-4 mr-4">
 									<p className="mb-1">Administrar usuarios</p>
-									<AssignmentIndOutlinedIcon fontSize="large" className="icon" />
+									<AssignmentIndOutlinedIcon
+										fontSize="large"
+										className="icon"
+										onClick={() => history.push('/admin/administrar-usuarios')}
+									/>
 								</div>
 							</Paper>
 						</React.Fragment>

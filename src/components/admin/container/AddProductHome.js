@@ -7,7 +7,7 @@ import { addProductAction, deleteProductAction } from '../../../redux/actions/ho
 import { logoutUser } from '../../../redux/actions/userAction';
 import { requestWithToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
-import { useSelecterProduct } from '../useSelecterProduct';
+import { useSelecter } from '../useSelecter';
 
 import Container from '@material-ui/core/Container';
 
@@ -18,7 +18,7 @@ const AddProductHome = () => {
 	const dispatch = useDispatch();
 	
 	const { data:dataProductsHome } = useFetch('get-products-home');
-	const [ handleChange, product, point ] = useSelecterProduct();
+	const [ handleChange, dataSelected, point ] = useSelecter();
 
 	// Actualizar el store de redux con los productos agregados al home cada vez que se recarga la pagina
 	useEffect(() => {
@@ -34,16 +34,16 @@ const AddProductHome = () => {
 		if (products.length + 1 > 9 && text === 'Agregar al home') 
 			return alert('warning', ['Solo puedes agregar un maximo de 9 productos al home']);
 		
-		const isExists = products.some(el => el['_id'] === product['_id']);
+		const isExists = products.some(el => el['_id'] === dataSelected['_id']);
 		
 		// Agregar o eliminar del store de redux
 		text === 'Agregar al home'
-		? dispatch( addProductAction(isExists ? products : [...products, product]) )
-		: dispatch( deleteProductAction(product) );
+		? dispatch( addProductAction(isExists ? products : [...products, dataSelected]) )
+		: dispatch( deleteProductAction(dataSelected) );
 		
 		// Guardar el producto agregado o eliminado en el backend
 		const formData = new FormData();
-		formData.append('product', window.JSON.stringify(product));
+		formData.append('product', window.JSON.stringify(dataSelected));
 		formData.append('isExists', isExists);
 		formData.append('text', text);
 
@@ -69,10 +69,11 @@ const AddProductHome = () => {
 		<Container maxWidth="sm" className="my-5">
 			<SelecterProduct
 				addOrDeleteProduct={addOrDeleteProduct}
+				dataSelected={dataSelected}
 				handleChange={handleChange}
 				isAdd={true}
 				point={point}
-				product={product}
+				title="Agregar producto al home"
 			/>
 		</Container>
 	)

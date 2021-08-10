@@ -1,6 +1,8 @@
 import React from 'react';
 
-const LinksPage = ({ links, social }) => (
+import { links } from '../../../utils/links';
+
+const LinksPage = ({ social }) => (
 	<a 
 		className="link w-100 p-4 d-flex justify-content-center align-items-center mb-2"
 		href={social.link}

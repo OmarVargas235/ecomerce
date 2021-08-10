@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 
 import CardAdminPage from '../components/CardAdminPage';
 
-const CardAdmin = ({ addOrDeleteProduct=()=>{}, delateProduct, isAdd=false, message="", product, point }) => {
+const CardAdmin = ({ addOrDeleteProduct, dataSelected, delateProduct, isAdd, message, point }) => {
 
 	const history = useHistory();
 
 	const handleClick = () => {
 		
-		const id = product['_id'];
+		const id = dataSelected['_id'];
 		
 		message === 'editar producto'
 		? history.push(`/editar-producto/${id}`)
@@ -22,7 +22,7 @@ const CardAdmin = ({ addOrDeleteProduct=()=>{}, delateProduct, isAdd=false, mess
 			handleClick={handleClick}
 			isAdd={isAdd}
 			message={message}
-			product={product}
+			dataSelected={dataSelected}
 			point={point}
 		/>
 	)

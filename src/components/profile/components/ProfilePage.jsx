@@ -6,20 +6,7 @@ import LinksPage from './LinksPage';
 
 import { Grid, Typography, Hidden } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import AttachmentIcon from '@material-ui/icons/Attachment';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import YouTubeIcon from '@material-ui/icons/YouTube';
 import StarIcon from '@material-ui/icons/Star';
-
-const links = {
-	'Sitio Web': <AttachmentIcon className="mr-2" />,
-	'Twitter': <TwitterIcon className="mr-2" />,
-	'Facebook': <FacebookIcon className="mr-2" />,
-	'Instagram': <InstagramIcon className="mr-2" />,
-	'Youtube': <YouTubeIcon className="mr-2" />,
-}
 
 const ProfilePage = ({ assessment, dataUser, matches }) => (
 	<ProfileStyle className="my-4 container">
@@ -73,7 +60,6 @@ const ProfilePage = ({ assessment, dataUser, matches }) => (
 							: dataUser.socialMedias.map((social, index) => (
 								<LinksPage
 									key={index}
-									links={links}
 									social={social}
 								/>
 							))
@@ -94,7 +80,6 @@ const ProfilePage = ({ assessment, dataUser, matches }) => (
 							: dataUser.socialMedias.map((social, index) => (
 								<LinksPage
 									key={index}
-									links={links}
 									social={social}
 								/>
 							))

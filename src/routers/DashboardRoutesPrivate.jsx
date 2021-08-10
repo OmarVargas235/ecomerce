@@ -18,6 +18,7 @@ import AddProductHome from '../components/admin/container/AddProductHome';
 import EditProductAdmin from '../components/admin/container/EditProductAdmin';
 import DeleteProductAdmin from '../components/admin/container/DeleteProductAdmin';
 import RecordAdmin from '../components/admin/container/RecordAdmin';
+import ManageUsers from '../components/admin/container/ManageUsers';
 
 const DashboardRoutesPrivate = () => (		
 	<Switch>
@@ -37,6 +38,7 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/admin/editar-producto" component={EditProductAdmin} />
 		<Route exact path="/admin/eliminar-producto" component={DeleteProductAdmin} />
 		<Route exact path="/admin/historial-ordenes" component={RecordAdmin} />
+		<Route exact path="/admin/administrar-usuarios" component={ManageUsers} />
 		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<Redirect to="/" />
