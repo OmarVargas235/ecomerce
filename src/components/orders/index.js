@@ -9,7 +9,7 @@ import { useFetch } from '../../customHooks/useFetch';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const Orders = () => {
+const Orders = ({ url="" }) => {
 
 	const { dataUser } = useSelector(state => state.user);
 
@@ -18,7 +18,7 @@ const Orders = () => {
 	moment.locale('es');
 	
 	const { uid } = dataUser;
-	const respFetch = useFetch(`get-orders/${uid}`, true);
+	const respFetch = useFetch(url.length === 0 ? `get-orders/${uid}` : url, true);
 
 	const [tableCategory, setTableCategory] = useState([]);
 	const [tablesData, setTablesData] = useState([]);

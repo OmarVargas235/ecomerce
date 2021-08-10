@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Data from './Data';
+
 import { Table, TableBody, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { Paper, TableCell, TablePagination } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,14 +15,6 @@ const StyledTableCell = withStyles((theme) => ({
 		fontSize: 14,
 	},
 }))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-	root: {
-		'&:nth-of-type(odd)': {
-			backgroundColor: theme.palette.action.hover,
-		},
-	},
-}))(TableRow);
 
 const TablePage = ({ classes, day, date, data, handleChangePage, handleChangeRowsPerPage, page, rowsPerPage }) => (
 	<React.Fragment>
@@ -46,25 +40,10 @@ const TablePage = ({ classes, day, date, data, handleChangePage, handleChangeRow
 					? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 					: data
 					).map((row, index) => (
-						<StyledTableRow key={index}>
-							<StyledTableCell component="th" scope="row" align="center">
-								{row.number}
-							</StyledTableCell>
-
-							<StyledTableCell align="center">
-								{
-									row.image ? <img
-										src={`http://localhost:5000/${row.image}`}
-										alt={row.name}
-										className="image-table"
-									/> : <p>Sin imagen</p>
-								}
-							</StyledTableCell>
-
-							<StyledTableCell align="center">{row.name}</StyledTableCell>
-							<StyledTableCell align="center">{row.price}</StyledTableCell>
-							<StyledTableCell align="center">{row.amount}</StyledTableCell>
-						</StyledTableRow>
+						<Data
+							key={index}
+							data={row}
+						/>
 					))}
 				</TableBody>
 			</Table>
