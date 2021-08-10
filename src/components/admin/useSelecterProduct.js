@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-export const useSelecterProduct = (data) => {
+import { useFetch } from '../../customHooks/useFetch';
+
+export const useSelecterProduct = () => {
+
+	const { data } = useFetch('get-all-products');
 
 	const [product, setProduct] = useState({});
 	const [point, setPoint] = useState(0);

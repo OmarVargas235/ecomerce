@@ -8,7 +8,7 @@ import CardAdmin from '../container/CardAdmin';
 
 import { Container } from '@material-ui/core';
 
-const SelecterProduct = ({ addOrDeleteProduct, handleChange, isAdd, message, product, point }) => {
+const SelecterProduct = ({ addOrDeleteProduct, delateProduct, handleChange, isAdd, message, product, point }) => {
 
 	const { data, loading } = useFetch('get-all-products');
 	
@@ -28,6 +28,7 @@ const SelecterProduct = ({ addOrDeleteProduct, handleChange, isAdd, message, pro
 						!product.name ? null
 						: <CardAdmin
 							addOrDeleteProduct={addOrDeleteProduct}
+							delateProduct={delateProduct}
 							isAdd={isAdd}
 							message={message}
 							product={product}

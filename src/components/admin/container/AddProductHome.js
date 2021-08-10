@@ -17,9 +17,8 @@ const AddProductHome = () => {
 	const { auth:{token} } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	
-	const { data } = useFetch('get-all-products');
 	const { data:dataProductsHome } = useFetch('get-products-home');
-	const [ handleChange, product, point ] = useSelecterProduct(data);
+	const [ handleChange, product, point ] = useSelecterProduct();
 
 	// Actualizar el store de redux con los productos agregados al home cada vez que se recarga la pagina
 	useEffect(() => {
