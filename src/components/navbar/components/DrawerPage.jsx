@@ -157,11 +157,12 @@ const DrawerPage = ({ auth, dataUser, history, isActiveLink, setActiveSearch }) 
 								/>
 
 								{
-									dataUser.role !== 'ADMIN_ROLE' ? null
-									: <Tab 
-										label="Admin"
+									dataUser.role === 'ADMIN_ROLE' || dataUser.role === 'MODERATOR_ROLE'
+									? <Tab 
+										label={dataUser.role === 'ADMIN_ROLE'
+										? 'Admin' : 'Moderador'}
 										onClick={() => history.push('/admin')}
-									/>
+									/> : null
 								}
 
 								<Tab 

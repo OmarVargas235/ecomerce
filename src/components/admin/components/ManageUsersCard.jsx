@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
+import { logoutUser } from '../../../redux/actions/userAction';
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 import { links } from '../../../utils/links';
+import { requestWithToken } from '../../../utils/fetch';
+import { alert } from '../../../utils/alert';
 import SelectionMenu from '../../../layaut/SelectionMenu';
 import { ManageUsersCardStyle } from '../style';
 
@@ -12,13 +16,54 @@ import { ThemeProvider } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const ManageUsersCard = ({ dataSelected, message="" }) => {
+	
+	const dispatch = useDispatch();
+	const { auth:{token} } = useSelector(state => state.user);
 
 	const theme = styleMaterialUiTheme();
 	const matches = useMediaQuery('(max-width: 415px)');
-	
-	const handleChange = select => {
+
+	const [rol, setRol] = useState('');
+	const [selectRol, setSelectRol] = useState('');
+
+	// dataSelected.role.split('_')[0]
+
+	useEffect(() => {
 		
-		console.log(select);
+		const { role } = dataSelected;
+		const clearRol = role.split('_')[0];
+
+		setRol(clearRol);
+		
+	}, [dataSelected]);
+		
+	const handleChange = select => setSelectRol(select);
+
+	const changeRol = async () => {
+
+		if (selectRol.length === 0 || selectRol === dataSelected.role) return;
+
+		dataSelected.role = selectRol;
+			
+		const formData = new FormData();
+		formData.append('user', JSON.stringify(dataSelected));
+
+		const { ok, messages, isExpiredToken } = await requestWithToken('change-rol-user', token, formData, 'PUT');
+
+		if (isExpiredToken) {
+			
+			dispatch( logoutUser() );
+			alert('error', messages);
+
+			return;
+		}
+
+		if (!ok) return alert('error', messages);
+		
+		const { message, role } = messages;
+		
+		setRol(role);
+		alert('success', message);
 	}
 	
 	return (
@@ -49,7 +94,7 @@ const ManageUsersCard = ({ dataSelected, message="" }) => {
 						</Typography>
 						
 						<Typography variant="body2" color="textSecondary" component="p">
-							Role: { dataSelected.role.split('_')[0] }
+							Role: <b style={{color: 'black'}}>{ rol }</b>
 						</Typography>
 
 						<Typography variant="body2" color="textSecondary" component="p">
@@ -77,23 +122,34 @@ const ManageUsersCard = ({ dataSelected, message="" }) => {
 							}
 						</Typography>
 						
-						 <SelectionMenu
-							categorys={['USUARIO', 'MODERADOR']}
-							value={['USER_ROLE', 'MODERATOR_ROLE']}
-							title='Cambiar rol'
-							setChange={handleChange}
-						/>
+						{
+							dataSelected.role === 'ADMIN_ROLE' ? null
+							: <SelectionMenu
+								categorys={['USUARIO', 'MODERADOR']}
+								value={['USER_ROLE', 'MODERATOR_ROLE']}
+								title='Cambiar rol'
+								setChange={handleChange}
+							/>
+						}
 					</CardContent>
 
-					<CardActions className="d-flex justify-content-center">
-						<Button variant="contained" size="small" color="secondary">
-							Cambiar de rol
-						</Button>
+					{
+						dataSelected.role === 'ADMIN_ROLE' ? null
+						: <CardActions className="d-flex justify-content-center">
+							<Button
+								variant="contained"
+								size="small"
+								color="secondary"
+								onClick={changeRol}
+							>
+								Cambiar de rol
+							</Button>
 
-						<Button variant="contained" size="small" color="secondary">
-							Eliminar usuario
-						</Button>
-					</CardActions>
+							<Button variant="contained" size="small" color="secondary">
+								Banear usuario
+							</Button>
+						</CardActions>
+					}
 				</Card>
 			</ThemeProvider>
 		</ManageUsersCardStyle>

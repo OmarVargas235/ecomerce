@@ -63,15 +63,15 @@ const MenuMdPage = ({ auth, classes, dataUser, history, isActiveLink, setActiveS
 						</Typography>
 
 						{
-							dataUser.role !== 'ADMIN_ROLE' ? null
-							: <Typography
+							dataUser.role === 'ADMIN_ROLE' || dataUser.role === 'MODERATOR_ROLE'
+							? <Typography
 								variant="body1"
 								component="span"
 								className="pointer ml-3"
 								onClick={() => history.push('/admin')}
 							>
-								admin
-							</Typography>
+								{dataUser.role === 'ADMIN_ROLE' ? 'admin' : 'moderador'}
+							</Typography> : null
 						}
 					</div>
 
