@@ -7,14 +7,14 @@ import { useFetch } from '../../../customHooks/useFetch';
 import CardAdmin from '../container/CardAdmin';
 import ManageUsersCard from '../components/ManageUsersCard';
 
-import { Container } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 
 const SelecterProduct = ({ addOrDeleteProduct, dataSelected, delateProduct, handleChange, isManage=false, isAdd, message, point, title }) => {
 
 	const { data, loading } = useFetch(isManage ? 'get-users': 'get-all-products');
 
 	return (
-		<Container maxWidth="sm" className="my-5">
+		<React.Fragment>
 			<h2 className="mb-4">{title}</h2>
 
 			{
@@ -29,7 +29,7 @@ const SelecterProduct = ({ addOrDeleteProduct, dataSelected, delateProduct, hand
 					
 					{
 						!dataSelected.name ? null
-						: <React.Fragment>
+						: <Container maxWidth="sm">
 							{
 								isManage ? <ManageUsersCard
 									dataSelected={dataSelected}
@@ -43,11 +43,11 @@ const SelecterProduct = ({ addOrDeleteProduct, dataSelected, delateProduct, hand
 									point={point}
 								/>
 							}
-						</React.Fragment>
+						</Container>
 					}
 				</React.Fragment>
 			}
-		</Container>
+		</React.Fragment>
 	)
 }
 

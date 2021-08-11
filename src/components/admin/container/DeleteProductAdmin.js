@@ -9,8 +9,6 @@ import { logoutUser } from '../../../redux/actions/userAction';
 import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
 
-import Container from '@material-ui/core/Container';
-
 const DeleteProductAdmin = () => {
 
 	const { auth:{token} } = useSelector(state => state.user);
@@ -63,16 +61,14 @@ const DeleteProductAdmin = () => {
 	}, [dispatch, token, history]);
 
 	return (
-		<Container maxWidth="sm" className="my-5">
-			<SelecterProduct
-				dataSelected={dataSelected}
-				delateProduct={delateProduct}
-				handleChange={handleChange}
-				message="eliminar producto"
-				point={point}
-				title="Eliminar producto"
-			/>
-		</Container>
+		<SelecterProduct
+			dataSelected={dataSelected}
+			delateProduct={delateProduct}
+			handleChange={handleChange}
+			message="eliminar producto"
+			point={point}
+			title="Eliminar producto"
+		/>
 	)
 }
 

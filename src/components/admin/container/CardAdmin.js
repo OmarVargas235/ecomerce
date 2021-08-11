@@ -19,10 +19,10 @@ const CardAdmin = ({ addOrDeleteProduct, dataSelected, delateProduct, isAdd, mes
 	return (
 		<CardAdminPage
 			addOrDeleteProduct={addOrDeleteProduct}
+			dataSelected={dataSelected}
 			handleClick={handleClick}
 			isAdd={isAdd}
 			message={message}
-			dataSelected={dataSelected}
 			point={point}
 		/>
 	)

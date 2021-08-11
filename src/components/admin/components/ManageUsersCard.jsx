@@ -17,7 +17,7 @@ const ManageUsersCard = ({ dataSelected, message="" }) => {
 	const matches = useMediaQuery('(max-width: 415px)');
 	
 	const handleChange = select => {
-
+		
 		console.log(select);
 	}
 	
@@ -76,15 +76,15 @@ const ManageUsersCard = ({ dataSelected, message="" }) => {
 								))
 							}
 						</Typography>
-
-						<SelectionMenu
-							categorys={['MODERADOR', 'USUARIO']}
-							// value={data.map(product => product['_id'])}
+						
+						 <SelectionMenu
+							categorys={['USUARIO', 'MODERADOR']}
+							value={['USER_ROLE', 'MODERATOR_ROLE']}
 							title='Cambiar rol'
 							setChange={handleChange}
 						/>
 					</CardContent>
-					
+
 					<CardActions className="d-flex justify-content-center">
 						<Button variant="contained" size="small" color="secondary">
 							Cambiar de rol

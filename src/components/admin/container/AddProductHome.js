@@ -9,8 +9,6 @@ import { requestWithToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
 import { useSelecter } from '../useSelecter';
 
-import Container from '@material-ui/core/Container';
-
 const AddProductHome = () => {
 	
 	const { products } = useSelector(state => state.productsHome);
@@ -66,16 +64,14 @@ const AddProductHome = () => {
 	}
 	
 	return (
-		<Container maxWidth="sm" className="my-5">
-			<SelecterProduct
-				addOrDeleteProduct={addOrDeleteProduct}
-				dataSelected={dataSelected}
-				handleChange={handleChange}
-				isAdd={true}
-				point={point}
-				title="Agregar producto al home"
-			/>
-		</Container>
+		<SelecterProduct
+			addOrDeleteProduct={addOrDeleteProduct}
+			dataSelected={dataSelected}
+			handleChange={handleChange}
+			isAdd={true}
+			point={point}
+			title="Agregar producto al home"
+		/>
 	)
 }
 
