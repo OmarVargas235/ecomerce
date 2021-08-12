@@ -6,7 +6,7 @@ import Spinner from '../../../layaut/Spinner';
 import { useFetch } from '../../../customHooks/useFetch';
 
 import CardAdmin from '../container/CardAdmin';
-import ManageUsersCard from '../components/ManageUsersCard';
+import ManageUsersCard from '../container/ManageUsersCard';
 
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
@@ -27,7 +27,7 @@ const SelecterProduct = ({ addOrDeleteProduct, dataSelected, delateProduct, hand
 				: <React.Fragment>
 					{
 						(	role === 'MODERATOR_ROLE' &&
-							(query === 'agregar-producto-home' || query === 'administrar-usuarios')
+							(query === 'eliminar-producto' || query === 'administrar-usuarios')
 						)
 						? <Alert variant="filled" severity="error"><strong>No tienes permisos de administrador</strong></Alert>
 						: <React.Fragment>

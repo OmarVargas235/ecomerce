@@ -14,6 +14,7 @@ import ProductLocation from '../components/product-location/';
 import ListConnected from '../components/connected/';
 import Orders from '../components/orders/';
 import RoutesAdmin from './RoutesAdmin';
+import RecordAdmin from '../components/admin/container/RecordAdmin';
 
 const DashboardRoutesPrivate = () => (		
 	<Switch>
@@ -27,7 +28,8 @@ const DashboardRoutesPrivate = () => (
 		<Route exact path="/mensajes" component={Chat} />
 		<Route exact path="/ubicacion-producto" component={ProductLocation} />
 		<Route exact path="/conectados" component={ListConnected} />
-		<Route exact path="/ordenes" component={Orders} />	
+		<Route exact path="/ordenes" component={Orders} />
+		<Route exact path="/admin/historial-ordenes" component={RecordAdmin} />
 		<Route exact path="/editar-producto/:id" component={EditProduct} />
 
 		<RoutesAdmin />

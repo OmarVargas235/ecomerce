@@ -6,7 +6,8 @@ import CardAdminPage from '../components/CardAdminPage';
 const CardAdmin = ({ addOrDeleteProduct, dataSelected, delateProduct, isAdd, message, point }) => {
 
 	const history = useHistory();
-
+	
+	// Eliminar o editar producto
 	const handleClick = () => {
 		
 		const id = dataSelected['_id'];

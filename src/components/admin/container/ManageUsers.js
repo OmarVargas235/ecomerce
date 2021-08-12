@@ -19,9 +19,9 @@ const ManageUsers = () => {
 
 	return (		
 		<SelecterProduct
+			dataSelected={dataSelected}
 			handleChange={handleChange}
 			isManage={true}
-			dataSelected={dataSelected}
 			title="Administrar usuarios"
 		/>
 	)

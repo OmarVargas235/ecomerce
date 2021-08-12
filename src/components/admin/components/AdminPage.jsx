@@ -14,17 +14,14 @@ const AdminPage = ({ history, role }) => (
 		<h2 className="mb-5">Administrar ecomerce</h2>
 		
 		<Paper elevation={3} className="d-flex flex-wrap justify-content-center pt-4">
-			{
-				role === 'MODERATOR_ROLE' ? null
-				: <div className="text-center mb-4 mr-4">
-					<p className="mb-1">Agregar producto en home</p>
-					<AddBoxOutlinedIcon
-						fontSize="large"
-						className="icon"
-						onClick={() => history.push('/admin/agregar-producto-home')}
-					/>
-				</div>
-			}
+			<div className="text-center mb-4 mr-4">
+				<p className="mb-1">Agregar producto en home</p>
+				<AddBoxOutlinedIcon
+					fontSize="large"
+					className="icon"
+					onClick={() => history.push('/admin/agregar-producto-home')}
+				/>
+			</div>
 
 			<div className="text-center mb-4 mr-4">
 				<p className="mb-1">Editar producto</p>
@@ -35,14 +32,17 @@ const AdminPage = ({ history, role }) => (
 				/>
 			</div>
 
-			<div className="text-center mb-4 mr-4">
-				<p className="mb-1">Eliminar producto</p>
-				<BackspaceOutlinedIcon
-					fontSize="large"
-					className="icon"
-					onClick={() => history.push('/admin/eliminar-producto')}
-				/>
-			</div>
+			{
+				role === 'MODERATOR_ROLE' ? null
+				: <div className="text-center mb-4 mr-4">
+					<p className="mb-1">Eliminar producto</p>
+					<BackspaceOutlinedIcon
+						fontSize="large"
+						className="icon"
+						onClick={() => history.push('/admin/eliminar-producto')}
+					/>
+				</div>
+			}		
 
 			<div className="text-center mb-4 mr-4">
 				<p className="mb-1">Ver historial de ordenes</p>
