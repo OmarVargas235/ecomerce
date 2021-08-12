@@ -9,7 +9,7 @@ import { Typography, Avatar, Button } from '@material-ui/core';
 import { Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
-const ManageUsersCard = ({ changeRol, dataSelected, handleChange, matches, rol, theme }) => (
+const ManageUsersCard = ({ ban, banUser, changeRol, dataSelected, handleChange, matches, rol, theme }) => (
 	<ManageUsersCardStyle>
 		<ThemeProvider theme={theme}>
 			<Card className={`mt-5 py-2 ${matches ? '' : 'mx-5'}`} raised={true}>
@@ -88,8 +88,13 @@ const ManageUsersCard = ({ changeRol, dataSelected, handleChange, matches, rol, 
 							Cambiar de rol
 						</Button>
 
-						<Button variant="contained" size="small" color="secondary">
-							Banear usuario
+						<Button
+							variant="contained"
+							size="small"
+							color="secondary"
+							onClick={banUser}
+						>
+							{ ban }
 						</Button>
 					</CardActions>
 				}

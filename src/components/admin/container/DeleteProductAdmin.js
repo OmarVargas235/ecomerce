@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Swal from 'sweetalert2';
+
 import { useHistory } from 'react-router-dom';
 
 import SelecterProduct from '../components/SelecterProduct';
 import { useSelecter } from '../useSelecter';
-import { logoutUser } from '../../../redux/actions/userAction';
-import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
-import { alert } from '../../../utils/alert';
+import { callAPI } from '../helper';
 
 const DeleteProductAdmin = () => {
 
@@ -21,42 +19,21 @@ const DeleteProductAdmin = () => {
 	// Eliminar producto del home
 	const delateProduct = useCallback(id => {
 		
-		Swal.fire({
+		const obj = {
+			id,
 			title: 'Esta seguro de eliminar el producto?',
 			text: 'Una vez eliminado, no se podra recuperar',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#212121',
-			cancelButtonColor: '#E12727',
-			confirmButtonText: 'Si, eliminar!'
-		}).then(async (result) => {
-			
-			if (result.isConfirmed) {
-				Swal.fire(
-					'Eliminado!',
-					'El producto fue eliminado con exito.',
-					'success'
-				);
-				
-				const formData = new FormData();
-				formData.append('id', id);
+			message: 'Si, eliminar!',
+			fireMessage1: 'Eliminado!',
+			fireMessage2: 'El producto fue eliminado con exito.',
+			url: 'delete-product',
+			urlHome: 'delete-product-home',
+			token,
+			dispatch,
+			history,
+		};
 
-				const { ok, messages, isExpiredToken } = await requestWithToken('delete-product', token, formData, 'DELETE');
-
-				if (isExpiredToken) {
-					
-					dispatch( logoutUser() );
-					alert('error', messages);
-
-					return;
-				}
-
-				if (!ok) return alert('error', messages);
-
-				await requestWithoutToken('delete-product-home', {id}, 'DELETE');
-				history.push('/admin');
-			}
-		});
+		callAPI(obj);
 		
 	}, [dispatch, token, history]);
 

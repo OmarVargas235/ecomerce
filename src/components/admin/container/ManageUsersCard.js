@@ -6,6 +6,7 @@ import { requestWithToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
+import { callAPI } from '../helper';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -19,6 +20,7 @@ const ManageUsersCard = ({ dataSelected }) => {
 
 	const [rol, setRol] = useState('');
 	const [selectRol, setSelectRol] = useState('');
+	const [ban, setBan] = useState('Banear usuario');
 	
 	// Obtener el rol que tiene el usuario actualmente
 	useEffect(() => {
@@ -27,6 +29,14 @@ const ManageUsersCard = ({ dataSelected }) => {
 		const clearRol = role.split('_')[0];
 
 		setRol(clearRol);
+		
+	}, [dataSelected]);
+	
+	// Cada vez que recarga la pagina, revisar en la data del usuario si esta baneado o no
+	useEffect(() => {
+		
+		const { ban } = dataSelected;
+		setBan(ban ? 'Desbanear usuario' : 'Banear usuario');
 		
 	}, [dataSelected]);
 	
@@ -60,9 +70,34 @@ const ManageUsersCard = ({ dataSelected }) => {
 		setRol(role);
 		alert('success', message);
 	}
+
+	const banUser = async () => {
+		
+		const isBan = (/^Banear/gi).test(ban);
+
+		const obj = {
+			id: dataSelected['_id'],
+			title: isBan ? 'Esta seguro de banear a este usuario?' : 'Desbanear usuario',
+			text: isBan ? 'Si lo baneas, puedes volverlo a desbanear' : 'Desbanear',
+			message: isBan ? 'Si, banear!' : 'Si, desbanear!',
+			fireMessage1: isBan ? 'Baneado!' : 'Desbaneado',
+			fireMessage2: isBan ? 'El usuario fue baneado con exito.' : 'Usuario desbaneado.',
+			url: 'ban-user',
+			token,
+			dispatch,
+		};
+
+		const resp = await callAPI(obj);
+		
+		if (resp === undefined) return;
+		
+		setBan(resp ? 'Desbanear usuario' : 'Banear usuario');
+	}
 	
 	return (
 		<ManageUsersCardPage
+			ban={ban}
+			banUser={banUser}
 			changeRol={changeRol}
 			dataSelected={dataSelected}
 			handleChange={handleChange}

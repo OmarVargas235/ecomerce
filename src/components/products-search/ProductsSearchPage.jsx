@@ -7,7 +7,7 @@ import { Grid, Container } from '@material-ui/core';
 const ProductsSearchPage = ({ history, products }) => (
 	<Container>
 		{
-			products.length === 0 ? <div className="mt-5 text-center">No ha resultados</div>
+			products.length === 0 ? <div className="mt-5 text-center">No hay resultados</div>
 			: <Grid container spacing={1} className="mt-5">
 				{
 					products.map((product, index) => (
