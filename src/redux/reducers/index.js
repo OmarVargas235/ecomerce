@@ -5,6 +5,7 @@ import productReducer from './productReducer';
 import messagesReducer from './messagesReducer';
 import notificationsReucer from './notificationsReucer';
 import productsHomeReducer from './homeReducer';
+import commentReducer from './commentReducer';
 
 export default combineReducers({
 	user: userReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
 	messages: messagesReducer,
 	notifications: notificationsReucer,
 	productsHome: productsHomeReducer,
+	comment: commentReducer,
 });

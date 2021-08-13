@@ -45,3 +45,8 @@ export const DELETE_NOTIFICATIONS = 'DELETE_NOTIFICATIONS';
 // =====================================
 export const ADD_PRODUCT_HOME = 'ADD_PRODUCT_HOME';
 export const DELETE_PRODUCT_HOME = 'DELETE_PRODUCT_HOME';
+
+// =====================================
+// Comentarios de producto
+// =====================================
+export const COMMENTS_PRODUCT = 'COMMENTS_PRODUCT';

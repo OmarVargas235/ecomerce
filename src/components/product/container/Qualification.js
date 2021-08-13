@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import QualificationPage from '../components/QualificationPage';
 import { logoutUser } from '../../../redux/actions/userAction';
@@ -10,6 +10,7 @@ import { SocketContext } from '../../../context/SocketContext';
 const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 
 	const dispatch = useDispatch();
+	const { comments } = useSelector(state => state.comment);
 
 	const { socket, online } = useContext( SocketContext );
 
@@ -114,6 +115,7 @@ const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 
 	return (
 		<QualificationPage
+			comments={comments}
 			classes={classes}
 			isAuthenticated={auth.isAuthenticated}
 			point={point}

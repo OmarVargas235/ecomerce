@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouteMatch  } from 'react-router-dom';
 
 import ChatPage from '../components/ChatPage';
@@ -6,11 +7,14 @@ import { useForm } from '../../../customHooks/useForm';
 import { usePagination } from '../../../customHooks/usePagination';
 import { useValidateForm } from '../../../customHooks/useValidateForm';
 import { SocketContext } from '../../../context/SocketContext';
+import { commentsProductAction } from '../../../redux/actions/commentAction';
 import { alert } from '../../../utils/alert';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Chat = ({ auth, ownerProduct, user }) => {
+
+	const dispatch = useDispatch();
 
 	const matches = useMediaQuery('(max-width: 399px)');
 	
@@ -52,13 +56,17 @@ const Chat = ({ auth, ownerProduct, user }) => {
 			
 			const { ok, messages } = resp;
 			
-			if (ok) setComments(messages);
-			else alert('error', messages);
+			if (ok) {
+
+				setComments(messages);
+				dispatch( commentsProductAction(messages) );
+			
+			} else alert('error', messages);
 		});
 		
 		return () => socket.off('get-comments');
 		
-	}, [socket, id]);
+	}, [socket, id, dispatch]);
 
 	// Agregar comentario
 	useEffect(() => {
@@ -67,10 +75,11 @@ const Chat = ({ auth, ownerProduct, user }) => {
 			
 			const { ok, messages } = resp;
 			const { __v, ...body } = messages;
-
 			const arr = [...comments];
 			arr.unshift(body);
 			
+			if (!ok) return alert('error', messages);
+
 			if (ok) setComments(arr);
 			else alert('error', comments);
 		});
