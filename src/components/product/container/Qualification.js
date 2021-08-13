@@ -19,6 +19,9 @@ const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 	const [update, setUpdate] = useState(false);
 
 	const qualificationProduct = useCallback(resp => {
+
+		const isArray = Array.isArray(resp);
+		if (!isArray) return;
 		
 		// Si "resp" es cero, significa que el producto aun no se a calificado
 		if (resp.length === 0) {
@@ -90,6 +93,9 @@ const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 		socket.on('get-qualification-message', resp => {
 
 			const { ok, messages } = resp;
+
+			if (messages[0] === "Este producto a sido eliminado") return alert('error',messages);
+
 			alert(ok ? 'success' : 'error', messages);
 			
 			// Si el token a expirado

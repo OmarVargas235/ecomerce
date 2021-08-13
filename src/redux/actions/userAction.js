@@ -103,8 +103,6 @@ export const deleteFavoriteProductActions = (formData, id, token) => async dispa
 export const getFavoriteProductActions = (id, token) => async dispatch => {
 	
 	try {
-		
-		if (!id) return;
 
 		const data = await requestWithToken(`get-favorite-product/${id}`, token);
 		const { ok, messages, isExpiredToken } = await data.json();

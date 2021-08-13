@@ -42,6 +42,8 @@ const Favorites = () => {
 	// Dispara el dispatch para obtener los productos agregados a favoritos
 	useEffect(() => {
 		
+		if (!dataUser.uid) return;
+
 		// Con el "cont = 2" evita que se genere un bucle infinito
 		if (cont === 2) return;
 		

@@ -99,6 +99,11 @@ const ProfilePage = ({ assessment, dataUser, matches }) => (
 							<StarIcon color={`${assessment > 4 ? 'primary' : 'disabled'}`} />
 						</div>
 					</div>
+
+					<Typography variant="h6" component="p" paragraph className="mt-3">
+						Rol: { dataUser.role.match(/[a-z]+/gi)[0] }
+					</Typography>
+
 				</Grid>
 			</Grid>
 		}

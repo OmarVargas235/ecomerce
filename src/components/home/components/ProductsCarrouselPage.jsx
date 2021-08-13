@@ -11,7 +11,7 @@ const ProductsCarrouselPage = ({ classes, history, products }) => {
 
 	useEffect(() => {
 
-		const timeoutID = window.setTimeout(() => setIsMounted(true), 600);
+		const timeoutID = window.setTimeout(() => setIsMounted(true), 1000);
 		
 		return () => {
 			
