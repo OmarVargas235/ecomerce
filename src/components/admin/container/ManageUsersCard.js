@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ManageUsersCardPage from '../components/ManageUsersCardPage';
@@ -7,16 +7,20 @@ import { alert } from '../../../utils/alert';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 import { callAPI } from '../helper';
+import { createNotifications } from '../../../utils/helper';
+import { SocketContext } from '../../../context/SocketContext';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const ManageUsersCard = ({ dataSelected }) => {
 
 	const dispatch = useDispatch();
-	const { auth:{token} } = useSelector(state => state.user);
+	const { auth:{token}, dataUser } = useSelector(state => state.user);
 
 	const theme = styleMaterialUiTheme();
 	const matches = useMediaQuery('(max-width: 415px)');
+
+const { socket } = useContext( SocketContext );
 
 	const [rol, setRol] = useState('');
 	const [selectRol, setSelectRol] = useState('');
@@ -69,6 +73,12 @@ const ManageUsersCard = ({ dataSelected }) => {
 		
 		setRol(role);
 		alert('success', message);
+
+		// Notificar al usuario que rol a cambiado
+		const messageNotification = `Tu rol a cambiado a ${role}`;
+		const { _id:id } = dataSelected;
+
+		createNotifications(dataUser, id, socket, messageNotification);
 	}
 
 	const banUser = async () => {

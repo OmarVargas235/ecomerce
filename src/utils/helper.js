@@ -55,12 +55,13 @@ export const categorys = [
 	'Decoracion'
 ];
 
-export const createNotifications = (dataUser, product, socket, message, url="") => {
+// export const createNotifications = (dataUser, product, socket, message, url="") => {
+export const createNotifications = (dataUser, idFor, socket, message, url="") => {
 
 	const { name, lastName, uid } = dataUser;
 	const obj = {
 		of: uid,
-		for: product.user['_id'],
+		for: idFor,
 		nameRemitter: name + ' ' + lastName,
 		message,
 		img: dataUser.img,

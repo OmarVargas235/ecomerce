@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
@@ -6,18 +6,21 @@ import { useHistory } from 'react-router-dom';
 import SelecterProduct from '../components/SelecterProduct';
 import { useSelecter } from '../useSelecter';
 import { callAPI } from '../helper';
+import { SocketContext } from '../../../context/SocketContext';
 
 const DeleteProductAdmin = () => {
 
-	const { auth:{token} } = useSelector(state => state.user);
+	const { auth:{token}, dataUser } = useSelector(state => state.user);
 	const dispatch = useDispatch();
+
+	const { socket } = useContext( SocketContext );
 
 	const history = useHistory();
 	
 	const [ handleChange, dataSelected, point ] = useSelecter();
 
 	// Eliminar producto del home
-	const delateProduct = useCallback(id => {
+	const delateProduct = useCallback((id, data) => {
 		
 		const obj = {
 			id,
@@ -31,11 +34,14 @@ const DeleteProductAdmin = () => {
 			token,
 			dispatch,
 			history,
+			socket,
+			dataUser,
+			data,
 		};
 
 		callAPI(obj);
 		
-	}, [dispatch, token, history]);
+	}, [dispatch, token, history, dataUser, socket]);
 
 	return (
 		<SelecterProduct

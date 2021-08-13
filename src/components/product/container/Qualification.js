@@ -53,7 +53,15 @@ const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 
 		socket.on('get-qualification-product', resp => qualificationProduct(resp));
 
-		return () => socket.off('get-qualification-product');
+		return () => {
+
+			socket.off('get-qualification-product');
+			setQualificationUser(null);
+			setPoint(0);
+			setReviews(0);
+			setUpdate(false);
+		}
+
 
 	}, [auth, dataUser, id, update, socket, qualificationProduct]);
 	

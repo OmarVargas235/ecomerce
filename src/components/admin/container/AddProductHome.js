@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SelecterProduct from '../components/SelecterProduct';
@@ -8,15 +8,19 @@ import { logoutUser } from '../../../redux/actions/userAction';
 import { requestWithToken } from '../../../utils/fetch';
 import { alert } from '../../../utils/alert';
 import { useSelecter } from '../useSelecter';
+import { createNotifications } from '../../../utils/helper';
+import { SocketContext } from '../../../context/SocketContext';
 
 const AddProductHome = () => {
 	
 	const { products } = useSelector(state => state.productsHome);
-	const { auth:{token} } = useSelector(state => state.user);
+	const { auth:{token}, dataUser } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	
 	const { data:dataProductsHome } = useFetch('get-products-home');
 	const [ handleChange, dataSelected, point ] = useSelecter();
+
+	const { socket } = useContext( SocketContext );
 
 	// Actualizar el store de redux con los productos agregados al home cada vez que se recarga la pagina
 	useEffect(() => {
@@ -61,6 +65,14 @@ const AddProductHome = () => {
 		if (isExistsBD) return alert('warning', messages);
 
 		alert('success', messages);
+
+		// Notificar al usuario que su producto a sido removido o agregadp al home
+		const message = text === 'Agregar al home'
+		? `Tu producto ${dataSelected.name}, a sido agregado al home`
+		: `Tu producto ${dataSelected.name}, a sido removido del home`;
+
+		const { idUser:{_id:id} } = dataSelected;
+		createNotifications(dataUser, id, socket, message);
 	}
 	
 	return (

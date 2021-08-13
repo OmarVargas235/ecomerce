@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { requestWithToken, requestWithoutToken } from '../../utils/fetch';
 import { logoutUser } from '../../redux/actions/userAction';
 import { alert } from '../../utils/alert';
+import { createNotifications } from '../../utils/helper';
 
 export const callAPI = async (obj) => {
 	
@@ -18,6 +19,9 @@ export const callAPI = async (obj) => {
 		token,
 		dispatch,
 		history,
+		socket,
+		dataUser,
+		data,
 	} = obj;
 
 	const resp = await Swal.fire({
@@ -59,7 +63,13 @@ export const callAPI = async (obj) => {
 				history.push('/admin');
 			}
 			
-			return messages;
+			// Notificar al usuario que su rol a cambiado
+			const message = `Tu producto ${data.name}, a sido eliminado por el admin`;
+			const { idUser:{_id:idNotification} } = data;
+
+			createNotifications(dataUser, idNotification, socket, message);
+			
+			return 'messages';
 		}
 	});
 

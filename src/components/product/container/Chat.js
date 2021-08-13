@@ -37,7 +37,11 @@ const Chat = ({ auth, ownerProduct, user }) => {
 		
 		socket.emit('get-qualification-product', id, resp => setQualifications(resp));
 
-		return () => socket.off('get-qualification-product');
+		return () => {
+
+			socket.off('get-qualification-product');
+			setQualifications([]);
+		}
 		
 	}, [socket, id]);
 	

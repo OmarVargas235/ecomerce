@@ -9,6 +9,7 @@ const ManageUsers = () => {
 
 	const [dataSelected, setDataSelected] = useState({});
 
+	// Obtener el usuario seleccionado
 	const handleChange = select => {
 		
 		if (select === '') return;

@@ -14,7 +14,7 @@ const CardAdmin = ({ addOrDeleteProduct, dataSelected, delateProduct, isAdd, mes
 		
 		message === 'editar producto'
 		? history.push(`/editar-producto/${id}`)
-		: delateProduct(id);
+		: delateProduct(id, dataSelected);
 	}
 	
 	return (
