@@ -27,7 +27,7 @@ export const contNotificationsAction = id => async dispatch => {
 		const messagesView = messages.filter(notification => notification.view);
 		
 		dispatch( contNotifications(messagesView.length) );
-		dispatch( notifications(messages) );
+		dispatch( notifications(messages.reverse()) );
 	
 	} catch(err) {
 		

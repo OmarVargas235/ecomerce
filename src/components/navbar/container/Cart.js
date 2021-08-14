@@ -67,7 +67,7 @@ const Cart = ({ idUser }) => {
 			if (!ok) return alert('error', messages);
 			
 			(diff === 0 && !isPlusOrLesss)
-			&& createNotifications(dataUser, messages, socket, message, product.url);
+			&& createNotifications(dataUser, messages.user['_id'], socket, message, product.url);
 
 			if (messages.stock === 0 || productsArr[i].cont > messages.stock)
 				alert('error', [`Stock insuficiente de ${messages.name}`]);
@@ -130,7 +130,7 @@ const Cart = ({ idUser }) => {
 		if (products.length > 0) {
 			
 			const message = 'Realizado una compra de tu producto';
-			createNotifications(dataUser, products[0], socket, message);
+			createNotifications(dataUser, products[0].user['_id'], socket, message);
 		}
 
 		const formData = new FormData();

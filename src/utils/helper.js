@@ -55,7 +55,6 @@ export const categorys = [
 	'Decoracion'
 ];
 
-// export const createNotifications = (dataUser, product, socket, message, url="") => {
 export const createNotifications = (dataUser, idFor, socket, message, url="") => {
 
 	const { name, lastName, uid } = dataUser;

@@ -109,7 +109,7 @@ const Qualification = ({ auth, classes, dataUser, id, product, url }) => {
 		if (!qualificationUser && dataUser.uid !== product.user['_id']) {
 			
 			const message = `Calificado el producto de ${product.name}`;
-			createNotifications(dataUser, product, socket, message, url);		
+			createNotifications(dataUser, product.user['_id'], socket, message, url);		
 		}
 	}
 

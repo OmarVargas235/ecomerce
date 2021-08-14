@@ -7,6 +7,9 @@ export const alert = (iconError, messages=[]) => {
 		position: 'top',
 		showConfirmButton: false,
 		timer: 3000,
+		customClass: {
+			container: 'my-swal'
+		}
 	})
 
 	Toast.fire({

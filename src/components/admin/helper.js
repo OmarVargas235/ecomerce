@@ -63,13 +63,15 @@ export const callAPI = async (obj) => {
 				history.push('/admin');
 			}
 			
+			if (!data) return messages;
+
 			// Notificar al usuario que su rol a cambiado
 			const message = `Tu producto ${data.name}, a sido eliminado por el admin`;
 			const { idUser:{_id:idNotification} } = data;
 
 			createNotifications(dataUser, idNotification, socket, message);
 			
-			return 'messages';
+			return messages;
 		}
 	});
 

@@ -87,11 +87,11 @@ const { socket } = useContext( SocketContext );
 
 		const obj = {
 			id: dataSelected['_id'],
-			title: isBan ? 'Esta seguro de banear a este usuario?' : 'Desbanear usuario',
+			title: isBan ? 'Esta seguro de banear a este usuario?' : 'Esta seguro de desbanear a este usuario',
 			text: isBan ? 'Si lo baneas, puedes volverlo a desbanear' : 'Desbanear',
 			message: isBan ? 'Si, banear!' : 'Si, desbanear!',
 			fireMessage1: isBan ? 'Baneado!' : 'Desbaneado',
-			fireMessage2: isBan ? 'El usuario fue baneado con exito.' : 'Usuario desbaneado.',
+			fireMessage2: isBan ? 'El usuario fue baneado con exito.' : 'Usuario desbaneado con exito.',
 			url: 'ban-user',
 			token,
 			dispatch,
