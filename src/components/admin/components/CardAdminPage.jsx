@@ -23,7 +23,7 @@ const CardAdminPage = ({ addOrDeleteProduct=()=>{}, dataSelected, handleClick, i
 					className="text-capitalize"
 					avatar={
 						dataSelected.idUser.img
-						? <img className="img-user mb-3" src={`http://localhost:5000/${dataSelected.idUser.img}`}alt="img" />
+						? <img className="img-user mb-3" src={`${process.env.REACT_APP_BACKEND_URL}/${dataSelected.idUser.img}`}alt="img" />
 						: <Avatar aria-label="recipe">
 							{dataSelected.idUser.name.charAt(0).toUpperCase()}
 						</Avatar>
@@ -41,7 +41,7 @@ const CardAdminPage = ({ addOrDeleteProduct=()=>{}, dataSelected, handleClick, i
 				
 				<CardMedia
 					style={{height: 0, paddingTop: '46.25%'}}
-					image={`http://localhost:5000/${dataSelected.images[0]}`}
+					image={`${process.env.REACT_APP_BACKEND_URL}/${dataSelected.images[0]}`}
 					title={dataSelected.name}
 			    />
 

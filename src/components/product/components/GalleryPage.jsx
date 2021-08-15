@@ -14,7 +14,7 @@ const GalleryPage = ({ changeImg, handleClose, handleClickOpen, images, name, op
 						onMouseEnter={() => setChangeImg({img, index})}
 						key={index}
 					>	
-						<img src={`http://localhost:5000/${img}`} alt={name} className="img-fluid" />
+						<img src={`${process.env.REACT_APP_BACKEND_URL}/${img}`} alt={name} className="img-fluid" />
 					</div>
 				))
 			}
@@ -22,7 +22,7 @@ const GalleryPage = ({ changeImg, handleClose, handleClickOpen, images, name, op
 
 		<Grid item sm={11} className="text-center">
 			<img
-				src={`http://localhost:5000/${changeImg.img}`}
+				src={`${process.env.REACT_APP_BACKEND_URL}/${changeImg.img}`}
 				alt={name}
 				className="img-fluid text-center zoom-in"
 				onClick={handleClickOpen}

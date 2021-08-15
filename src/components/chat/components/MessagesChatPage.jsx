@@ -23,7 +23,7 @@ const MessagesChatPage = ({ idUser, message, refMessage }) => (
 						
 					<Grid item xs={4} key={index}>
 						<img
-							src={`http://localhost:5000/${img}`}
+							src={`${process.env.REACT_APP_BACKEND_URL}/${img}`}
 							alt={`img-${index}`} className="img-fluid"
 						/>
         			</Grid>

@@ -28,7 +28,7 @@ const CardProduct = ({ history, product }) => {
 			<CardActionArea>
 				<CardMedia
 					className={classes.media}
-					image={`http://localhost:5000/${product.images[0]}`}
+					image={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`}
 					title={product.name}
 				/>
 

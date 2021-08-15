@@ -44,7 +44,7 @@ const CartPage = ({ buyProduct, cartRef, classes, deleteProduct, handleDrawerOpe
 					onMouseOver={() => setMouseMove(index)}
 					onMouseOut={() => setMouseMove(-1)}
 				>
-					<img src={`http://localhost:5000/${product.images[0]}`} alt="prueba" />
+					<img src={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`} alt="prueba" />
 
 					<div className="ml-2">
 						<Typography variant="subtitle1" component="p">

@@ -71,7 +71,7 @@ const ProfilePage = ({ assessment, dataUser, matches }) => (
 					{
 						!dataUser.img 
 						? <AccountCircleIcon className="img-user mb-3" />
-						: <img className="img-user mb-3" src={`http://localhost:5000/${dataUser.img}`}alt="img" />
+						: <img className="img-user mb-3" src={`${process.env.REACT_APP_BACKEND_URL}/${dataUser.img}`}alt="img" />
 					}
 					
 					<Hidden xsDown>

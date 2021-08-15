@@ -6,7 +6,7 @@ export const SocketContext = createContext();
 
 const SocketProvider = ({ children }) => {
 
-	const [ socket, online ] = useSocket('http://localhost:5000');
+	const [ socket, online ] = useSocket( process.env.REACT_APP_BACKEND_URL );
 	
 	return (
 		<SocketContext.Provider value={{

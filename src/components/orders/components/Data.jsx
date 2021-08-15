@@ -44,7 +44,7 @@ const Data = ({ data }) => {
 								style={{fill: '#2BC48A'}}
 							/>
 							: <img
-								src={`http://localhost:5000/${data.image}`}
+								src={`${process.env.REACT_APP_BACKEND_URL}/${data.image}`}
 								alt={data.name}
 								className="image-table"
 								onError={() => setBrokenImg(true)}

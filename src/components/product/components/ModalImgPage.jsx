@@ -25,7 +25,7 @@ const ModalImgPage = ({ handleClose, indexImg, images, name, openModal }) => (
 					{
 						images.map((img, index) => (
 							<img
-								src={`http://localhost:5000/${img}`}
+								src={`${process.env.REACT_APP_BACKEND_URL}/${img}`}
 								alt={name}
 								key={index}
 								className="img-modal"

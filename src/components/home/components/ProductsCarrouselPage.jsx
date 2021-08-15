@@ -34,7 +34,7 @@ const ProductsCarrouselPage = ({ classes, history, products }) => {
 								<Grid container spacing={3}>
 									<Grid item xs={5} className={`text-center ${classes.root}`}>
 				          				<img
-				          					src={`http://localhost:5000/${item.images[0]}`}
+				          					src={`${process.env.REACT_APP_BACKEND_URL}/${item.images[0]}`}
 				          					alt={item.name}
 				          					className="img-fluid img-carrousel"
 				          				/>

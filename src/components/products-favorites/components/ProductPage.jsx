@@ -22,7 +22,7 @@ const ProductPage = ({ delateProduct, history, product }) => {
 							style={{fill: '#2BC48A'}}
 						/>
 						: <img
-							src={`http://localhost:5000/${product.img}`}
+							src={`${process.env.REACT_APP_BACKEND_URL}/${product.img}`}
 							alt={product.name}
 							className="img-fluid"
 							onError={() => setBrokenImg(true)}

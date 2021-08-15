@@ -15,7 +15,7 @@ const Notification = ({ index, notification, selectNotification }) => (
 				notification.img
 				? <img 
 					className="img-user mr-4"
-					src={`http://localhost:5000/${notification.img}`}
+					src={`${process.env.REACT_APP_BACKEND_URL}/${notification.img}`}
 					alt="img"
 				/>
 				: <Avatar className="mr-4">
