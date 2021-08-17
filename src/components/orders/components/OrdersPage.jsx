@@ -28,8 +28,8 @@ const OrdersPage = ({ loading, matches, setChange, tableCategory, tablesData }) 
 				/>
 
 				<div className="mb-5"></div>
-								
-				{	isString(tablesData) 
+				
+				{	isString(tablesData)
 					? <Alert variant="filled" severity="info"><strong>{tablesData}</strong></Alert>
 					: tablesData.map((data, i) => (
 						<Table key={i} data={data} />
