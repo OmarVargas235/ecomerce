@@ -46,7 +46,7 @@ const PopoverPage = ({ dataUser, history }) => {
 				<div onClick={event => setAnchorEl(event.currentTarget)}>
 					{
 						!dataUser.img ? <AccountCircleIcon fontSize="large" />
-						: <img  className="img-user" src={`${process.env.REACT_APP_BACKEND_URL}/${dataUser.img}`} alt="img" />
+						: <img  className="img-user" src={dataUser.img.url} alt={dataUser.img.id} />
 					}
 			
 					<Typography
@@ -83,7 +83,7 @@ const PopoverPage = ({ dataUser, history }) => {
 									{
 										!dataUser.img 
 										? <AccountCircleIcon fontSize="large" color="secondary" />
-										: <img className="img-user" src={`${process.env.REACT_APP_BACKEND_URL}/${dataUser.img}`} alt="img" />
+										: <img  className="img-user" src={dataUser.img.url} alt={dataUser.img.id} />
 									}
 				         		</ListItemIcon>
 

@@ -29,7 +29,7 @@ const ControlPanel = ({ component:Component, history, title, text, textButton, d
 		        			{
 		        				!img 
 		        				? <AccountCircleIcon className="icon" color="secondary" />
-		        				: <img className="img-user" src={`${process.env.REACT_APP_BACKEND_URL}/${img}`} alt="img" />
+		        				: <img  className="img-user" src={dataUser.img.url} alt={dataUser.img.id} />
 		        			}
 
 		        			<p className="mt-2">{name} {lastName}</p>
