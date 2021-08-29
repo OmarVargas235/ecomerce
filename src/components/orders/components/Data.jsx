@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
+import { useBrokenImg } from '../../../customHooks/useBrokenImg';
 
 import { TableRow, TableCell } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,9 +26,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const Data = ({ data }) => {
 
-	const [brokenImg, setBrokenImg] = useState(false);
-
-	useEffect(() => setBrokenImg(false), [data]);
+	const [brokenImg, setBrokenImg] = useBrokenImg();
 	
 	return (
 		<StyledTableRow>

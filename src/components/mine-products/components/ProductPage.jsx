@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Spinner from '../../../layaut/Spinner';
+
 import { Grid, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,7 +10,14 @@ import { teal } from '@material-ui/core/colors';
 const ProductPage = ({ delateProduct, history, product }) => (
 	<Grid container className="mb-4">
 		<Grid item xs={3} className="mb-3">
-			<img src={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`} alt={product.name} className="img-fluid" />
+			{
+				product.images.length === 0 ? <Spinner />
+				: <img
+					src={product.images[0].url}
+					alt={product.name}
+					className="img-fluid"
+				/>
+			}
 		</Grid>
 
 		<Grid item xs={6} container justify="center" direction="column">
@@ -41,7 +50,7 @@ const ProductPage = ({ delateProduct, history, product }) => (
 				className="pointer"
 				onClick={() => delateProduct(product['_id'])}
 			/>
-		</Grid>
+		</Grid>	
 	</Grid>
 )
 

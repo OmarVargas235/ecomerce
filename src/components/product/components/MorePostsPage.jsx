@@ -19,11 +19,14 @@ const MorePostsPage = ({ classes, history, idUser, products }) => (
 
 								<React.Fragment key={product['_id']}>
 									<Grid item xs={4} sm={3} className="mb-3">
-										<img
-											src={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`}
-											alt={product.name}
-											className="imgUpMorePost"
-										/>
+										{
+											product.images.length === 0 ? <Spinner />
+											: <img
+												src={product.images[0].url}
+												alt={product.name}
+												className="imgUpMorePost"
+											/>
+										}
 									</Grid>
 
 									<Grid item xs={8} sm={9}>

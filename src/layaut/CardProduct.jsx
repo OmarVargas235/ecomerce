@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { RedLightButton } from '../utils/styleMaterialUi';
+import Spinner from '../layaut/Spinner';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardActions, CardContent } from '@material-ui/core';
@@ -25,12 +26,16 @@ const CardProduct = ({ history, product }) => {
 			className={`d-flex flex-column justify-content-between mb-4 w-100 ${classes.root}`}
 			raised={true}
 		>
+			
 			<CardActionArea>
-				<CardMedia
-					className={classes.media}
-					image={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`}
-					title={product.name}
-				/>
+				{
+					product.images.length === 0 ? <Spinner />
+					: <CardMedia
+						className={classes.media}
+						image={product.images[0].url}
+						title={product.name}
+					/>
+				}
 
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2" align="center">

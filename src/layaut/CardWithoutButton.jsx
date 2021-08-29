@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CardWithoutButtonPriceStyle } from './style';
+import Spinner from './Spinner';
 
 import { Card, CardContent, CardActionArea, CardMedia } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -8,13 +9,16 @@ import Typography from '@material-ui/core/Typography';
 const CardWithoutButton = ({ classes, data={}, history={} }) => (
 	<Card raised={true} className={classes.card}>
 		<CardActionArea onClick={() => history.push(`/producto/${data['_id']}`)}>
-			<CardMedia
-				component="img"
-				alt="Contemplative Reptile"
-				height="140"
-				image={`${process.env.REACT_APP_BACKEND_URL}/${data.images[0]}`}
-				title={data.id}
-			/>
+			{
+				data.images.length === 0 ? <Spinner />
+				: <CardMedia
+					component="img"
+					alt="Contemplative Reptile"
+					height="140"
+					image={data.images[0].url}
+					title={data.id}
+				/>
+			}
 
 			<CardContent>
 				<Typography gutterBottom variant="h6" component="h2">

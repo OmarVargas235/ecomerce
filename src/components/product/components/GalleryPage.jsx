@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ModalImgPage from './ModalImgPage';
+import Spinner from '../../../layaut/Spinner';
 
 import { Grid } from '@material-ui/core';
 
@@ -14,20 +15,23 @@ const GalleryPage = ({ changeImg, handleClose, handleClickOpen, images, name, op
 						onMouseEnter={() => setChangeImg({img, index})}
 						key={index}
 					>	
-						<img src={`${process.env.REACT_APP_BACKEND_URL}/${img}`} alt={name} className="img-fluid" />
+						<img src={img.url} alt={name} className="img-fluid" />
 					</div>
 				))
 			}
 		</Grid>
 
 		<Grid item sm={11} className="text-center">
-			<img
-				src={`${process.env.REACT_APP_BACKEND_URL}/${changeImg.img}`}
-				alt={name}
-				className="img-fluid text-center zoom-in"
-				onClick={handleClickOpen}
-				style={{maxHeight: '350px'}}
-			/>
+			{
+				!changeImg.img ? <Spinner />
+				: <img
+					src={changeImg.img.url}
+					alt={name}
+					className="img-fluid text-center zoom-in"
+					onClick={handleClickOpen}
+					style={{maxHeight: '350px'}}
+				/>
+			}
 			
 			<ModalImgPage
 				handleClose={handleClose}

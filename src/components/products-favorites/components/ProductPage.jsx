@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
+import { useBrokenImg } from '../../../customHooks/useBrokenImg';
 
 import { Grid, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,9 +10,7 @@ import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 
 const ProductPage = ({ delateProduct, history, product }) => {
 
-	const [brokenImg, setBrokenImg] = useState(false);
-
-	useEffect(() => setBrokenImg(false), []);
+	const [brokenImg, setBrokenImg] = useBrokenImg();
 
 	return (
 		<Grid container className="mb-4 py-4 px-5 text-center">
@@ -22,7 +22,7 @@ const ProductPage = ({ delateProduct, history, product }) => {
 							style={{fill: '#2BC48A'}}
 						/>
 						: <img
-							src={`${process.env.REACT_APP_BACKEND_URL}/${product.img}`}
+							src={product.img.url}
 							alt={product.name}
 							className="img-fluid"
 							onError={() => setBrokenImg(true)}
