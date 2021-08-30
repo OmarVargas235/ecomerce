@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useBrokenImg } from '../../../customHooks/useBrokenImg';
+import Spinner from '../../../layaut/Spinner';
 
 import { Grid, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -14,21 +15,24 @@ const ProductPage = ({ delateProduct, history, product }) => {
 
 	return (
 		<Grid container className="mb-4 py-4 px-5 text-center">
-			<Grid item xs={3} className="mb-3">
-					{
-						brokenImg ? <BrokenImageIcon
-							fontSize="large"
-							color="inherit"
-							style={{fill: '#2BC48A'}}
-						/>
-						: <img
-							src={product.img.url}
-							alt={product.name}
-							className="img-fluid"
-							onError={() => setBrokenImg(true)}
-						/>
-					}
-			</Grid>
+			{
+				!product.img ? <Spinner />
+				: <Grid item xs={3} className="mb-3">
+						{
+							brokenImg ? <BrokenImageIcon
+								fontSize="large"
+								color="inherit"
+								style={{fill: '#2BC48A'}}
+							/>
+							: <img
+								src={product.img.url}
+								alt={product.name}
+								className="img-fluid"
+								onError={() => setBrokenImg(true)}
+							/>
+						}
+				</Grid>
+			}
 			
 			<Grid item xs={5} container justify="center" direction="column">
 				<Typography

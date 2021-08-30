@@ -7,7 +7,7 @@ import { alert } from '../../../utils/alert';
 import { createNotifications } from '../../../utils/helper';
 import { requestWithToken, requestWithoutToken } from '../../../utils/fetch';
 import { addAction, add, deleteAction, clearAction } from '../../../redux/actions/cartAction';
-import { getProduct } from '../../../redux/actions/productActions';
+import { getProduct, getProductActions } from '../../../redux/actions/productActions';
 import { logoutUser } from '../../../redux/actions/userAction';
 import { SocketContext } from '../../../context/SocketContext';
 
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const Cart = ({ idUser }) => {
 	
 	const { dataUser } = useSelector(state => state.user);
+	const { product } = useSelector(state => state.product);
 	const products = useSelector(state => state.cart.products);
 	const token = useSelector(state => state.user.auth.token);
 	const dispatch = useDispatch();
@@ -78,6 +79,33 @@ const Cart = ({ idUser }) => {
 		return true;
 
 	}, [products, dataUser, socket]);
+
+
+	// Agregar las imagenes del producto al carrito cuando se hallan terminado de cargar
+	useEffect(() => {
+		
+		// Obtener del localStorage el producto agregado al carrito
+		const getLS = JSON.parse(window.localStorage.getItem(`cart-${idUser}`)) || [];
+
+		// Revisar si ya tiene las imagenes agregadas
+		getLS.forEach(productLS => {
+
+			const { images, _id:id } = productLS;
+
+			// Si no hay imagenes en el producto agregado las agrega
+			if (images.length === 0) {
+
+				Object.keys(product).length === 0 && dispatch( getProductActions(id) );
+				product.images && (productLS.images = product.images);
+				window.localStorage.setItem(`cart-${idUser}`, JSON.stringify(getLS));
+			}
+		});
+
+		// Disparar la accion de agregar al carrito el producto con las imagenes ya cargadas
+		if (Object.keys(product).length > 0) dispatch( add(getLS) );
+
+	}, [idUser, dispatch, product]);
+
 
 	useEffect(() => {
 		

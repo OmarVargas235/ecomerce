@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { CartStyle } from '../style';
-import { ThemeProvider } from '@material-ui/styles';
+import Spinner from '../../../layaut/Spinner';
 
+import { ThemeProvider } from '@material-ui/styles';
 import { Drawer, Typography, Divider, IconButton } from '@material-ui/core';
 import { List, ListItem, Button } from '@material-ui/core';
 
@@ -44,7 +45,10 @@ const CartPage = ({ buyProduct, cartRef, classes, deleteProduct, handleDrawerOpe
 					onMouseOver={() => setMouseMove(index)}
 					onMouseOut={() => setMouseMove(-1)}
 				>
-					<img src={`${process.env.REACT_APP_BACKEND_URL}/${product.images[0]}`} alt="prueba" />
+					{
+						product.images.length === 0 ? <Spinner />
+						: <img src={product.images[0].url} alt="prueba" />
+					}
 
 					<div className="ml-2">
 						<Typography variant="subtitle1" component="p">

@@ -37,7 +37,7 @@ const Chat = ({ auth, ownerProduct, user }) => {
 	const [comments, setComments] = useState([]);
 
 	// Obtener las calificaciones del producto
-	useEffect(() => {
+	useEffect(() => {	
 		
 		socket.emit('get-qualification-product', id, resp => setQualifications(resp));
 
@@ -66,7 +66,7 @@ const Chat = ({ auth, ownerProduct, user }) => {
 		
 		return () => socket.off('get-comments');
 		
-	}, [socket, id, dispatch]);
+	}, [socket, id, dispatch, user]);
 
 	// Agregar comentario
 	useEffect(() => {
@@ -114,10 +114,12 @@ const Chat = ({ auth, ownerProduct, user }) => {
 
 		if ( validate({ comment }) ) return;
 
+		console.log(user);
+
 		const sendSocket = {
 			comment,
 			name: user.name + ' ' + user.lastName,
-			img: user.img,
+			img: user.img ? user.img.url : '',
 			idUser: user['uid'],
 			idProduct: id,
 			token: auth.token,

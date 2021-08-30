@@ -12,7 +12,7 @@ const CommentsPage = ({ classes, comment, editOrdeleteComment, idUser, nameFirst
 		<div className="my-4 d-flex align-items-center">
 			{
 				comment.img
-				? <img  className="comment-img align-self-start" src={`${process.env.REACT_APP_BACKEND_URL}/${comment.img}`} alt="img" />
+				? <img  className="comment-img align-self-start" src={comment.img} alt="img" />
 				: <Avatar alt="Remy Sharp" className={classes.orange}>{nameFirstLetter}</Avatar>
 			}
 			

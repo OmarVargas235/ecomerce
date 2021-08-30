@@ -1,12 +1,12 @@
 import Swal from 'sweetalert2';
 
-export const alert = (iconError, messages=[]) => {
+export const alert = (iconError, messages=[], tieme=3000) => {
 
 	const Toast = Swal.mixin({
 		toast: true,
 		position: 'top',
 		showConfirmButton: false,
-		timer: 3000,
+		timer: tieme,
 		customClass: {
 			container: 'my-swal'
 		}

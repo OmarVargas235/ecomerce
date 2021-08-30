@@ -82,6 +82,8 @@ const MorePostsPage = ({ classes, history, idUser, products }) => (
 											classes={classes}
 											data={product}
 											history={history}
+											idUser={idUser}
+											moreProducts={true}
 										/>
 									</Grid>
 								))
