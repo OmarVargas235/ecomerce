@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import EditImgProfilePage from './EditImgProfilePage';
@@ -7,7 +7,6 @@ import { requestWithToken } from '../../utils/fetch';
 import { alert } from '../../utils/alert';
 import { useUploadForm } from '../../customHooks/useUploadForm';
 import { getUserAction, logoutUser } from '../../redux/actions/userAction';
-import { SocketContext } from '../../context/SocketContext';
 
 const EditImgProfile = () => {
 	
@@ -15,8 +14,6 @@ const EditImgProfile = () => {
 	const { auth, dataUser } = useSelector(state => state.user);
 
 	const [previewImages, handleChangeImg, image] = useUploadForm();
-
-	const { socket } = useContext( SocketContext );
 
 	const [desactiveBtn, setDesactiveBtn] = useState(false);
 
@@ -32,9 +29,9 @@ const EditImgProfile = () => {
 		
 		const formData = new FormData();
 		formData.append('image', image);
-		formData.append('id', id);
+		formData.append('idUser', id);
 
-		const { ok, messages, isExpiredToken, result } = await requestWithToken('upload-img', token, formData, 'POST');
+		const { ok, messages, isExpiredToken } = await requestWithToken('upload-img', token, formData, 'POST');
 		
 		// Si el token ya a expirado se deslogea
 		if (isExpiredToken) {
@@ -46,8 +43,6 @@ const EditImgProfile = () => {
 		}
 
 		dispatch( getUserAction(token) );
-
-		socket.emit('edit-comment', {result: result.url, idUser: dataUser.uid});
 
 		if (ok) {
 

@@ -17,7 +17,7 @@ const ManageUsersCard = ({ ban, banUser, changeRol, dataSelected, handleChange, 
 					className="text-capitalize"
 					avatar={
 						dataSelected.img
-						? <img className="img-user mb-3" src={`${process.env.REACT_APP_BACKEND_URL}/${dataSelected.img}`}alt="img" />
+						? <img className="img-user mb-3" src={dataSelected.img.url} alt="img" />
 						: <Avatar aria-label="recipe">
 							{dataSelected.name.charAt(0).toUpperCase()}
 						</Avatar>
