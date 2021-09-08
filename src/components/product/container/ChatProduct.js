@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouteMatch  } from 'react-router-dom';
 
-import ChatPage from '../components/ChatPage';
+import ChatProductPage from '../components/ChatProductPage';
 import { useForm } from '../../../customHooks/useForm';
 import { usePagination } from '../../../customHooks/usePagination';
 import { useValidateForm } from '../../../customHooks/useValidateForm';
@@ -12,7 +12,7 @@ import { alert } from '../../../utils/alert';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const Chat = ({ auth, ownerProduct, user }) => {
+const ChatProduct = ({ auth, ownerProduct, user }) => {
 
 	const dispatch = useDispatch();
 
@@ -114,8 +114,6 @@ const Chat = ({ auth, ownerProduct, user }) => {
 
 		if ( validate({ comment }) ) return;
 
-		console.log(user);
-
 		const sendSocket = {
 			comment,
 			name: user.name + ' ' + user.lastName,
@@ -133,7 +131,7 @@ const Chat = ({ auth, ownerProduct, user }) => {
 	}
 	
 	return (
-		<ChatPage
+		<ChatProductPage
 			comments={comments}
 			desactiveBtn={desactiveBtn}
 			end={end}
@@ -151,4 +149,4 @@ const Chat = ({ auth, ownerProduct, user }) => {
 	)
 }
 
-export default Chat;
+export default ChatProduct;

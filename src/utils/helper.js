@@ -56,14 +56,14 @@ export const categorys = [
 ];
 
 export const createNotifications = (dataUser, idFor, socket, message, url="") => {
-
+	
 	const { name, lastName, uid } = dataUser;
 	const obj = {
 		of: uid,
 		for: idFor,
 		nameRemitter: name + ' ' + lastName,
 		message,
-		img: dataUser.img,
+		img: dataUser.img || {},
 		url,
 	};
 

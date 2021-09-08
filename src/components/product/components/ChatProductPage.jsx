@@ -6,7 +6,7 @@ import { TextField, Button, Grid } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Pagination from '@material-ui/lab/Pagination';
 
-const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage, initial, isAuthenticated, isRequired, leaveComment, matches, ownerProduct, qualifications, user }) => (
+const ChatProductPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage, initial, isAuthenticated, isRequired, leaveComment, matches, ownerProduct, qualifications, user }) => (
 	<div className="mt-5 chat">
 
 		<h3 className="mt-4">Deja tu comentario aqui</h3>
@@ -86,4 +86,4 @@ const ChatPage = ({ comments, desactiveBtn, end, handleChange, handleChangePage,
 	</div>
 )
 
-export default ChatPage;
+export default ChatProductPage;

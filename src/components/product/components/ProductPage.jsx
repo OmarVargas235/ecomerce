@@ -4,7 +4,7 @@ import { ProductStyle } from '../style';
 import Spinner from '../../../layaut/Spinner';
 import Gallery from '../container/Gallery';
 import Qualification from '../container/Qualification';
-import Chat from '../container/Chat';
+import ChatProduct from '../container/ChatProduct';
 import MorePosts from '../container/MorePosts';
 import AddToCart from '../container/AddToCart';
 import Map from '../container/Map';
@@ -73,7 +73,7 @@ const ProductPage = ({ auth, classes, dataUser, product={}, products=[], theme, 
 									url={url}
 								/>
 
-								<Chat
+								<ChatProduct
 									auth={auth}
 									ownerProduct={product.user.name}
 									user={dataUser}
