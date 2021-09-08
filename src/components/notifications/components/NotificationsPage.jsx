@@ -7,7 +7,7 @@ import { NotificationsStyle } from '../style';
 import Pagination from '@material-ui/lab/Pagination';
 import { ThemeProvider } from '@material-ui/styles';
 
-const NotificationsPage = ({ deleteAllNotifications, end, handleChangePage, initial, markAllRead, notifications, selectNotification, theme }) => (
+const NotificationsPage = ({ deleteAllNotifications, end, handleChangePage, initial, markRead,markAllRead, notifications, theme }) => (
 
 	<NotificationsStyle className="container my-5">
 		{
@@ -18,7 +18,7 @@ const NotificationsPage = ({ deleteAllNotifications, end, handleChangePage, init
 					key={index}
 					index={index}
 					notification={notification}
-					selectNotification={selectNotification}
+					markRead={markRead}
 				/>
 			))
 		}

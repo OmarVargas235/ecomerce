@@ -4,18 +4,18 @@ import 'moment/locale/es';
 
 import { Avatar, Typography } from '@material-ui/core';
 
-const Notification = ({ index, notification, selectNotification }) => (
+const Notification = ({ index, notification, markRead }) => (
 
 	<div
 		className={`notifications ${notification.view ? 'notification-new' : ''} px-1 py-3`}
-		onClick={() => selectNotification(index)}
+		onClick={() => markRead(index)}
 	>
 		<div className="d-flex">
 			{
 				notification.img
 				? <img 
 					className="img-user mr-4"
-					src={`${process.env.REACT_APP_BACKEND_URL}/${notification.img}`}
+					src={notification.img}
 					alt="img"
 				/>
 				: <Avatar className="mr-4">

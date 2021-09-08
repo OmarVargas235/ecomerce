@@ -7,7 +7,7 @@ const UsersConnected = ({ handleClick, user }) => (
 		<ListItemIcon>
 			{
 				user.img
-				? <img src={`${process.env.REACT_APP_BACKEND_URL}/${user.img}`} alt="img-user" />
+				? <img src={user.img.url} alt="img-user" />
 				: <Avatar className="avatar mr-3 text-uppercase">
 					{ user.name.charAt(0) }
 				</Avatar>
