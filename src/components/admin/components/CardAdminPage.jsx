@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import MenuThreePoints from '../../../layaut/MenuThreePoints';
+import Spinner from '../../../layaut/Spinner';
 import { styleMaterialUiTheme } from '../../../utils/styleMaterialUi';
 
 import { Grid, Typography, Avatar, Button } from '@material-ui/core';
@@ -39,11 +40,14 @@ const CardAdminPage = ({ addOrDeleteProduct=()=>{}, dataSelected, handleClick, i
 					subheader={moment(new Date(), "YYYYMMDD").format('LL')}
 				/>
 				
-				<CardMedia
-					style={{height: 0, paddingTop: '46.25%'}}
-					image={dataSelected.images[0].url}
-					title={dataSelected.name}
-			    />
+				{
+					dataSelected.images[0] ? <CardMedia
+						style={{height: 0, paddingTop: '46.25%'}}
+						image={dataSelected.images[0].url}
+						title={dataSelected.name}
+				    />
+				    : <Spinner />
+				}
 
 				<CardContent>
 					<Typography variant="body2" color="textSecondary" component="p">

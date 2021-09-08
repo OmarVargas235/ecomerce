@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { RedButton } from '../../../utils/styleMaterialUi';
+import Spinner from '../../../layaut/Spinner';
 
 import Carousel from 'react-material-ui-carousel';
 import { Paper, Grid } from '@material-ui/core';
@@ -33,11 +34,14 @@ const ProductsCarrouselPage = ({ classes, history, products }) => {
 							<Paper key={i} square={true} className="py-4">
 								<Grid container spacing={3}>
 									<Grid item xs={5} className={`text-center ${classes.root}`}>
-				          				<img
-				          					src={`${process.env.REACT_APP_BACKEND_URL}/${item.images[0]}`}
-				          					alt={item.name}
-				          					className="img-fluid img-carrousel"
-				          				/>
+										{
+											item.images.length === 0 ? <Spinner />
+											: <img
+					          					src={item.images[0].url}
+					          					alt={item.name}
+					          					className="img-fluid img-carrousel"
+					          				/>
+										}
 				        			</Grid>
 
 				        			<Grid item xs={7} className={classes.root}>
