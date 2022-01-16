@@ -17,11 +17,11 @@ const SendMessage = ({ dispatch, state }) => {
 	const { dataUser } = useSelector(state => state.user);
 	const dispatchRedux = useDispatch();
 
-	const [ formData, handleChange ] = useForm({
+	const [ formData, handleChange, ,, setValues ] = useForm({
 		message: '',
 	});
 	const [, validate] = useValidateForm({ message: false });
-	const [previewImages, handleChangeImg, , images] = useUploadForm([]);
+	const [previewImages, handleChangeImg, , images, clearImages] = useUploadForm([]);
 
 	const { socket, online } = useContext( SocketContext );
 
@@ -83,6 +83,7 @@ const SendMessage = ({ dispatch, state }) => {
 			const obj = {
 				of: uid,
 				for: id,
+				img: dataUser.img,
 				nameRemitter: dataUser.name + ' ' + dataUser.lastName,
 				nameReceptor: selectedUserChat.name + ' ' + selectedUserChat.lastName,
 				message,
@@ -92,9 +93,12 @@ const SendMessage = ({ dispatch, state }) => {
 				viewMessageFor: true,
 				token,
 			};
-
+			
 			socket.emit('message-personal', obj, async resp => {
 
+				setValues({message: ''});
+				clearImages();
+				
 				const formData = new FormData();
 				images.forEach(img => formData.append('images', img) );
 				formData.append('id', resp['_id']);

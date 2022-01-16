@@ -113,6 +113,7 @@ const RecordChat = ({ dispatch, state }) => {
 						data={chat}
 						deleteRecordChat={deleteRecordChat}
 						idUser={dataUser.uid}
+						selectedUserChat={selectedUserChat}
 					/>
 				))
 			}

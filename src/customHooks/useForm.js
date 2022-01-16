@@ -13,5 +13,5 @@ export const useForm = (initialState ={}) => {
 		});
 	}
 
-	return [values, handleChange, desactiveBtn, setDesactiveBtn];
+	return [values, handleChange, desactiveBtn, setDesactiveBtn, setValues];
 }

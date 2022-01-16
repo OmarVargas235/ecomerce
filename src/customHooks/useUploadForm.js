@@ -48,5 +48,11 @@ export const useUploadForm = (initialState='') => {
 		}
 	}
 
-	return [previewImages, handleChangeImg, image, images];
+	const clearImages = () => {
+
+		setImages([]);
+		setPreviewImages("");
+	}
+
+	return [previewImages, handleChangeImg, image, images, clearImages];
 }

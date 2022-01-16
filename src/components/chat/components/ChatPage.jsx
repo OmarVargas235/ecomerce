@@ -76,9 +76,17 @@ const ChatPage = ({ containerMesssageRef, dispatch, matchesContainerMessages, st
 					: <React.Fragment>
 						<div className="d-flex justify-content-between px-4">
 							<div className="d-flex align-items-center">
-								<Avatar
-									className="mr-4 text-uppercase"
-								>{selectedUserChat.name.charAt(0)}</Avatar>
+								{
+									selectedUserChat.img ?
+									<img
+										src={selectedUserChat.img?.url}
+										alt={selectedUserChat.img?.nameFile}
+										style={{width: '40px', height: '40px', borderRadius: "50%"}}
+									/>
+									: <Avatar
+										className="mr-4 text-uppercase"
+									>{selectedUserChat.name.charAt(0)}</Avatar>
+								}
 								
 								<Typography
 									variant="subtitle1"

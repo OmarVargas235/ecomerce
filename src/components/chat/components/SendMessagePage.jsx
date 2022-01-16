@@ -59,6 +59,7 @@ const SendMessagePage = ({ handleChange, handleChangeImg, isFocus, images, previ
 					rows="3"
 					onFocus={() => setIsFocus(true)}
 					onBlur={() => setIsFocus(false)}
+					value={text}
 				></textarea>
 			</TextareaStyle>
 
