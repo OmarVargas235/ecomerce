@@ -7,7 +7,10 @@ import StarIcon from '@material-ui/icons/Star';
 
 import { CommentStyle } from '../style';
 
-const CommentsPage = ({ classes, comment, editOrdeleteComment, idUser, nameFirstLetter, point, time }) => (
+const ADMIN_ROLE = "ADMIN_ROLE";
+const MODERATOR_ROLE = "MODERATOR_ROLE";
+
+const CommentsPage = ({ classes, comment, dataUser, editOrdeleteComment, idUser, nameFirstLetter, point, time }) => (
 	<CommentStyle>
 		<div className="my-4 d-flex align-items-center">
 			{
@@ -38,16 +41,14 @@ const CommentsPage = ({ classes, comment, editOrdeleteComment, idUser, nameFirst
 				<Typography variant="body2" component="h1" className="comment">
 			  		{comment.comment}.
 				</Typography>
-
-				<a href="/">Denunciar</a>
 			</span>
 			
 			{
-				comment.idUser !== idUser ? null
-				: <MenuThreePoints
+				(comment.idUser === idUser || ADMIN_ROLE === dataUser.role || MODERATOR_ROLE === dataUser.role)
+				? <MenuThreePoints
 					handleChange={editOrdeleteComment}
 					options={['Editar', 'Eliminar']}
-				/>
+				/> : null
 			}
 		</div>
 

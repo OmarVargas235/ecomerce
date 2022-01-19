@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/es';
 import Swal from 'sweetalert2';
@@ -21,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Comments = ({ comment, idUser, qualifications }) => {
+
+	const { dataUser } = useSelector(state => state.user);
 
 	const classes = useStyles();
 
@@ -65,6 +68,7 @@ const Comments = ({ comment, idUser, qualifications }) => {
 		<CommentsPage
 			classes={classes}
 			comment={comment}
+			dataUser={dataUser}
 			editOrdeleteComment={editOrdeleteComment}
 			idUser={idUser}
 			nameFirstLetter={nameFirstLetter}
